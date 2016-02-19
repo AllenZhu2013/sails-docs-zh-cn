@@ -29,7 +29,7 @@ As with most things in Sails, you can use any Connect/Express/Sails-compatible b
 
 ## Blueprints
 
-A new blueprint action (`findOne`) has been added. For instance, if you have a `FooController` and `Foo` model, then send a request to `/foo/5`, the `findOne` action in your `FooController` will run. If you don't have a `findOne` action, the `findOne` blueprint action will be used in its stead. Requests sent to `/foo` will still run the find controller/blueprint action.
+A new blueprint action (`findOne`) has been added. For instance, if you have a `FooController` and `Foo` model, then send a request to `/foo/5`, the `findOne` action in your `FooController` will run. If you don't have a `findOne` action, the `find` blueprint action will be used in its stead. Requests sent to `/foo` will still run the `find` controller/blueprint action.
 
 ## Policies
 
