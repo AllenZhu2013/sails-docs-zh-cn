@@ -1,16 +1,12 @@
 # File Uploads
+在Sails中上传文件类似于你在普通的Nodejs或者Express上传文件的做法。但是如果以前你使用的服务器平台是PHP、.NTE、Python、Ruby或Java的话，那可能有些不同于以前你使用的方法。但是不用担心：内核组已经尽最大的努力让上传动作保持可缩放和安全的情况变得容易实现。
 
-Uploading files in Sails is similar to how you would upload files for a vanilla Node.js or Express application.  It is, however, probably different than what you're used to if you're coming from a different server-side platform like PHP, .NET, Python, Ruby, or Java.  But fear not: the core team has gone to great lengths to make file uploads easier to accomplish, while still keeping them scalable and secure.
+Sails自带一个强大的“body分析器”叫做“Skipper”，该工具可以让实现流文件上传变得容易--不仅对于服务器的文件系统(也就是硬盘)，而且对于Amazon S3、MongoDb的gridfs或者其他任何支持的文件适配器。
 
-Sails comes with a powerful "body parser" called [Skipper](https://github.com/balderdashy/skipper) which makes it easy to implement streaming file uploads-- not only to the server's filesystem (i.e. hard disk), but also to Amazon S3, MongoDB's gridfs, or any of its other supported file adapters.
+### 上传一个文件
+上传到HTTP web服务器的文件作为*file parameters*。同样地你可能发送一条表单POST到一个带有文本参数比如“name”，“email”和“password”的URL，你发送文件作为文件参数，就想“avatar”或“newSong”。
 
-
-
-### Uploading a file
-
-Files are uploaded to HTTP web servers as _file parameters_.  In the same way you might send a form POST to a URL with text parameters like "name", "email", and "password", you send files as file parameters, like "avatar" or "newSong".
-
-Take this simple example:
+参考下面的例子：
 
 ```javascript
 req.file('avatar').upload(function (err, uploadedFiles) {
@@ -18,9 +14,9 @@ req.file('avatar').upload(function (err, uploadedFiles) {
 });
 ```
 
-Files should be uploaded inside of an `action` in one of your controllers.  Here's a more in-depth example that demonstrates how you could allow users to upload an avatar image and associate it with their accounts.  It assumes you've already taken care of access control in a policy, and that you're storing the id of the logged-in user in `req.session.me`.
+文件上传的动作应该在你的某一个控制器中的一个`action`中。下面的一个比较深入的例子来解释怎样允许用户上传一个avatar图片并将它关联到它的账户的。这假设你已经获取对服务器的访问控制权利，并且你存储已经登录的用户的ID在`req.session.me`。
 
-```javascript
+ ```javascript
 // api/controllers/UserController.js
 //
 // ...
@@ -102,14 +98,11 @@ avatar: function (req, res){
 ```
 
 
+#### 上传的文件放在哪里？
+当使用默认的`receiver`，文件上传到`myApp/.tmp/uploads/`目录下。你可以使用`dirname`选项重写这个目录。注意：当你调用`.upload()`函数和当你调用skipper-disk适配器的时候你需要提供dirname选项(所以你上传和下载的目录位置都是同一个)。
 
-
-#### Where do the files go?
-When using the default `receiver`, file uploads go to the `myApp/.tmp/uploads/` directory.  You can override this using the `dirname` option.  Note that you'll need to provide this option both when you call the `.upload()` function AND when you invoke the skipper-disk adapter (so that you are uploading to and downloading from the same place.)
-
-
-#### Uploading to a custom folder
-In the above example we upload the file to .tmp/uploads. So how do we configure it with a custom folder, say ‘assets/images’. We can achieve this by adding options to upload function as shown below.
+####上传到自定义的文件夹
+在上面的例子中我们上传文件到 .tmp/uploads。所以如何配置才能上传文件到我们自定义的文件夹呢，比如”assets/images“。我们可以通过下面的例子添加选项到上传函数中来实现这个目的：
 
 ```javascript
 req.file('avatar').upload({
@@ -123,10 +116,9 @@ req.file('avatar').upload({
 });
 ```
 
-### Example
-
-#### Generate an `api`
-First we need to generate a new `api` for serving/storing files.  Do this using the sails command line tool.
+### 例子
+#### 生成一个API
+首先我们需要为serving/storing文件生成一个新的`API`。使用Sails的命令行工具生成：
 
 ```sh
 $ sails generate api file
@@ -138,11 +130,10 @@ info: REST API generated @ http://localhost:1337/file
 info: and will be available the next time you run `sails lift`.
 ```
 
-#### Write Controller Actions
+#### 实现控制器的Actions
+让我们创建一个`index`动作来初始化文件上传和一个`upload`动作来接收文件。
 
-Lets make an `index` action to initiate the file upload and an `upload` action to receive the file.
-
-```javascript
+ ```javascript
 
 // myApp/api/controllers/FileController.js
 
@@ -174,13 +165,13 @@ module.exports = {
 };
 ```
 
-#### Where do they go?
-When using the default `receiver`, file uploads go to the `myApp/.tmp/uploads/` directory.  You can do whatever you want with it in the `upload` action.
+#### 它们往哪里去？
+当使用默认的`receiver`，文件将上传到`myApp/.tmp/uploads/`目录。你可以在`upload`动作中做任何想做的事情。
 
-#### Uploading to a custom folder
-In the above example we could upload the file to .tmp/uploads . So how do we configure it with a custom folder , say ‘assets/images’. We can achieve this by adding options to upload function as shown below.
+#### 上传到一个自定义的文件夹
+在上面的例子中我们可以上传文件到.tmp/uploads。所以我们该如何配置成一个自定义的目录呢，以`assets/images`为例。我们通过添加选项到上传函数中来实现这个目录，如下：
 
-```javascript
+ ```javascript
 req.file('avatar').upload({
   dirname: './assets/images'
 },function (err, uploadedFiles) {
@@ -192,8 +183,7 @@ req.file('avatar').upload({
 });
 ```
 
-## Read more
-
+## 更多阅读
 + [Skipper docs](https://github.com/balderdashy/skipper)
 + [Uploading to Amazon S3](http://sailsjs.org/documentation/concepts/file-uploads/uploading-to-s-3)
 + [Uploading to Mongo GridFS](http://sailsjs.org/documentation/concepts/file-uploads/uploading-to-grid-fs)
