@@ -153,7 +153,7 @@ npm uninstall grunt-contrib-jst --save-dev
 
  运行的是**build**任务组(`tasks/register/build.js`)，编译所有的Assets到`www`子文件夹而不是`./tmp/public`,使用的是在参考中的相对路径。这个允许将一些静态资源服务于Apache或Ngnix而不用一直依赖于['www middleware'](http://sailsjs.org/documentation/concepts/Middleware)。
 
-##### `sails www --prod(production)
+##### `sails www --prod(production)`
 
 运行的是**buildProd**任务组(`tasks/register/buildProd.js`)，除了做的事情和build任务组一样之外还可以优化Assets。
 
