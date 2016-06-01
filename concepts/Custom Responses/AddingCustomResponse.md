@@ -1,6 +1,7 @@
-# Adding a Custom Response
+# 添加自定义的响应
 
-To add your own custom response method, simply add a file to `/api/responses` with the same name as the method you would like to create.  The file should export a function, which can take any parameters you like.
+为了添加你自定义的响应方法，可以简单地在`/api/responses`中添加一个文件，该文件的名称需要和你想要创建的方法名称一样。这个文件应该导出一个函数，该函数可以带任何你想要的参数。
+
 
 ```
 /** 
