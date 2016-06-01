@@ -1,10 +1,9 @@
 # Blueprint Actions
+Blueprint actions(不要和blueprint action *routes*相混淆)是设计成与你的所有有相同名称的模型的控制器协同工作的通用动作(比如`ParrotController`将会需要一个`Parrot`的模型)。你可以将它们想象成你的应用中默认的行为。比如，如果你有一个`User.js`模型并且有一个空的`UserController.js`控制器，那么`find`,`create`,`update`,`destroy`, `populate`,`add`和`remove`的动作将会隐式的存在，不需要你去实现它们。
 
-Blueprint actions (not to be confused with blueprint action *routes*) are generic actions designed to work with any of your controllers that have a model of the same name (e.g. `ParrotController` would need a `Parrot` model).  Think of them as the default behavior for your application.  For instance, if you have a `User.js` model and an empty `UserController.js` controller, `find`, `create`, `update`, `destroy`, `populate`, `add` and `remove` actions exist implicitly, without you having to write them.
+默认的blueprint RESTful routes和shortcut routes被绑定到它们对应的blueprint 动作中。但是任何blueprint动作都是可以通过在对应控制器的文件(比如`ParrotController.find`)中创建一个自定义的动作来为某一个特定的控制器重写.另外，你可以通过创建你自己定义的blueprint动作来在*你的app中的任何地方*重写blueprint动作(比如 `api/blueprints/create.js`)。
 
-By default, the blueprint RESTful routes and shortcut routes are bound to their corresponding blueprint actions.  However, any blueprint action can be overridden for a particular controller by creating a custom action in that controller file (e.g. `ParrotController.find`).  Alternatively, you can override the blueprint action _everywhere in your app_ by creating your own custom blueprint action. (e.g. `api/blueprints/create.js`).
-
-The current version of Sails ships with the following blueprint actions:
+当前版本的Sails有以下blueprint动作：
 
 + [find](http://sailsjs.org/documentation/reference/blueprint-api/Find.html)
 + [findOne](http://sailsjs.org/documentation/reference/blueprint-api/FindOne.html)
@@ -15,6 +14,6 @@ The current version of Sails ships with the following blueprint actions:
 + [add](http://sailsjs.org/documentation/reference/blueprint-api/Add.html)
 + [remove](http://sailsjs.org/documentation/reference/blueprint-api/Remove.html)
 
-For more information about blueprints, including how to disable and override them, see the [Blueprint API reference](http://sailsjs.org/documentation/reference/blueprint-api)
+关于blueprint更多信息，包括如何禁用它以及重写它们，请参考[Blueprint API参考文档](http://sailsjs.org/documentation/reference/blueprint-api)。
 
 <docmeta name="displayName" value="Blueprint Actions">
