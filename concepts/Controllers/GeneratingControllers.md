@@ -1,19 +1,18 @@
-# Generating controllers
+# 生成控制器
+你可以使用[Sails命令行工具](http://sailsjs.org/documentation/reference/cli)快速生成一个控制器，只需要输入：
 
-You can use the [Sails command line tool](http://sailsjs.org/documentation/reference/cli) to quickly generate a controller, by typing:
-
-```sh
+ ```sh
 $ sails generate controller <controller name> [action names separated by spaces...]
 ```
 
-For example, if you run the following command:
+比如，如果你输入如下命令：
 
 ```sh
 $ sails generate controller comment create destroy tag like
 info: Generated a new controller `comment` at api/controllers/CommentController.js!
 ```
 
-Sails will generate `api/controllers/CommentController.js`:
+Sails将会生成`api/controllers/CommentController.js`:
 
 ```javascript
 /**
