@@ -1,6 +1,5 @@
-### Translating Dynamic Content
+### 动态翻译内容
+如果你的后端存储多国语言的数据(比如通过CMS产品数据被录成多国语言)，你不应该回应一个简单的JSON本地化文件除非你计划动态地编辑本地化。有一个选项是用于编辑可编程的本地化翻译，可以通过一个自定义的实现也可以通过一个翻译服务。Sails/node-i18n的JSON字符串文件兼容[webtrslateit.com](https://webtranslateit.com/en)使用的格式。
 
-If your backend is storing interlingual data (e.g. product data is entered in multiple languages via a CMS), you shouldn't rely on simple JSON locale files unless you're somehow planning on editing your locale translations dynamically.  One option is to edit the locale translations programatically, either with a custom implementation or through a translation service.  Sails/node-i18n JSON stringfiles are compatible with the format used by [webtranslateit.com](https://webtranslateit.com/en).
-
-On the other hand you might opt to store these types of dynamic translated strings in a database.  If so, just make sure and build your data model accordingly so you can store and retrieve the relevant dynamic data by locale id (e.g. "en", "es", "de", etc)  That way, you can leverage the [`req.getLocale()`](https://github.com/mashpie/i18n-node#getlocale) method to help you figure out which translated content to use in any given response, and keep consistent with the conventions used elsewhere in your app.
+在另一方面你可能需要存储这些动态翻译的字符串类型到数据库中。如果是这样的话，只需要确保并编译你相应的数据模型，这样你就可以通过locale id存储和检索动态数据(比如"en"、"es"、"de"等)。那样的话，你就可以利用[`req.getLocale()`](https://github.com/mashpie/i18n-node#getlocale)方法帮助你解决使用在任何响应中的翻译的内容，并且保持在你的app中使用的会话一致性。
 <docmeta name="displayName" value="Translating Dynamic Content">
