@@ -1,10 +1,8 @@
 # Custom Responses
+### 概述
+Sails V0.10允许定制化服务器的响应。Sails默认自带少数最常见的响应类型。它们都放置于`/api/responses`目录。为了自定义这些响应，简单地修改appropriate.js文件。
 
-### Overview
-
-Sails v.10 allows for customizable server responses.  Sails comes with a handful of the most common response types by default.  They can be found in the `/api/responses` directory of your project.  To customize these, simply edit the appropriate .js file.
-
-As a quick example, consider the following controller action:
+下面是一个简单的例子，
 
 ```javascript
 foo: function(req, res) {
@@ -16,13 +14,13 @@ foo: function(req, res) {
 }
 ```
 
-This code handles a bad request by sending a 400 error status and a short message describing the problem.  However, this code has several drawbacks, primarily:
+这段代码处理一个不合理的请求通过发送一个400错误以及一段简短的信息来描述问题。但是，这段代码有一些弊端，主要有：
 
-*  It isn't *normalized*; the code is specific to this instance, and we'd have to work hard to keep the same format everywhere
-*  It isn't *abstracted*; if we wanted to use a similar approach elsewhere, we'd have to copy / paste the code
-*  The response isn't *content-negotiated*; if the client is expecting a JSON response, they're out of luck
++ 它是*非标准化的*；这段代码专用于这个实例，然后我们会努力地保持在任何地方都有相同的格式；
++ 它是*非抽象的*；如果我们想要在别地地方使用这段代码，我们不得不拷贝粘贴。
++ 响应是*非内容可协商的*；如果客户端期望收到一个JSON响应，那么这就有点运气不好了。
 
-Now, consider this replacement:
+那么我们将其改成如下：
 
 ```javascript
 foo: function(req, res) {
@@ -33,18 +31,15 @@ foo: function(req, res) {
 }
 ```
 
+这种方法有许多优点：
++ 错误的payload是标准化的；
++ 产品和开发模式下的日志考虑在内了；
++ 错误代码是一致的；
++ 考虑到了内容可协商(JSON和HTML)；
++ 可以快速编辑那个合适的响应文件以完成API微调；
 
-This approach has many advantages:
-
- - Error payloads are normalized
- - Production vs. Development logging is taken into account
- - Error codes are consistent
- - Content negotiation (JSON vs HTML) is taken care of
- - API tweaks can be done in one quick edit to the appropriate generic response file
-
-### Responses methods and files
-
-Any `.js` script saved in the `/api/responses` folder will be executed by calling `res.[responseName]` in your controller.  For example, `/api/responses/serverError.js` can be executed with a call to `res.serverError(errors)`.  The request and response objects are available inside the response script as `this.req` and `this.res`; this allows the actual response function to take arbitrary parameters (like `serverError`'s `errors` parameter).
+### 响应方法和文件
+任何`.js`文件都被保存在`/api/responses`目录下，然后都可以在你的控制器中通过调用res.[responseName]来使用。比如，当调用`res.serverError(errors)`的时候将执行`/api/responses/serverError.js`。在响应脚本内部，请求和响应对象作为`this.req`和`this.res`都是可用的；这样就允许实际的响应函数可以携带任意的参数(比如`serverError`的`错误`参数)。
 
 
 <docmeta name="displayName" value="Custom Responses">
