@@ -1,22 +1,12 @@
-# Many-to-Many 
+# 多对多
+### 概述
+一个多对多的关联表示的是一个模型可以关联到其他许多模型反之亦然。因为二者模型都能过有许多相关的模型，所以一个新的job表需要被创建来追朔这些关系。
 
-**AKA "Has and Belongs To Many"**
+Waterline将会查找你的模型并且如果它找到两个都有相同集合属性并分别指向对方的模型，那么它会自动构建一张join表为你。
 
-### Overview
+因为你也许想要一个模型有着多个多对多的关联到另外一个模型，所以`via`关键词在`collection`属性上是必须的。这表明在关联的一端的`model`属性总是用于populate记录出来。
 
-A many-to-many association states that a model can be associated with many other models and vice-versa.
-Because both models can have many related models a new join table will need to be created to keep track
-of these relations.
-
-Waterline will look at your models and if it finds that two models both have collection attributes that
-point to each other, it will automatically build up a join table for you.
-
-Because you may want a model to have multiple many-to-many associations on another model a `via` key
-is needed on the `collection` attribute. This states which `model` attribute on the one side of the
-association is used to populate the records.
-
-Using the `User` and `Pet` example lets look at how to build a schema where a `User` may have many
-`Pet` records and a `Pet` may have multiple owners.
+使用`User`和`Pet`作为例子，让我们看看是如何建立一张`User`有着许多`Pet`并且`Pet`有这许多主人。
 
 ```javascript
 // myApp/api/models/User.js
@@ -63,24 +53,16 @@ module.exports = {
 };
 ```
 
-Now that the `User` and `Pet` models have been created and the join table has been setup
-automatically, we can start associating records and querying the join table. To do this lets add a
-`User` and `Pet` and then associate them together.
+现在`User`和`Pet`模型都已经创建并且join表也已经自动设置，我们就可以开始关联记录然后查询join表。为了实现这个让我们添加一个`User`和`Pet`然后将它们关联一起。
 
-There are two ways of creating associations when a many-to-many association is used. You can associate
-two existing records together or you can associate a new record to the existing record. To show how
-this is done we will introduce the special methods attached to a `collection` attribute: `add` and `remove`.
+当使用一个多对多的关联的时候有两种方法创建关联。你可以关联两个已经存在的记录到一起或者你也可以关联一个新的记录到已存在的记录中去。为了展示这个是如何实现的我们将会介绍连接到一个`collection`属性的特殊方法：`add`和`remove`。
 
-Both these methods are sync methods that will queue up a set of operations to be run when an instance
-is saved. If a primary key is used for the value on an `add`, a new record in the join table will be
-created linking the current model to the record specified in the primary key. However if an object
-is used as the value in an `add`, a new model will be created and then the primary key of that model
-will be used in the new join table record. You can also use an array of previous values.
+这些方法都是同步的方法也就是说它们在一个实例被保存的时候回自动形成一组操作队列来运行。如果在一个首要关键词使用在一个`add`上的值，在join表上将会创建一条新的记录并链接到当前模型中首要关键词指定的记录上。然而如果早一个`add`上使用一个对象作为其值，那么会创建一个新的模型然后那个模型的首要关键词将会用在新的join表的记录。你也可以使用一个以前值的数组。
 
-> When using `.save()` a populate call will be performed to return the newly saved data to you. If you would prefer this not to happen you can use an optional config flag in the `.save()` command. Example: `.save({ populate: false }, function(err) {})`
+> 当使用`.save()`一个populate调用，将会返回新的保存的数据给你。如果你不想让这个发生你可以使用一个在`.save()`命令中的可选的配置标志位。比如：`.save({ populate: false }, function(err) {})`。
+
 
 ## When Both Records Exist
-
 ```javascript
 // Given a User with ID 2 and a Pet with ID 20
 
@@ -109,7 +91,7 @@ User.findOne(2).exec(function(err, user) {
 });
 ```
 
-## With An Array of Existing Records
+##  With An Array of Existing Records
 
 ```javascript
 // Given a User with ID 2 and a Pet with ID 20, 24, 31
@@ -125,8 +107,7 @@ User.findOne(2).exec(function(err, user) {
 });
 ```
 
-Removing associations is just as easy using the `remove` method. It works the same as the `add`
-method except it only accepts primary keys as a value. The two methods can be used together as well.
+使用`remove`方法删除关联是很简单的。它和`add`方法的工作方式一样除了它只能接收首要关键词作为它的值之外。下面两种方法也可以一起使用：
 
 ```javascript
 User.findOne(2).exec(function(err, user) {
@@ -143,8 +124,8 @@ User.findOne(2).exec(function(err, user) {
 });
 ```
 
-### Notes
-> For a more detailed description of this type of association, see the [Waterline Docs](https://github.com/balderdashy/waterline-docs/blob/master/models/associations/associations.md)
+### 注意
+> 关于更细节的描述请参考[Waterline Docs](https://github.com/balderdashy/waterline-docs/blob/master/models/associations/associations.md)。
 
 
 <docmeta name="displayName" value="Many-to-Many">
