@@ -1,14 +1,12 @@
-# One Way Association
+# 单向连接
 
-**AKA "Belongs To"**
+**也就是从属于的意思**
 
-### Overview
+### 概述
+单向关联指的是一个模型关联到另一个模型。你可以查询这个模型并填充获取被相关模型。但是你不能查询被相关模型和通过被相关模型找到相关模型。
 
-A one way association is where a model is associated with another model.  You could query that model and populate to get the associated model.  You can't however query the associated model and populate to get the associating model.
-
-### One Way Example
-
-In this example, we are associating a `User` with a `Pet` but not a `Pet` with a `User`.
+### 单向相关例子
+在这个例子中，我们关联一个`User`到一个`Pet`，而不是一个`Pet`到一个`User`。
 
 ```javascript
 // myApp/api/models/Pet.js
@@ -41,7 +39,7 @@ module.exports = {
 }
 ```
 
-Now that the association is setup, you can populate the pony association.
+现在关联已经设置好了，你就可以populate出pony的关联：
 
 ```javascript
 User.find({ name:'Mike' })
@@ -49,26 +47,27 @@ User.find({ name:'Mike' })
 .exec(function(err, users) {
 
   // The users object would look something like:
-  // [{ 
+  // [{
   //  name: 'Mike',
   //  age: 21,
-  //  pony: { 
+  //  pony: {
   //    name: 'Pinkie Pie',
   //    color: 'pink',
   //    id: 5,
   //    createdAt: Tue Feb 11 2014 15:45:33 GMT-0600 (CST),
-  //    updatedAt: Tue Feb 11 2014 15:45:33 GMT-0600 (CST) 
+  //    updatedAt: Tue Feb 11 2014 15:45:33 GMT-0600 (CST)
   //  },
   //  createdAt: Tue Feb 11 2014 15:48:53 GMT-0600 (CST),
   //  updatedAt: Tue Feb 11 2014 15:48:53 GMT-0600 (CST),
-  //  id: 1 
+  //  id: 1
   // }]
 ```
-### Notes
-> For a more detailed description of this type of association, see the [Waterline Docs](https://github.com/balderdashy/waterline-docs/blob/master/models/associations/associations.md)
 
+### 注意：
 
-> Because we have only formed an association on one of the models, a `Pet` has no restrictions on the number of `User` models it can belong to. If we wanted to, we could change this and associate the `Pet` with exactly one `User` and the `User` with exactly one `Pet`.
+> 关于更细节的描述请参考[Waterline Docs](https://github.com/balderdashy/waterline-docs/blob/master/models/associations/associations.md)。
+
+> 因为我们只有和一个模型形成关联，所以一个`Pet`可以属于多个`User`模型，并且数目不限制。如果我们需要，我们可以改变这个让一个`Pet`精确关联一个`User`并且该`User`精确关联一个`Pet`。
 
 
 <docmeta name="displayName" value="One Way Association">
