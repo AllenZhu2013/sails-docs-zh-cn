@@ -1,6 +1,5 @@
-# Models
-
-A model represents a collection of structured data, usually corresponding to a single table or collection in a database.  Models are usually defined by creating a file in an app's `api/models/` folder.
+# 模型
+模型表示的结构数据的一个集合，总是对应于数据库中的一张表或者一个集合。模型总是通过在`api/models`文件夹下创建一个文件来定义。
 
 ```javascript
 // Parrot.js
@@ -46,35 +45,24 @@ module.exports = {
 }
 -->
 
+### 使用模型
+模型可能可以通过我们的控制器、策略、服务、响应、测试或者在我们自定义的模型方法中访问到。在模型上有许多内建的方法可用，最重要的是查询方法：[find](http://sailsjs.org/documentation/reference/waterline/models/find.html)， [create](http://sailsjs.org/documentation/reference/waterline/models/create.html)， [update](http://sailsjs.org/documentation/reference/waterline/models/update.html)， 和 [destroy](http://sailsjs.org/documentation/reference/waterline/models/destroy.html)。 这些方法都是[异步的](https://github.com/balderdashy/sails-docs/blob/master/PAGE_NEEDED.md)--在后台中，Waterline会发送一条查询到数据库然后等待响应。
 
-### Using models
+因此，查询方法会返回一个延迟的查询对象。为实际执行一条查询，`.exec(cb)`必须在这条延迟对象上调用，其中`cb`是一个回调函数来运行查询结束之后的操作。
 
+Waterline也包含可选的promise支持。除了调用`.exec()`之外，还可以调用`.then()`, `.spread()`, 或者`.catch()`，这些函数都返回一个[Bluebird promise](https://github.com/petkaantonov/bluebird)。
 
-Models may be accessed from our controllers, policies, services, responses, tests, and in custom model methods.  There are many built-in methods available on models, the most important of which are the query methods: [find](http://sailsjs.org/documentation/reference/waterline/models/find.html), [create](http://sailsjs.org/documentation/reference/waterline/models/create.html), [update](http://sailsjs.org/documentation/reference/waterline/models/update.html), and [destroy](http://sailsjs.org/documentation/reference/waterline/models/destroy.html).  These methods are [asynchronous](https://github.com/balderdashy/sails-docs/blob/master/PAGE_NEEDED.md) - under the covers, Waterline has to send a query to the database and wait for a response.
+### 模型方法
+模型类方法是内置在函数模型本身去执行一段特有的任务在它的实例上(记录)。在这里你会发现熟悉的CRUD方法来执行数据库操作比如：`.create()`, `.update()`, `.destroy()`, `.find()`等。
 
+##### 自定义模型方法
+Waterline允许你在你的模型上定义你的方法。这个特性利用了Waterline模型会忽略未被承认的关键词这一事实，所以你需要注意不小心地就重写了内建的方法以及动态查找器(不要定义方法名称为“create”等操作)。自定义的模型方法在外推与一个特有的模型相关的控制器的代码最有效；也就是者允许你将代码从你的控制器中拉出来然后组成可重要的函数，能够在任何地方被调用到(也就是不依赖于`res`和`req`)。
 
-Consequently, query methods return a deferred query object.  To actually execute a query, `.exec(cb)` must be called on this deferred object, where `cb` is a callback function to run after the query is complete.
+模型方法一般都是异步的。按照惯例，异步模型方法应该是一个2阶的函数，将会接收一个对象作为它们的第一个参数(一般叫做`opt`或`options`)和一个Node回调作为第二个参数。或者，你也可以选择返回一个promise(这两种策略都是可以工作的--这是一个个人喜好问题，如果你没有个人偏好，最好坚持使用Node回调)。
 
-Waterline also includes opt-in support for promises.  Instead of calling `.exec()` on a query object, we can call `.then()`, `.spread()`, or `.catch()`, which will return a [Bluebird promise](https://github.com/petkaantonov/bluebird).
+一个最佳实践就是写你的静态的模型方法所以它能够接受要么是一个记录要么是它的首要关键值。对于同时操作多条记录的模型方法，你应该允许一个记录的数组或主关键值的数组能够传递进来。虽然这需要更多的时间来写,但是使你的方法更强大。并且因为你在使用这个区外推通用使用的逻辑，通常是值得额外的努。
 
-
-
-
-
-### Model Methods (aka "static" or "class" methods)
-
-Model class methods are functions built into the model itself that perform a particular task on its instances (records).  This is where you will find the familiar CRUD methods for performing database operations like `.create()`, `.update()`, `.destroy()`, `.find()`, etc.
-
-
-###### Custom model methods
-
-Waterline allows you to define custom methods on your models.  This feature takes advantage of the fact that Waterline models ignore unrecognized keys, so you do need to be careful about inadvertently overriding built-in methods and dynamic finders (don't define methods named "create", etc.)  Custom model methods are most useful for extrapolating controller code that relates to a particular model; i.e. this allows you to pull code out of your controllers and into reusuable functions that can be called from anywhere (i.e. don't depend on `req` or `res`.)
-
-Model methods are generally asynchronous functions.  By convention, asynchronous model methods should be 2-ary functions, which accept an object of inputs as their first argument (usually called `opts` or `options`) and a Node callback as the second argument.  Alternatively, you might opt to return a promise (both strategies work just fine- it's a matter of preference.  If you don't have a preference, stick with Node callbacks.)
-
-A best practice is to write your static model method so that it can accept either a record OR its primary key value.  For model methods that operate on/from _multiple_ records at once, you should allow an array of records OR an array of primary key values to be passed in.  This takes more time to write, but makes your method much more powerful.  And since you're doing this to extrapolate commonly-used logic anyway, it's usually worth the extra effort.
-
-For example:
+比如:
 
 ```js
 // in api/models/Monkey.js...
@@ -110,7 +98,7 @@ findWithSameNameAsPerson: function (opts, cb) {
 }
 ```
 
-Then you can do:
+然后你可以：
 
 ```js
 Monkey.findWithSameNameAsPerson(albus, function (err, monkeys) { ... });
@@ -118,9 +106,9 @@ Monkey.findWithSameNameAsPerson(albus, function (err, monkeys) { ... });
 Monkey.findWithSameNameAsPerson(37, function (err, monkeys) { ... });
 ```
 
-> For more tips, read about the incident involving [Timothy the Monkey]().
+> 更多的细节，请阅读[Timothy the Monkey]()。
 
-Another example:
+另外一个例子：
 
 ```javascript
 // api/models/User.js
@@ -155,45 +143,35 @@ module.exports = {
 };
 ```
 
-
-#### Dynamic Finders
-
-These are special static methods that are dynamically generated by Sails when you lift your app.  For instance, if your Person model has a "firstName", you might run:
+#### 动态发现器
+当你启动你的Sails app的时候会动态生成一些专用的静态方法。比如，如果你的Person模型有一个“firstName”，你可以这样运行：
 
 ```js
 Person.findByFirstName('emma').exec(function(err,people){ ... });
 ```
 
-
-#### Resourceful Pubsub Methods
-
-A special type of model methods which are attached by the pubsub hook.  More on that in the [section of the docs on resourceful pubsub](http://sailsjs.org/documentation/reference/websockets/resourceful-pubsub).
-
+#### 资源丰富的发布订阅方法
+一个用pubsub钩子勾住的特殊类型模型方法。更多参考[section of the docs on resourceful pubsub](http://sailsjs.org/documentation/reference/websockets/resourceful-pubsub)。
 
 <!--
 another special type of class method.  It stands for 'Publish, Subscribe' and that's just what they do. These methods play a big role in how Sails integrates and utilizes Socket.IO.  They are used to subscribe clients to and publish messages about the creation, update, and destruction of models.  If you want to build real-time functionality in Sails, these will come in handy.
 -->
 
-#### Attribute Methods (i.e. record/instance methods)
+#### 属性方法
+属性方法是在记录(也就是模型实例)上可用的方法，从Waterline查询中返回。比如，如果你从Student模型中找到10个高GPA的学生，那些学生中的每一个的记录都可以访问内建的属性方法，以及任何定义在Student模型上的自定义属性方法。
 
-Attribute methods are functions available on records (i.e. model instances) returned from Waterline queries.  For example, if you find the ten students with the highest GPA from the Student model, each of those student records will have access to all the built-in attribute methods, as well as any custom attribute methods defined on the Student model.
-
-###### Built-in attribute methods
-Every Waterline model includes some attribute methods automatically, including:
+###### 内建的属性方法
+每一个Waterline方法自动包含一些属性方法，包括：
 
 + [`.toJSON()`](http://sailsjs.org/documentation/reference/waterline/records/toJSON.html)
 + [`.save()`](http://sailsjs.org/documentation/reference/waterline/records/save.html)
 + [`.destroy()`](http://sailsjs.org/documentation/reference/waterline/models/destroy.html)
 + [`.validate()`](http://sailsjs.org/documentation/reference/waterline/records/validate.html)
 
-
 <!-- note to self- we should bundle a getPrimaryKeyValue() attribute method on every model in waterline core (or maybe just getId() since "id" is simpler to understand) ~mike - aug2,2014 -->
 
-
-###### Custom attribute methods
-
-Waterline models also allow you to define your own custom attribute methods.  Define them like any other attribute, but instead of an attribute definition object, write a function on the right-hand-side.
-
+###### 自定义属性方法
+Waterline模型也允许你去定义你自己的属性方法。就像别的属性一样定义它们，但是不是在一个属性定义对象上，写一个函数在右手边。
 
 ```js
 // From api/models/Person.js...
@@ -231,13 +209,11 @@ module.exports = {
 };
 ```
 
-> Note that with the notable exception of the built-in `.save()` and `.destroy()` attribute methods, attribute methods are almost always _synchronous_ by convention.
->
-> Also note that custom attributes methods are not serialized to JSON by default.  To serialize them, you can override [toJSON](http://sailsjs.org/documentation/reference/waterline-orm/records/to-json).
+> 值得注意的除了内建的`.save()`和`.destroy()`属性方法之外，其他的属性方法几乎都是与约定*同步*。
+> 也还要注意自定义的属性方法默认是不会序列化成JSON的。那么为了序列化它们，你可以重写[toJSON](http://sailsjs.org/documentation/reference/waterline-orm/records/to-json)。
 
-###### When to write a custom attribute method
-
-Custom attribute methods are particularly useful for extracting some information out of a record.  I.e. you might want to reduce some information from one or more attributes (i.e. "is this person married?"")
+###### 什么时候写一个自定义属性方法
+自定义属性方法对从一个记录中提取信息特别有用。也就是说，你可能想要从一个或者多个属性中减少一些信息(也就是“这个人结婚了吗？”)。
 
 ```js
 if ( rick.isMarried() ) {
@@ -245,13 +221,10 @@ if ( rick.isMarried() ) {
 }
 ```
 
+###### 什么时候**不要**写一个自定义属性方法
+**你应该避免写你的异步属性方法**。虽然内建的异步属性方法像`.save()`和·`.destroy()`可以在你的app上方便地使用，但是写出你自己的异步属性方法有时候会有一些不想要的结果，并且也不是最有效地构建你的app
 
-
-###### When NOT to write a custom attribute method
-
-You should **avoid writing your own _asynchronous_ attribute methods**.  While built-in asynchronous attribute methods like `.save()` and `.destroy()` can be convenient from your app code, writing your _own_ asynchronous attribute methods can sometimes have unintended consequences, and is not the most efficient way to build your app.
-
-For instance, consider an app that manages wedding records.  You might think to write an attribute method on the Person model that updates the `spouse` attribute on both individuals in the database.  This would allow you to write controller code like:
+比如，考虑到一个app管理结婚记录。你也许认为写一个属性方法在Person模型上更新另个人的`spouse`属性在数据库。那么你的控制器代码可能是这样的：
 
 ```js
 personA.marry(personB, function (err) {
@@ -260,9 +233,9 @@ personA.marry(personB, function (err) {
 })
 ```
 
-Which looks great...until you need to write a different action where you don't have an actual record for "personA".
+貌似看着很对。。。。直到你需要写一个不同的动作但是你并没有一个实际的“PersonA”的记录。
 
-A better strategy is to write a custom (static) model method instead.  This makes your function more reusable/versatile, since it will be accessible whether or not you have an actual record instance on hand.  You might refactor the code from the previous example to look like:
+一个最好的办法就是写一个自定义的(静态)模型方法。这会让你的函数变得更加可重用性和通用，因为无论你是否有一个实际的记录实例还是没有它都是可访问的。你也许需要重构代码如下：
 
 ```js
 Person.marry([joe,raquel], function (err) {
@@ -271,10 +244,8 @@ Person.marry([joe,raquel], function (err) {
 })
 ```
 
-
-
-###### Naming your attribute methods
-Make sure you use a naming convention that helps you avoid confusing **attribute methods** from _attribute values_ when you're working with records in your app.  A good best practice is to use "get*" (e.g. `getFullName()`) prefix and avoid writing attribute methods that change records in-place.
+###### 命名你的属性方法
+确保你使用一个命名规则来帮助你避免将**属性方法**和*属性值*混淆当你在使用记录的时候。一个最佳实践是使用“get*”(比如`getFileName()`)前缀并避免写属性方法原状地改变记录。
 
 <!--
 
