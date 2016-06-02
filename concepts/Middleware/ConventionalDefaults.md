@@ -1,10 +1,9 @@
-# Conventional Defaults
+# 常见的默认值
+Sails有绑定一组默认的常用的HTTP中间件供你使用。当然你可以禁用、重写或者追加新的内容，但是对于在产品或者开发模式下大部分的app的预安装的栈是完全可以接受的。下面是一组标准的HTTP中间件函数，有序地绑定到Sails中，当每次有HTTP收到的时候便会执行：
 
-Sails comes bundled with a suite of conventional HTTP middleware, ready to use.  You can, of course, disable, override, rearrange, or append to it, but the pre-installed stack is perfectly acceptable for most apps in development or production.  Below is a list of the standard HTTP middleware functions that come bundled in Sails, in the order they execute every time the server receives an incoming HTTP request:
-
- HTTP Middleware Key       | Purpose
+HTTP Middleware Key       | Purpose
  :------------------------ |:------------
- **startRequestTimer**     | Allocates a variable in memory to hold the timestamp when the request began.  This can be accessed and used by your app to provide diagnostic information about slow requests.
+ **startRequestTimer**     | 当请求开始的时候在内存中分配一个变量保存时间戳。这个可以被你的app访问到并被用于提供关于慢请求的诊断信息。
  _cookieParser_ *          | Parses the cookie header into a clean object for use in subsequent middleware and your application code.
  _session_ *               | Sets up a unique session object using your [session configuration](http://sailsjs.org/documentation/reference/sails.config/sails.config.session.html).
  **bodyParser**            | Parses parameters and binary upstreams (for streaming file uploads) from the HTTP request body using [Skipper](https://github.com/balderdashy/skipper).
@@ -16,6 +15,6 @@ Sails comes bundled with a suite of conventional HTTP middleware, ready to use. 
  _www_ *                   | Serves static files- usually images, stylesheets, scripts- in your app's "public" folder (configured in [`sails.config.paths`](https://github.com/balderdashy/sails-docs/blob/master/PAGE_NEEDED.md), conventionally [`.tmp/public/`](https://github.com/balderdashy/sails-docs/blob/master/PAGE_NEEDED.md)) using Connect's [static middleware](http://www.senchalabs.org/connect/static.html).
  **favicon**               | Serves the [browser favicon](http://en.wikipedia.org/wiki/Favicon) for your app if one is provided as `/assets/favicon.ico`.
  _404_ *                   | Handles requests which do not match any routes - triggers `res.notFound()`  <!-- technically, this emits the `router:request:404` event)  -->
- _500_ *                   | Handles requests which trigger an internal error (i.e. call Express's `next(err)`)  - triggers `res.serverError()` <!-- technically, this emits the `router:request:500` event)  -->
+ _500_ *                   | Handles requests which trigger an internal error (i.e. call Express's `next(err)`)  - triggers `res.serverError()` <!-- technically, this emits the `router:request:500` event)  -->
 
 <docmeta name="displayName" value="Conventional Defaults">
