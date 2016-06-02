@@ -1,11 +1,8 @@
-# Lifecycle callbacks
+# 生命周期回调
+### 概述
+生命周期回调是能够在某些*模型*动作之前或之后自动调用的功能。比如，我们有时使用生命周期回调自动化地加密一个密码在创建或者更新一个`Account`模型之前。
 
-### Overview
-
-Lifecycle callbacks are functions that are automagically called before or after certain _model_ actions. For example, we sometimes use lifecycle callbacks to automatically encrypt a password before creating or updating an `Account` model.
-
-Sails exposes a handful of lifecycle callbacks by default.
-
+Sails默认暴露了一个有用的生命周期调用。
 
 ##### Callbacks on `create`
 
@@ -13,6 +10,7 @@ Sails exposes a handful of lifecycle callbacks by default.
   - afterValidate: fn(values, cb)
   - beforeCreate: fn(values, cb)
   - afterCreate: fn(newlyInsertedRecord, cb)
+
 
 ##### Callbacks on `update`
 
@@ -27,9 +25,8 @@ Sails exposes a handful of lifecycle callbacks by default.
   - afterDestroy: fn(destroyedRecords, cb)
 
 
-### Example
-
-If you want to encrypt a password before saving in the database, you might use the `beforeCreate` lifecycle callback.
+### 例子
+如果你想在保存到数据库之前加密一个密码，你也许会使用`beforeCreate`生命周期回调。
 
 ```javascript
 var bcrypt = require('bcrypt');
