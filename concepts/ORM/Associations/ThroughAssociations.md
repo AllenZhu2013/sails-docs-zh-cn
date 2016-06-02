@@ -1,13 +1,8 @@
-# Through Associations
+# 直达的关联
+### 概述
+多对多的直达关联表现和多对多的关联一样，除了会自动为你创建join表之外。在一个多对多的直达关联中你定义了一个模型包含了两个你想合并一起的模型的字段。当你添加`through`关键词定义一个关联的时候，该模型应该被使用而不是自动join到表中。
 
-**AKA "Has Many Through"**
-
-### Overview
-
-Many-to-Many through associations behave the same way as many-to-many associations with the exception
-of the join table being automatically created for you. In a Many-To-Many through assocation you define a model containing two fields that correspond to the two models you will be joining together. When defining an association you will add the `through` key to show that the model should be used rather than the automatic join table.
-
-### Has Many Through Example
+### Has Many Through例子
 
 ```javascript
 // myApp/api/models/User.js
@@ -58,9 +53,9 @@ module.exports = {
 }
 ```
 
-By using the `PetUser` model we can use `.populate()` on both the `User` model and `Pet` model just the same as a normal [Many-to-Many](http://sailsjs.org/documentation/concepts/models-and-orm/associations/many-to-many) association.
+通过使用`PetUser`模型我们可以在`User`模型和`Pet`模型上都使用`.populate()`，只需要和一个正常的[Many-to-Many](http://sailsjs.org/documentation/concepts/models-and-orm/associations/many-to-many)关联一样。
 
-> Currently if you would like to add additional information to the `through` table it will not be available when calling `.populate`. To do this you will need to query the `through` model manually.
+> 当前如果你想要添加额外的信息到`through`表中，那么当地奥欧勇`.populate`的时候将不会生效。为了实现这个你需要手工地去查询`through`模型。
 
 
 
