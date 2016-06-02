@@ -1,20 +1,13 @@
-# One-to-One
+# 一对一
+### 概述
+一对一表示的是一个模型只能和另一个模型关联。为了让一个模型知道它相关联的另外一个模型是什么，一个foreign的关键词必须包含在其中的一个记录里并且带有一个`unique`数据库来约束它。
 
-**AKA "Has One"**
-
-### Overview
-
-A one-to-one association states that a model may only be associated with one other model. In order
-for the model to know which other model it is associated with, a foreign key must be included on one of the
-records along with a `unique` database constraint on it.
-
-There are currently two ways of handling this association in Waterline.
+当前在Waterline中有两种方法来操作这种关联。
 
 ### Has One Using A Collection
+在这个例子中，我们关联一个`Pet`和一个`User`。`User`只能有一只`Pet`，反之亦然，一个`Pet`只能有一个`User`。然而，为了在这里中双方能够互相查询，我们必须添加一个`collection`属性到`User`模型中。这允许我们都可以调用`User.find().populate('pet')和`Pet.find().populate('owner')`。
 
-In this example, we are associating a `Pet` with a `User`. The `User` may only have one `Pet` and viceversa, a `Pet` can only have one `User`. However in order to query from both sides in this example we must add a `collection` attribute to the `User` model. This allows us to call both `User.find().populate('pet')` along with `Pet.find().populate('owner')`.
-
-The two models will stay in sync by updating the `Pet` model's `owner` attribute. Adding the `unique` property ensures that only one value for each `owner` will exist in the database. The downside is that when populating from the `User` side you will always get an array back.
+这两种方法通过更新`Pet`模型的`owner`属性来保持同步。添加`unique`属性确保每一个`owner`只有一个值存在于数据库中。当你从`User`端populate出数据的视乎你将会得到一个数组。
 
 ```javascript
 // myApp/api/models/Pet.js
@@ -51,12 +44,11 @@ module.exports = {
   }
 }
 ```
-
 ### Has One Manual Sync
+在这个例子中，我们关联一个`Pet`和一个`User`。`User`只能有一只`Pet`，反之亦然，一个`Pet`只能有一个`User`。然而，为了在这里中双方能够互相查询，我们必须添加一个`model`属性到`User`模型中。这允许我们都可以调用`User.find().populate('pet')和`Pet.find().populate('owner')`。
 
-In this example, we are associating a `Pet` with a `User`. The `User` may only have one `Pet` and viceversa, a `Pet` can only have one `User`. However in order to query from both sides a `model` property is added to the `User` model. This allows us to call both `User.find().populate('pet')` along with `Pet.find().populate('owner')`.
+但是这两种模型将不会保持同步。所以当你更新其中一端的时候记得也去更新另外一端。
 
-The two models will not stay in sync however. So when updating one side you must remember to update the other side as well.
 
 ```javascript
 // myApp/api/models/Pet.js
@@ -93,8 +85,8 @@ module.exports = {
 ```
 
 
-### Notes
-> For a more detailed description of this type of association, see the [Waterline Docs](https://github.com/balderdashy/waterline-docs/blob/master/models/associations/one-to-one.md)
+###注意
+> 关于更细节的描述请参考[Waterline Docs](https://github.com/balderdashy/waterline-docs/blob/master/models/associations/associations.md)。
 
 
 
