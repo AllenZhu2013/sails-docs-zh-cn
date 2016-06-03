@@ -1,32 +1,26 @@
-# Adapters
-### Status
+# 适配器
+### 状态
+##### 稳定性：[3](http://nodejs.org/api/documentation.html#documentation_stability_index)级-稳定
+这个API已经证明是满足要求的，但是底层代码的清理可能会导致轻微的改变。向后兼容是必须的。
 
-##### Stability: [3](http://nodejs.org/api/documentation.html#documentation_stability_index) - Stable
+### 什么是适配器？
+适配器是将实现具体的函数抽象出来然后提供一个**接口**给外部调用。这允许我们可以保证跨多种模型、开发者、app甚至是公司去方便地使用这些类型，让app的代码变得更加可维护性，更加有效率，更加可靠。适配器用于集成数据库，开放的API，内部的或者专用的web服务乃至硬件。
 
-The API has proven satisfactory, but cleanup in the underlying code may cause minor changes.  Backwards-compatibility is guaranteed.
+### 在一个适配器里我们能够做哪类事情？
+适配器主要关注提供模型上下文化的CRUD方法。CRUD代表创建、读取、更新和删除。在Sails或者Waterline中，我们称这些方法为`create()`,`find()`,`update()`和`destroy()`。
 
-### What is an adapter?
+比如，一个`MySQLAdapter`实现一个`create()`的方法，该方法在内部使用专用的表名称去调用一个MySQL数据库并连接然后运行一个`INSERT...`SQL查询。
 
- Adapters expose **interfaces**, which imply a contract to implement certain functionality.  This allows us to guarantee conventional usage patterns across multiple models, developers, apps, and even companies, making app code more maintainable, efficient, and reliable.  Adapters are useful for integrating with databases, open APIs, internal/proprietary web services, or even hardware.
+实际上，你的适配器可以做任何你想做的事情--你写的任何方法都会暴露在原始连接对象中和任何会使用它们的模型中。
 
+##### 类方法
+下面提到的`class methods`指的是静态的或者面向集合的，在模型本身中函数可用的。比如：`User.create()`或`Menu.update()`。为了添加自定义的类方法到你的模型中(除了在适配器中提供它实现了什么)，定义它们作为顶层的关键词或者函数对在model对象中。
 
-### What kind of things can I do in an adapter?
+##### 实例方法
+另一方面`instance methods`(也是众所周知的对象、模型或者方法)指的是在独立的结果模型中那些可用的方法，比如：`User.findOne(7).done(function (err, user) { user.someInstanceMethod(); })`。为了添加自定义的方法到你的模型中(除了在适配器中提供它实现了什么)，定义它们作为顶层的关键词或者函数对在模型定义的地方中的`attributes`对象。
 
-Adapters are mainly focused on providing model-contextualized CRUD methods.  CRUD stands for create, read, update, and delete.  In Sails/Waterline, we call these methods `create()`, `find()`, `update()`, and `destroy()`.
-
-For example, a `MySQLAdapter` implements a `create()` method which, internally, calls out to a MySQL database using the specified table name and connection informtion and runs an `INSERT ...` SQL query.
-
-In practice, your adapter can really do anything it likes-- any method you write will be exposed on the raw connection objects and any models which use them.
-
-
-##### Class methods
-Below, `class methods` refer to the static, or collection-oriented, functions available on the model itself, e.g. `User.create()` or `Menu.update()`.  To add custom class methods to your model (beyond what is provided in the adapters it implements), define them as top-level key/function pairs in the model object.
-
-##### Instance methods
-`instance methods` on the other hand, (also known as object, or model, methods) refer to methods available on the individual result models themselves, e.g. `User.findOne(7).done(function (err, user) { user.someInstanceMethod(); });`.  To add custom instance methods to your model (beyond what is provided in the adapters it implements), define them as key/function pairs in the `attributes` object of the model's definition.
-
-##### DDL and auto-migrations
-`DDL` stands for data-definition language, and is a common fixture of schema-oriented databases.  In Sails, auto-migrations are supported out of the box.  Since adapters for the most common SQL databases support `alter()`, they also support automatic schema migration!  In your own adapter, if you write the `alter()` method, the same behavior will take effect.  The feature is configurable using the `migrate` property, which can be set to `safe` (don't touch the schema, period), `drop` (recreate the tables every time the app starts), or `alter` (the default-- merge the schema in the apps' models with what is currently in the database).
+##### DDL和自动迁移
+`DDL`表示的是数据定义语言，它是面向模式的数据库的基本特征。在Sails中，自动迁移支持立即完成。因为对于大部分常见的支持`alter()`的SQL的适配器，所以它们也支持自动地模式迁移。在你自己的适配器中，如果你写了`alert()`方法，那么相同的行为将会生效。这个特征是可以使用`migrate`属性来进行配置，该属性可以设置成`safe`(不会修改架构、期限)、`drop`(每次app启动的时候重新生成表)、或者`alter`(默认的配置--合并app中的模型的纲要到目前数据库存在的数据中)。
 
 
 
