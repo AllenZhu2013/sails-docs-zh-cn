@@ -1,23 +1,24 @@
-# Partials
+# Partials(局部模板)
+在它的视图渲染代码中Sails使用`ejs-locals`，所以在你的视图中你可以这样做：
 
-Sails uses `ejs-locals` in its view rendering code, so in your views you can do:
-
-```
-<%- partial ('foo.ejs') %> 
-```
-
-to render a partial located at `/views/foo.ejs`. All of your locals will be sent to the partial automatically.
-
-The paths are relative to the view that loads the partial. So if you have a a user view at `/views/users/view.ejs` and want to load `/views/partials/widget.ejs` then you would use:
 
 ```
-<%- partial ('../partials/widget.ejs') %> 
+<%- partial ('foo.ejs') %>
 ```
 
-One thing to note: partials are rendered synchronously, so they will block Sails from serving more requests until they're done loading. It's something to keep in mind while developing your app, especially if you anticipate a large number of connections.
+来渲染位于`/views/foo.ejs`中的一个局部模板。你的所有的本地变量将会自动地被发送到局部模板中。
 
-> NOTE: When using other templating languages than ejs, their syntax for loading partials or block, etc. will be used. Please refer to their documentation for more information on their syntax and conventions
+加载局部模板的路径都是相对于视图来说的。所以如果你在`/views/users/view.ejs`中有一个用户视图并且想要加载`/views/partials/widget.ejs`，那么你应该这么写：
 
+```
+<%- partial ('../partials/widget.ejs') %>
+```
+
+有一件事情需要注意：局部模板是同步渲染的，所以他们会在Sails服务于多个请求的时候锁住知道他们都加载完成。有一些需要记住的是当开发你的app时，尤其如果你预期你的app会有很多的连接的时候。
+
+> 注意：
+
+> 当你使用其他模板引擎而不是EJS的时候，它们加载局部模板的语法或者被锁的机制都会被使用。请参考关于其他模板引擎的文档。
 
 <docmeta name="displayName" value="Partials">
 
