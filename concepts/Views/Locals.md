@@ -1,27 +1,24 @@
-# Locals
-
-The variables accessible in a particular view are called `locals`.  Locals represent server-side data that is _accessible_ to your view-- locals are not actually _included_ in the compiled HTML unless you explicitly reference them using special syntax provided by your view engine.
+# 本地变量
+在一个特殊的视图中可访问到的变量我们叫做`locals`。本地变量表示的是你的视图可以访问到的服务器端的数据--本地变量没有实际*包含*到你的编译的HTML除非你明确地使用你的视图引擎提供的特殊语法来引用它们。
 
 ```ejs
 <div>Logged in as <a><%= name %></a>.</div>
 ```
 
-##### Using locals in your views
+##### 在你的视图中使用本地变量
+下面提到的符号是用于访问你的本地变量，在EJS中，你使用特殊的模板标记(比如`<%= someValue %>`)来包含本地变量到你的视图中。
 
-The notation for accessing locals varies between view engines.  In EJS, you use special template markup (e.g. `<%= someValue %>`) to include locals in your views.
-
-There are three kinds of template tags in EJS:
+在EJS中有下面三种类型的模板标签：
 + `<%= someValue %>`
-  + HTML-escapes the `someValue` local, and then includes it as a string.
+    + HTML-转义`someValue`这个本地变量，然后将其作为一个字符串来包含；
 + `<%- someRawHTML %>`
-  + Includes the `someRawHTML` local verbatim, without escaping it.
-  + Be careful!  This tag can make you vulnerable to XSS attacks if you don't know what you're doing.
-+ `<% if (!loggedIn) { %>  <a>Logout</a>  <% } %>`
-  + Runs the javascript inside the `<% ... %>` when the view is compiled.
-  + Useful for conditionals (`if`/`else`), and looping over data (`for`/`each`).
+    + 一字不差地包含`someRawHTML`这个本地变量，不进行转义；
+    + 请注意，这个标签会让你容易受到XSS攻击如果你不知道你在做什么。
++ `<% if (!loggedIn) { %> <a>Logout</a> <% } %>`
+    + 当视图编译的时候执行`<% ... %>`里面的JS；
+    + 条件语句使用(`if/else`)，循环数据使用(`for/each`)；
 
-
-Here's an example of a view (`views/backOffice/profile.ejs`) using two locals, `user` and `corndogs`:
+下面文件(`views/backOffice/profile.ejs`)的视图例子使用了两个本地变量：`user`和`corndogs`：
 
 ```html
 <div>
@@ -35,9 +32,9 @@ Here's an example of a view (`views/backOffice/profile.ejs`) using two locals, `
 </div>
 ```
 
-> You might have noticed another local, `_`.  By default, Sails passes down a few locals to your views automatically, including lodash (`_`).
+> 你也许可能发现另外一个本地变量-`_`。默认的，Sails会自动传递几个本地变量到你的视图中，这些变量都包含lodash(`_`)。
 
-If the data you wanted to pass down to this view was completely static, you don't necessarily need a controller- you could just hard-code the view and its locals in your `config/routes.js` file, i.e:
+如果你想传递给视图文件的数据是完全静态的，你不再需要一个控制器-你只需要固定你的视图文件，然后本地变量都放在你的`config/routes.js`文件中，如下：
 
 ```javascript
   // ...
@@ -58,9 +55,10 @@ If the data you wanted to pass down to this view was completely static, you don'
   // ...
 ```
 
-On the other hand, in the more likely scenario that this data is dynamic, we'd need to use a controller action to load it from our models, then pass it to the view using the [res.view()](http://sailsjs.org/documentation/reference/res/res.view.html) method.
 
-Assuming we hooked up our route to one of our controller's actions (and our models were set up), we might send down our view like this:
+另一方面，在大部分场景下这些数据是动态的，我们可能需要控制器的动作来从我们的模型中加载，然后通过res.view()方法传递给视图。
+
+假设现在我们将我们的路由关联到控制器中的动作(并且已经设置了模型)，我们可能应该像下面这样的设置：
 
 ```javascript
 // in api/controllers/UserController.js...
