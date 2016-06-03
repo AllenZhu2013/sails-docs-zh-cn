@@ -1,18 +1,13 @@
-# View Engines
+# 模板引擎
+默认的模板引擎是[EJS](https://github.com/visionmedia/ejs)。
 
-The default view engine in Sails is [EJS](https://github.com/visionmedia/ejs).
+##### swapping out the view engine
+为了使用不同的模板引擎，你应该在你的工程中使用npm安装，然后在[`config/views.js`](http://sailsjs.org/documentation/anatomy/myApp/config/views.js.html)中设置`sails.config.views.engine`。
 
-##### Swapping out the view engine
+比如，为了切换到Jade，运行`run npm install jade --save-dev`，然后在[`config/views.js`](http://sailsjs.org/documentation/anatomy/myApp/config/views.js.html)中设置`engine: 'jade'`。
 
-To use a different view engine, you should use npm to install it in your project, then set `sails.config.views.engine` in [`config/views.js`](http://sailsjs.org/documentation/anatomy/myApp/config/views.js.html).
-
-For example, to switch to jade, run `npm install jade --save-dev`, then set `engine: 'jade'` in [`config/views.js`](http://sailsjs.org/documentation/anatomy/myApp/config/views.js.html).
-
-
-
-##### Supported view engines
-
-  - [atpl](https://github.com/soywiz/atpl.js)
+##### 模板引擎
+- [atpl](https://github.com/soywiz/atpl.js)
   - [dust](https://github.com/akdubya/dustjs) [(website)](http://akdubya.github.com/dustjs/) (.dust)
   - [eco](https://github.com/sstephenson/eco)
   - [ect](https://github.com/baryshev/ect) [(website)](http://ectjs.com/)
@@ -37,11 +32,8 @@ For example, to switch to jade, run `npm install jade --save-dev`, then set `eng
   - [walrus](https://github.com/jeremyruppel/walrus) [(website)](http://documentup.com/jeremyruppel/walrus/)
   - [whiskers](https://github.com/gsf/whiskers.js)
 
-
-
-##### Adding new custom view engines
-
-For instructions on adding support for a view engine not listed above, check out the [consolidate project](https://github.com/visionmedia/consolidate.js/blob/master/Readme.md#api) repository.
+##### 添加新的自定义的模板引擎
+如何添加一个模板引擎的支持没有罗列在上面的列表中，不过你可以查看这个链接地址：[consolidate project](https://github.com/visionmedia/consolidate.js/blob/master/Readme.md#api)
 
 
 
