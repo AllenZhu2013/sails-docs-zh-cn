@@ -1,17 +1,17 @@
-# Generators
+# 生成器
+Sails的生成器允许你去完全定制你在命令行运行`sails new`和`sails generate`的时候执行的操作。自定义生成器让标准化你的团队或者组织创建新的Sails app或在已存在的app中的新模块成为可能。自定义生成器可以用在下面罗列的所有事项中：
 
-Sails' generators allow you to completely customize what happens when you run `sails new` and `sails generate` from the command-line.  Custom generators make it possible to standardize the way your team or organization creates new Sails apps, as well as new modules within existing apps.  Custom generators can be used to do all sorts of cool things:
-- to standardize conventions and boilerplate logic for all new apps across your organization
-- to override the default Gruntfile with a set of custom tasks
-- to completely replace Grunt with [Gulp](http://gulpjs.com/) or [webpack](https://webpack.github.io/)
-- to use another view engine like Jade, Dust or Nunjucks by default (instead of EJS)
-- to automate custom deployments (e.g. white label apps with one server per-customer)
-- to generate files as Coffeescript or Typescript
-- to include ASCII pictures of cats at the top of every code file (or license headers, whatever)
-- to start off with all documentation and comments in a language other than English
++ 为所有你的组织中使用的新的app标准化约定和样板
++ 使用一组自定义的任务重写默认的Gruntfile
++ 使用[Gulp](http://gulpjs.com/)或[Webpack](https://webpack.github.io/)完全替换
+Grunt
++ 可以默认使用其他的模板引擎比如Jade、Dust或者Nunjucks
++ 可以自动地自定义部署(比如white label apps with one server per-customer)
++ 生成Coffeescript或Typescript的文件
++ 在每个代码文件的顶部(或许可证头部)中包含ASCII的猫图片
++ 使用另外一种语言而不是英语来开始所有的文档和注释
 
-
-> If you are interested in making custom generators, the best place to start is by checking out the [introduction to custom generators](http://sailsjs.org/documentation/concepts/extending-sails/generators/custom-generators).  You also might check out [open-source generators from the community](https://sailsjs-website.herokuapp.com/documentation/concepts/extending-sails/generators/available-generators), in case something already out there will save you some time.
+> 如果你对制作自定义的生成器很感兴趣，最好开始的地方便是阅读文档[introduction to custom generators](http://sailsjs.org/documentation/concepts/extending-sails/generators/custom-generators)。你也可以阅读[open-source generators from the community](https://sailsjs-website.herokuapp.com/documentation/concepts/extending-sails/generators/available-generators)。
 
 
 <docmeta name="displayName" value="Generators">
