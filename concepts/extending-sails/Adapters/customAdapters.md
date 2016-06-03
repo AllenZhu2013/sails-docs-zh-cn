@@ -1,6 +1,5 @@
-# Custom Adapters
-
-Sails makes it fairly easy to write your own database adapter.  Custom adapters can be built directly in your app (`api/adapters/`) or published as NPM packages.  Check out [Intro to Custom Adapters](https://github.com/balderdashy/sails-docs/blob/master/contributing/intro-to-custom-adapters.md), the [Adapter Interface Reference](https://github.com/balderdashy/sails-docs/blob/master/contributing/adapter-specification.md), and [sails-adapter-boilerplate](https://github.com/balderdashy/sails-adapter-boilerplate) for more information about creating your own adapter.
+# 自定义的适配器
+Sails让你写出自己的适配器变得异常容易。自定义的适配器可以在你的app(`api/adapters/`)中直接编译或者将它作为NPM包发布出去。请参考[ Intro to Custom Adapters]()，[Adapter Interface Reference](https://github.com/balderdashy/sails-docs/blob/master/contributing/adapter-specification.md)，和[sails-adapter-boilerplate](https://github.com/balderdashy/sails-adapter-boilerplate)，获取更多关于创建自己的适配器的信息。
 
 
 
