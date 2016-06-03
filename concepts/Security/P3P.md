@@ -1,30 +1,26 @@
 # P3P
+### 背景
+P3P表示的是个人隐私安全平台项目，是一种web/浏览器标准，被设计成获得更好的用户web隐私控制。当前(截止2014年)，所有的主流浏览器中只有IE浏览器支持。它通常发挥作用在处理老旧的应用程序上。
 
-### Background
+许多现代的组织都执意地忽略P3P。下面是[Facebook](https://www.facebook.com/help/327993273962160/)关于该主题说过的话：
 
-P3P stands for the "Platform for Privacy Preferences", a browser/web standard designed to facilitate better consumer web privacy control.  Currently (as of 2014), out of all the major browsers, it is only supported by Internet Explorer.  It comes into play most often when dealing with legacy applications.
-
-Many modern organizations are willfully ignoring P3P. Here's what [Facebook has to say](https://www.facebook.com/help/327993273962160/) on the subject:
-
-> The organization that established P3P, the World Wide Web Consortium, suspended its work on this standard several years ago because most modern web browsers don't fully support P3P. As a result, the P3P standard is now out of date and doesn't reflect technologies that are currently in use on the web, so most websites currently don't have P3P policies.
-> 
-> See also: http://www.zdnet.com/blog/facebook/facebook-to-microsoft-p3p-is-outdated-what-else-ya-got/9332
+> 建立P3P的组织叫做Wide Web Consortium，它因为大部分的现代浏览器都没有完全支持P3P所以几年前暂停了他们的工作。因为，P3P的标准现在有点过时并且也不会体现在当前web使用的技术上，所以大部分的网站都没有P3P策略。
+> 其他信息也可以参考http://www.zdnet.com/blog/facebook/facebook-to-microsoft-p3p-is-outdated-what-else-ya-got/9332
 
 
-### Supporting P3P with Sails
+### Sails支持的P3P
+但是抛开这些不谈，有时候你无论如何都不得不实现P3P。
 
-But all that aside, sometimes you just have to support P3P anyways.
+幸运的是，有一些不同的模块存在支持Express或Sails的P3P功能只需要在相关的P3P头部使能。为了使用这些模块来处理P3P头部，使用下面的的指令从npm中安装，然后在你的项目中打开`config/http.js`文件并将它配置为一个自动以的中间件。要做到这一点，定义你的P3P中间件为“p3p"，并且添加字符串”p3p"到你想要在中间链中运行的`middleware.order`数组中(放置最好的地方是在`cookieParser`的前面)。
 
-Fortunately, a few different modules exist that bring P3P support to Express and Sails by enabling the relevant P3P headers.  To use one of these modules for handling P3P headers, install it from npm using the directions below, then open `config/http.js` in your project and configure it as a custom middleware.  To do that, define your P3P middleware as "p3p", and add the string "p3p" to your `middleware.order` array wherever you'd like it to run in the middleware chain (a good place to put it might be right before `cookieParser`):
-
-E.g. in `config/http.js`:
+在`config/http.js`中的例子：
 
 ```js
 // .....
 module.exports.http = {
 
   middleware: {
-  
+
     p3p: require('p3p')(p3p.recommmended), // <==== set up the custom middleware here and named it "p3p"
 
     order: [
@@ -49,20 +45,17 @@ module.exports.http = {
 };
 ```
 
-
-Check out the examples below for more guidance - and be sure and follow the links to see the docs for the module you're using for the latest information, comparative analysis of its features, any recent bug fixes, and advanced usage details.
-
+参考下面的例子获取更多细节-并确保跟随你正在使用的模块的文档链接，获取最新的信息，它的特性的对比分析以及任何相关的bug修复和高级使用细节。
 
 ##### Using [node-p3p](https://github.com/troygoode/node-p3p)
-
-> `node-p3p` is open-source under the [MIT license](https://github.com/troygoode/node-p3p/blob/master/LICENSE).
+> `node-p3p`是在MIT许可证下的开源项目。
 
 ```sh
 # In your sails app
 npm install p3p --save
 ```
 
-Then in the `middleware` config object in `config/http.js`:
+然后在`config/http.js`的`middleware`配置对象中配置：
 
 ```js
   // ...
@@ -73,15 +66,14 @@ Then in the `middleware` config object in `config/http.js`:
 
 
 ##### Using [lusca](https://github.com/krakenjs/lusca#luscap3pvalue)
-
-> `lusca` is open-source under the [Apache license](https://github.com/krakenjs/lusca/blob/master/LICENSE.txt)
+> `lusca`是在MIT许可证下的开源项目。
 
 ```sh
 # In your sails app
 npm install lusca --save
 ```
 
-Then in the `middleware` config object in `config/http.js`:
+然后在`config/http.j`s的`middleware`配置对象中配置：
 
 ```js
   // ...
@@ -90,8 +82,7 @@ Then in the `middleware` config object in `config/http.js`:
   // ...
 ```
 
-
-### Additional Resources: 
+### 额外资源：
 
 + [Description of the P3P Project (Microsoft)](http://support.microsoft.com/kb/290333)
 + ["P3P Work suspended" (W3C)](http://www.w3.org/P3P/)
