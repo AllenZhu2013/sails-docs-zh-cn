@@ -1,24 +1,18 @@
-# Clickjacking
-
-
-[Clickjacking](https://www.owasp.org/index.php/Clickjacking) (aka "UI redress attacks") are where an attacker manages to trick your users into triggering "unintended" UI events (e.g. DOM events.)
-
-
+# 点击劫持
+[点击劫持](https://www.owasp.org/index.php/Clickjacking)(也称UI-覆盖攻击)，攻击者诱导用户去点击触发那些“无意识的”UI事件(比如DOM事件)。
 
 ### X-FRAME-OPTIONS
+阻止点击劫持攻击的一个最简单的办法是去使能X-FRAME-OPTIONS头部。
 
-One simple way to help prevent clickjacking attacks is to enable the X-FRAME-OPTIONS header.
-
-##### Using [lusca](https://github.com/krakenjs/lusca#luscaxframevalue)
-
-> `lusca` is open-source under the [Apache license](https://github.com/krakenjs/lusca/blob/master/LICENSE.txt)
+##### 使用[lusca](https://github.com/krakenjs/lusca#luscaxframevalue)
+`lusca`是在[Apache证书](https://github.com/krakenjs/lusca/blob/master/LICENSE.txt)下的开源软件。
 
 ```sh
 # In your sails app
 npm install lusca --save
 ```
 
-Then in the `middleware` config object in `config/http.js`:
+然后在`config/http.js`中的`中间件`配置对象中配置：
 
 ```js
   // ...
@@ -32,9 +26,8 @@ Then in the `middleware` config object in `config/http.js`:
   ]
 ```
 
+### 额外的资源
 
-
-### Additional Resources
 + [Clickjacking (OWasp)](https://www.owasp.org/index.php/Clickjacking)
 
 
