@@ -1,98 +1,95 @@
-# Custom Generators
-### Overview
+# 自定义生成器
 
-Sails is all about automating repetitive tasks to make your programming easier and **Generators** are no exception.  _Generators_ are command line utilities within Sails that automate the generation of files through templates within your Sails projects.  In fact, Sails core uses _generators_ to create Sails projects.  So when you type...
+### 概述
+要说Sails中哪个可以自动化重复工作来让你编程更加容易的话那非**Generator**莫属。*Generators*可以在你的Sails工程中使用命令行通过模板自动生成一些文件。实际上，Sails内核使用*generators*来创建Sails工程。所以当你输入：
 
-```sh
+ ```sh
 ~/ $ sails new myProject
 ```
 
-...sails is using _generators_ to build up the initial folder structure of a Sails app like this:
+...sails便会使用*generators*来构建一个有初始目录结构的Sails app，结构如下：
 
-```javascript
+ ```javascript
 myProject
        |_api
        |_assets
        |_config
        |_node_modules
        |_tasks
-       |_views                
+       |_views
 .gitignore
 .sailsrc
 app.js
 Gruntfile.js
 package.json
 README.md
-                
+
 ```
 
-Other examples of _generators_ in Sails core (meaning they are built into Sails) include:
 
-- sails-generate-adapter
-- sails-generate-backend
-- sails-generate-controller
-- sails-generate-frontend
-- sails-generate-model
-- sails-generate-new
-- sails-generate-views
-- sails-generate-views-jade
-- Although not a stand-alone module there's one other _generator_ accessed via `sails generate api`
+在Sails内核中*generators*的其他例子：
 
-To begin the process of generating a generator you can use `sails-generate-generator`. 
++ sails-generate-adapter
++ sails-generate-backend
++ sails-generate-controller
++ sails-generate-frontend
++ sails-generate-model
++ sails-generate-new
++ sails-generate-views
++ sails-generate-views-jade
++ 虽然不是一个独立的模块，但是可以通过`sails generate api`访问其他的*generators*
 
->**Note:** The idea of creating a _generator_ by invoking a _generator_ may seem like some kind of demented infinite loop but trust us it will not create a worm hole to an evil alternate universe. 
+为了开始生成一个生成器的过程你可以使用`sails-generate-generator`。
 
-### Creating a Generator
+> **注意：**通过调用generators来创建*一个generators*的想法看起来像是疯狂的无限循环但是请不要怀疑这种做法，因为它不会创建一个虫洞到另外一个邪恶的世界的。
 
-First we need a Sails project.  If you haven't already created one go to your terminal and type:
+### 创建一个生成器
+首先我们需要一个Sails工程。如果你还没有创建那么可以在你的终端输入：
 
-```sh
+ ```sh
 ~/ $ sails new myProject
 ```
 
-`cd` into `myProject` or from any existing Sails project and create a _generator_ from the terminal named **awesome** by typing:
+`cd`进`myProject`或者任何已经存在的Sails工程然后在命令行中创建一个名为**awesome**的*generator*：
 
-```sh
-~/ $ sails generate generator awesome 
+ ```sh
+~/ $ sails generate generator awesome
 ```
 
-You'll know the generator was created if you see the message: `info: Created a new generator!`.
+如果你看到提示：`info: Created a new generator!`，那说明generator已经创建成功了。
 
-### Enabling the Generator
+### 使能一个生成器
+为了使能*generator*你需要通过`\myProject\.sailsrc`来告诉Sails。如果你正在使用一个已存在的生成器那么你将会在`.sailsrc`中链接到一个npm模块然后使用`npm install`安装它。因为你正在开发一个生成器，所以你可以直接地链接。为了创建链接请回到终端然后`cd`进入`awesome` *generator*文件夹并输入：
 
-To enable the _generator_ you need to tell Sails about it via `\myProject\.sailsrc`. If you were using an existing generator you would link to an npm module in `.sailsrc` and then just install it with `npm install`.  Since you're developing a generator, you'll link to it directly.  To create the link go back to the terminal and `cd` into the `awesome` _generator_ folder and type:
-
-```sh 
+```sh
 ~/ $  pwd
 ```
 
-The `pwd` command will return a fully resolved path to the _generator_ (e.g. `/Users/irl/sails_projects/myProject/awesome`).
+`pwd`命令将会返回一个完整的*generator*的文件夹路径(比如：`/Users/irl/sails_projects/myProject/awesome`)。
 
-Copy the path and then open `myProject/.sailsrc`.  Within the `modules` property add an `awesome` key and paste the path to the `awesome` _generator_ as the value. 
+拷贝该路径然后打开`myProject/.sailsrc`。在`modules`属性中添加`awesome`关键词并粘贴刚才复制的`awesome` *generator*路径。
 
-> **Note:** you can name the _generator_ anything you want, for now let's stick with `awesome`:
+> **注意：**你可以命名*generator*为任意你想要的名字，现在我们只是假设为`awesome`：
 
 ```javascript
 {
   "generators": {
     "modules": {
-    	"awesome": "/Users/irl/sails_projects/myProject/awesome"
+      "awesome": "/Users/irl/sails_projects/myProject/awesome"
     }
   }
 }
 ```
->**Note:** Whatever name you give your _generator_ in the `.sailsrc` file will be the name you'll use from the terminal command-line to execute it.
 
-Lastly, you'll need to do an `npm install` from the terminal in order to install the necessary modules that were added to the generator's `package.json` file.
+> **注意：**你在`.sailsrc`文件中命名的generator的名字将会用在终端命令行中执行。
 
-### Using the Generator
+最后，你需要在终端中做一个`npm install`，这是为了安装那些添加到生成器的`package.json`需要的模块。
 
-Back at the terminal type: `sails generate awesome example`. Let's take a look at what was generated.
+### 使用生成器
+回到终端并输入：`sails generate awesome example`。让我们看看这会生成些什么。
 
-#### What did the Generator create?
-
-Open up your project in a text editor you'll notice that a folder called `hey_look_a_folder` was created and a file named `example` was also created: 
-
+#### Generator会创建些什么？
+使用文本编辑器打开你的工程，你会注意到有一个新创建的文件夹叫做`hey_look_a_folder`，并且还有一个名为`example`的文件：
 
 ```javascript
 /**
@@ -104,21 +101,19 @@ Open up your project in a text editor you'll notice that a folder called `hey_lo
 module.exports = function () {
   // ...
 };
-``` 
+```
 
-The folder and file illustrate the power of the _generator_ not only to create elements but to use `arguments` from the command-line to influence their content. For example, the file name, `example`, used an element from the command line argument `sails generate awesome example`.
+这个文件夹和文件表明了*generator*的强大，因为它不仅创建了元素而且还使用命令行中的`arguments`来影响文件的内容。比如，文件名称--`example`，使用了命令行参数`sails generate awesome example`的一个元素。
 
-### Basic generator configuration
+### 基本的生成器配置
+所有有关`awesome` *generator*的配置都包含在`\myProjects\awesome\Generator.js`。`Generator.js`的主要部分是`before()`函数和`targets`目录。
 
-All of the configuration for the `awesome` _generator_ is contained in `\myProjects\awesome\Generator.js`.  The main parts of `Generator.js` are the `before()` function and the `targets` dictionary.
+> **注意：**我们指的是使用`{}`作为一个目录的JavaScript对象。
 
-> **Note:** We refer to the JavaScript object that uses `{}` as a dictionary.
+### 配置before()函数
+让我们仔细查看`myProject/awesome/Generator.js`文件：
 
-### Configuring the `before()` function
-
-Let's take a closer look at `myProject/awesome/Generator.js`:
-
-```javascript
+ ```javascript
 ...
 before: function (scope, cb) {
 
@@ -151,9 +146,10 @@ before: function (scope, cb) {
   ...
   ```
 
-Each _generator_ has access to the `scope` dictionary, which is useful when you want to obtain the arguments that were entered when the _generator_ was executed.
 
-In your default `awesome` _generator_ a new key, `createdAt:` was created in the scope.  We'll take a look at this dictionary within a template momentarily.
+每个_generator_都可以访问到`scope`目录，该目录在_generator_被执行的时候你想要获取参数的时候有用。
+
+如果你的默认`awesome` _generator_是一个新的关键词，`createdAt:`在scope中被创建。我们临时看一下某个模板的这个字段：
 
 ```javascript
 ...
@@ -163,7 +159,8 @@ In your default `awesome` _generator_ a new key, `createdAt:` was created in the
     });
 ...
 ```
-Next, the arguments used when executing the awesome _generator_ (e.g. `sails generate awesome <theargument>`) are available in an array from `scope.args`.  In our default `awesome` _generator_ a `filename` property was added to the scope and assigned the value of the first element of the `scope.args` array (e.g. example):
+
+接下去，当执行`awesome` *generator*(比如`sails generate awesome <theargument>`)的时候，`scope.arg`中参数数组是可用的。在我们默认的`awesome` *generator*，属性`filename`被添加到`scope`中并为`scope.arg`数组中的第一个元素的值赋值。比如：
 
 ```javascript
 ...
@@ -171,7 +168,7 @@ scope.filename = scope.args[0];
 ...
 ```
 
-Finally, another property (e.g. scope.whatIsThis) was added to the scope dictionary.
+最后，另外一个属性(比如scope.whatIsThis)也被添加到`scope`目录。
 
 ```javascript
 ...
@@ -179,9 +176,8 @@ scope.whatIsThis = 'an example file created at '+scope.createdAt;
 ...
 ```
 
-#### Configuring the targets dictionary
-
-Now, let's take a look at the `targets` dictionary in `myProject\awesome\Generator.js` to better understand how the folder (e.g. hey_look_a_folder) and file (e.g. example) were generated. 
+#### 配置目标目录
+现在我们仔细查看`myProject\awesome\Generator.js`中的`targets`字段来更好理解这个文件夹(比如hey_look_a_folder)和文件(比如example)是怎样生成的。
 
 ```javascript
 ...
@@ -205,19 +201,17 @@ targets: {
 ...
 ```
 
-The `template` and `folder` helpers look a lot like routes.  These helpers perform the actions that their names indicate.
+·template`和`folder`辅助者看起来很像路由。这些辅助者执行的操作就像它们的名字一样。
 
-##### The _template_ helper
-
-Not surprisingly the _template_ helper creates files based upon a template.  Remember, that the scope dictionary is accessible to the templates.
+#####  _template_ helper
+对*template*辅助者基于一个模板创建一些文件一点儿也不会感到惊讶。记住，模板中是可以访问到`scope`字段的。
 
 ```javascript
 ...
 './:filename': { template: 'example.template.js' },
 ...
 ```
-
-The left-hand side specifies the path and filename where as the right dictates which template the _generator_ will use to create the file.  Notice you're using the `filename` from the `scope.filename` assignment that was based upon the the first element of `scope.args` in the `before()` function.  The templates can be found in `myProject\awesome\templates`.  In the awesome _generator_ you're using `example.template.js`:
+左手边的参数指定了路径和文件名称，而右边参数则是表明*generator*会使用哪个模板去创建文件。注意你在`before`函数中的`scopre.args`的第一个参数中的`scope.filename`中使用`filename`。这个模板可以在`myProject\awesome\templates`可以找到。在`awesome` *generator*你正在使用`example.template.js`：
 
 ```javascript
 /**
@@ -231,37 +225,34 @@ module.exports = function () {
 };
 ```
 
->**Note:** the scope property `whatIsThis` which as you may recall uses the createdAt: property created in the `before` function.
+> **注意**：在属性scope中的`whatIsThis`是作为你重新调用使用的createdAt：属性在`before`函数中创建。
 
-##### The _folder_ helper
-
-The _folder_ helper generates folders.  
+#####  _folder_ helper
+_folder_辅助者用来生成文件夹。
 
 ```javascript
 ...
 './hey_look_a_folder': { folder: {} }
 ...
 ```
-The left-hand side specifies the path and name of the folder.  The right-hand side specifies any optional parameters. For example, by default, if a folder already exists at that location an error will be displayed:
-`Something else already exists at ::<path of folder>`.  If you want the _generator_ to overwrite an existing folder you have two options.  You can alter the _folder_ helper to overwrite the existing folder by specifying `force: true` in the options parameters:
+
+左手边的参数指定了路径和文件名称，而右边参数指定任何可选地参数。比如，默认，如果在那个位置中已经存在一个文件夹，那么将会出现一个错误：`Something else already exists at ::<path of folder>`。如果你想要*generator*去重写覆盖一个已经存在的文件夹你有两种方法：你可以在选项参数中通过指定`force:true`来让*folder*辅助者覆盖一个已经存在的文件夹：
 
 ```javascript
 ...
 './hey_look_a_folder': { folder: { force: true} }
 ...
 ```
-
-
-You can also use the `--force` parameter from the command-line when executing the _generator_ which will configure all helpers to overwrite:
+你也可以在命令行中执行*generator*的时候使用`--force`参数来配置所有的辅助者覆盖已经存在的文件夹：
 
 ```sh
 ~/ $ sails generate awesome test --force
 ```
 
-### Using a generator within a generator
-To leverage the work of other programmers, _generators_ were designed to be used by other _generators_.  This is where the scope dictionary being passed down to all _generators_ becomes really powerful. 
+### 在一个生成器中使用一个生成器
+为了利用其它编程者的劳动成果，*generators*可以被其它的*generators*使用。这就是传递给所有的*generators*的`scope`字段的强大之处。
 
-For example, Sails core has a _generator_ called `sails-generate-model`.  Since it's built into Sails core, there's no installation necessary.  To add it to our awesome _generator_ example is simple.  Within the `myProject\awesome\Generator.js` include it by inserting `./': ['model'],`
+比如，Sails内核有一个叫做`sails-generate-model`的生成器。因为它是内建到Sails内核的，所以无需安装。将它添加到我们的awesome生成器是很容易的。在`myProject\awesome\Generator.js`通过插入`./': ['model']`来包含它：
 
 ```javascript
 ...
@@ -276,17 +267,18 @@ targets: {
   },
 ...
 ```
->**Note:** By using `./` as the path, any models will be placed in the `\api\models` folder from whatever folder the generator was executed.
+> **注意**：通过使用`./`作为路径，生成器被执行的任何文件夹中的的任何模型都会被放在在`\api\models`文件夹中。
 
-That's it!  Now let's create a model from within the awesome _generator_.  From the terminal type:
+
+就是这么简单！现在我们在awesome生成器中创建一个模型。在终端中输入：
 
 ```sh
 ~/ $ sails generate awesome user name:string email:email
 ```
 
-If you take a look in `myProject\api\models` you'll see a new file named `User.js` has been created that contains the model attributes specified earlier.
+如果你查看了`myProject\api\models`那么你将会看到一个新的文件叫做`User.js`已经被创建了并且包含了之前指定的模型属性：
 
-```javascript
+ ```javascript
 /**
 * User
 *
@@ -304,23 +296,24 @@ module.exports = {
   }
 };
 ```
+### 福利：发布你的生成器到npmjs.org
+为了发布awesome生成器到npmjs.org，请进入`myProject\awesome\package.json`文件然后改变它的文件名、作者和其他基本的信息(比如许可证)。
 
-### Bonus: Publishing your generator to npmjs.org
+从`myProject\awesome`文件夹中在终端输入：
 
-To publish the awesome _generator_ to npmjs.org go into the `myProject\awesome\package.json` file and change the name, author and any other meta information (e.g. licensing).
-
-From within the `myProject\awesome` folder at the terminal type:
 ```sh
 ~/ $ npm publish
 ```
->**Note:**  If don't already have an NPM account, go to (npmjs.org)[https://www.npmjs.org/] and create one.
 
-To unpublish the module, type: 
+> **注意**：如果你还没有一个NPM账号，可以到(npmjs.org)[https://www.npmjs.org/]中创建一个
+
+想要取消发布某个模块可以输入：
 
 ```sh
 ~/ $  npm unpublish` --force
 ```
-Change the `myProject\.sailsrc` to:
+
+改变`myProject\.sailsrc`为：
 
 ```javascript
 {
@@ -332,13 +325,12 @@ Change the `myProject\.sailsrc` to:
 }
 ```
 
-From the awesome _generator_ folder within the terminal type:
+
+从awesome *generator*文件中在终端输入：
 
 ```sh
 ~/ $ npm install
 ```
-
-And you're all set!
 
 
 
