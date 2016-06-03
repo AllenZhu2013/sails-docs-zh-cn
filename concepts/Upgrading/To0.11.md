@@ -1,42 +1,33 @@
-# Upgrading to Sails v0.11
+# 升级到v.0.11
 
+v0.11带有许多辅助的改进，也包括一些内核文件的内部清理。最大的改变是Sails 内核使用了Socket.io v1.
 
-**tldr;**
+基本上该版本不会影响到现在的代码，但是仍然也有一些重要的不同和新特性。我们罗列在下面。
 
-v0.11 comes with many minor improvements, as well as some internal cleanup in core.  The biggest change is that Sails core is now using Socket.io v1.
+## 不同点
+#### 升级Socket.io / Sails.io浏览器客户端
+旧的v0.9 socket.io客户端不再工作，所以你需要从v0.9或v0.10升级你的sails.io.js客户端到v0.11。
 
-Almost none of this should affect the existing code in project, but there are a few important differences and new features to be aware of.  We've listed them below.
+为了升级，你只需要删除你的sails.io.js客户端并安装新的。我们绑定一个有用的生成器来帮你做这些操作，假设你的sails.io.js客户端是在默认的位置：`assets/js/dependencies/sails.io.js`(也就是你没有移动过它或者重命名它)：
 
-
-## Differences
-
-#### Upgrade the Socket.io / Sails.io browser client
-
-Old v0.9 socket.io client will no longer work, so consequently you'll need to upgrade your sails.io.js client from v0.9 or v0.10 to v0.11.
-
-To do this, just remove your sails.io.js client and install the new one.  We've bundled a helper generator that will do this for you, assuming your sails.io.js client is in the conventional location at `assets/js/dependencies/sails.io.js` (i.e. if you haven't moved or renamed it):
-
-```sh
+ ```sh
 sails generate sails.io.js --force
 ```
 
-
-####  `onConnect` lifecycle callback
+#### onConnect生命周期回调
 
 > **tldr;**
 >
-> Remove your `onConnect` function from `config/sockets.js`.
+ > 从`config/sockets.js`中删除你的`onConnect`函数。
 
-The `onConnect` lifecycle callback has been deprecated.  Instead, if you need to do something when a new socket is connected, send a request from the newly-connected client to do so.  The purpose of `onConnect` was always for optimizing performance (eliminating the need to do this initial extra round-trip with the server), yet its use can lead to confusion and race conditions. If you desperately need to eliminate the server roundtrip, you can bind a handler directly on `sails.io.on('connect', function (newlyConnectedSocket){})` in your bootstrap function (`config/bootstrap.js`). However, note that this is discouraged.  Unless you're facing _true_ production performance issues, you should use the strategy mentioned above for your "on connection" logic (i.e. send an initial request from the client after the socket connects).  Socket requests are lightweight, so this doesn't add any tangible overhead to your application, and it will help make your code more predictable.
+`onConnect`生命周期回调已经被弃用了。相反，当一个新的套接字连接的时候如果你需要做些事情的话，那么你就需要从一个新连接的客户端中发送一个请求去做这些事情。`onConnect`的目的当时是为了优化性能(消除了需要做服务器来回的额外初始化)，但是现在它的使用会导致混淆和竞争的情况。如果你极度地需要消除服务器的来回程，那么你可以直接绑定一个操作在你的bootstrap函数(`config/bootstrap.js`)中的`sails.io.on('connect', function (newlyConnectedSocket){})`。然而不鼓励这样做。除非你正在面临着*真正的*产品性能问题，否则你应该使用上面提到的策略来给你"on connection"逻辑(也就是在socket连接之后从客户端发送一条初始化的请求)。Socket 请求是轻量级的，所以不会添加任何有形的开销到你的应用中，并且它还会让你的代码变得更加有预测性。
 
+#### onDisconnect生命周期回调
+为了支持`afterDisconnect`，`onDisconnect`生命周期的回调已经被弃用了。
 
+如果你以前在使用`onDisconnect`，那么你可能不得不改变`session`然后手工调用`session.save()`。在v0.11中，这个工作也是基本一样，除了`afterDisconnect`接收一个额外的第三个参数：一个回调函数。这样的话，你只需要调用提供的回调函数当你的`afterDisconnect`逻辑结束的时候，所以Sails能够自动地持续你对session做的任何改变。最后，正如你料想的，你不再需要手工调用`session.save()`--它现在会自动调用(就像在一个正常的route、action、policy中的`req.session`)。
 
-####  `onDisconnect` lifecycle callback
-
-The `onDisconnect` lifecycle callback has been deprecated in favor of `afterDisconnect`.
-
-If you were using `onDisconnect` previously, you might have had to change the `session`, then call `session.save()` manually.  In v0.11, this works in almost exactly the same way, except that `afterDisconnect` receives an additional 3rd argument: a callback function.  This way, you can just call the provided callback when your `afterDisconnect` logic has finished, so that Sails can persist any changes you've made to the session automatically.  Finally, as you might expect, you won't need to call `session.save()` manually anymore- it is now taken care of for you (just like `req.session` in a normal route, action, or policy.)
-
+在config/sockets.js中重命名你的onDisconnect函数，如下：
 
 > **tldr;**
 > Rename your `onDisconnect` function in `config/sockets.js` with the following:
@@ -49,92 +40,73 @@ If you were using `onDisconnect` previously, you might have had to change the `s
 > ```
 
 
+#### 在config/sockets.js中其他的配置
+在Socket.io v1中的许多配置已经发生改变了，所以你需要按照如下更新你的config/sockets.js文件：
+
++ 如果在你的app中的`config/sockets.js`文件中没有自定义任何选项的话，你可以安全地删除或者注释掉整个文件并让Sails默认地执行它们的逻辑。否则参考新的[Sails sockets documentation](http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.sockets.html)，确保你的配置仍然有效以避免不必要的信息丢失。
++ 如果你在一个*不支持严格会话*(包含Heroku)的环境中扩展到多服务器，那么你需要在你的`config/socket.js`和你的客户端中设置你的`transports`为`['websocket']`--更多信息参考[our Scaling doc](http://sailsjs.org/#!/documentation/concepts/Deployment/Scaling.html?q=configuring-your-app-for-a-clustered-deployment)。
++ 如果你以前在使用一个自定义的`authorization`函数来限制你套接字连接，那么你现在想要使用`beforeConnect`。虽然Socket.io v1已经启用了authorization，但是`beforeConnect`(从Engine.io中映射到`allowRequest`选项)的原理也是和它一样的。
++ 如果你正在使用其他底层直接传递给socket.io v1的套接字配置，请确保并检查[在sailsjs.org上的包含了所有新的配置选项的细节的参考页面](http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.sockets.html)
+
+#### "firehose"
+为了测试套接字的“firehose”特性已经被弃用了。如果你不知道那是什么意思，也没啥事。虽然它的基本用法还是会持续一段时间，但是它很快就会从内核中删除，并且你不应该在你的app中依赖它。它应用到下面的这些方法：
+
++ sails.sockets.subscribeToFirehose()
++ sails.sockets.unsubscribeFromFirehose()
++ sails.sockets.drink()
++ sails.sockets.spit()
++ sails.sockets.squirt()
+
+> 如果你还想要用"firehose"，请在[Twitter上让Mike知道](http://twitter.com/mikermcneil)(它可以作为一个隔离的钩子使用)。
+
+#### 在子文件夹下的配置文件
+在Sails `config`文件下的所有文件没有优先于彼此一直是我们的目的，包括那些只是用于文件组织的文件名和子文件夹(除了`local.js`和`env`、`locale`子文件夹)。但是，在以前的Sails版本中，保存配置文件到子文件夹下将会产生一个影响，那就是将文件名称作为关键词添加到`sails.config`中去，所以如果你保存一些配置到`config/foo/bar.js`,那么这些配置将会在sails.config.bar的命名空间下。这不是我们想要的并且会有潜在的混淆风险因为1) 目录名称被忽略掉，2) 移动文件将会导致配置关键词发生改变。这个问题在v0.11.x已经被修复掉:在子文件夹的配置文件将会被当做和在根目录`config`文件夹下一样。如果你因为各种原因需要依赖旧的行为，你也许可以在你的`.sailsrc`文件设置`dontFlattenConfig`为`true`,但是我们强烈建议你在`module.exports`中通过设置你想要的关键词来代替你自己设置的配置；比如`module.exports.foo = {...}`。更多细节请参考[issue #2544](https://github.com/balderdashy/sails/issues/2544)。
+
+#### Waterline现在使用Bluebird
+在v0.11, Waterline现在支持Bluebird(代替了q)的promises.如果你正在使用`.exec()`那么你不会收到影响--只有你在使用`.then()`的时候才会。更多信息请参考https://github.com/balderdashy/sails/issues/1186。
 
 
-####  Other configuration in `config/sockets.js`
+## 新特性
+Sails v0.11同时也带来了一些我们希望你清楚的新特性:
+#### 用户级别的hooks
+钩子现在可以直接从NPM中安装了。
 
-Many of the configuration options in Socket.io v1 have changed, so you'll want to update your `config/sockets.js` file accordingly.
+这意味着你现在可以在你的终端中用一条命令就可以安装钩子。比如，以[@sgress454](https://twitter.com/sgress454)制作的`autoreload`[钩子](https://github.com/sgress454/sails-hook-autoreload)为例，该钩子会监控你的后台代码的变化这样你就不需要每次修改你的控制器、路由或者模型等之后杀掉进程并重新启动服务器。
 
-+ if you haven&rsquo;t customized any of the options in `config/sockets.js` for your app, you can safely remove or comment out the entire file and let the Sails defaults do their magic.  Otherwise, refer to the new [Sails sockets  documentation](http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.sockets.html) to ensure that your configuration is still valid and avoid unwanted hair loss.
-+ if you are scaling to multiple servers in an environment that does *not support sticky sessions* (this includes Heroku), you'll need to set your `transports` to `['websocket']` in both `config/socket.js` and your client--see [our Scaling doc](http://sailsjs.org/#!/documentation/concepts/Deployment/Scaling.html?q=configuring-your-app-for-a-clustered-deployment) for more info.
-+ if you were using a custom `authorization` function to restrict socket connections, you'll now want to use `beforeConnect`.  `authorization` was deprecated by Socket.io v1, but `beforeConnect` (which maps to the `allowRequest` option from Engine.io) works just the same way.
-+ if you were using other low-level socket configuration that was passed directly to socket.io v1, be sure and check out the [reference page on sailsjs.org](http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.sockets.html) where all of the new configuration options are covered in detail.
+为了安装`autoreload`钩子，运行下面的命令：
 
-
-#### The "firehose"
-
-The "firehose" feature for testing with sockets has been deprecated.  If you don't know what that means, you have nothing to worry about. The basic usage will continue to work for a while, but it will soon be removed from core and should not be relied upon in your app.  This also applies to the following methods:
-  + sails.sockets.subscribeToFirehose()
-  + sails.sockets.unsubscribeFromFirehose()
-  + sails.sockets.drink()
-  + sails.sockets.spit()
-  + sails.sockets.squirt()
-
-> If you want the "firehose" back, let [Mike know on twitter](http://twitter.com/mikermcneil) (it can be brought back as a separate hook).
-
-#### Config files in subfolders
-
-It has always been the intention that files in the Sails `config` folder have no precedence over each other, and that the filenames and subfolders (with the exception of `local.js` and the `env` and `locale` subfolders) be used merely for organization.  However, in previous Sails versions, saving config files in subfolders would have the effect that the filename would be added as a key in `sails.config`, so that if you saved some config in `config/foo/bar.js`, then that config would be namespaced under `sails.config.bar`.  This was unintentional and potentially confusing as 1) the directory name is ignored, and 2) moving the file would change the config key.  This has been fixed in v0.11.x: config files in subfolders will be treated the same as those in the root `config` folder.  If you are for some reason relying on the old behavior, you may set `dontFlattenConfig` to `true` in your `.sailsrc` file, but we would strongly recommend that you instead just namespace the config yourself by setting the desired key on `module.exports`; for example `module.exports.foo = {...}`.  See [issue #2544](https://github.com/balderdashy/sails/issues/2544) for more details.
-
-#### Waterline now uses Bluebird
-
-As of v0.11, Waterline now supports Bluebird (instead of q) for promises.  If you are using `.exec()` you won't be affected-- only if you are using `.then()`.  See https://github.com/balderdashy/sails/issues/1186 for more information.
-
-
-## New features
-
-Sails v0.11 also comes with some new stuff that we thought you'd like to know about:
-
-
-#### User-level hooks
-
-Hooks can now be installed directly from NPM.
-
-This means you can now install hooks with a single command in your terminal.  For instance, consider the [`autoreload` hook](https://github.com/sgress454/sails-hook-autoreload) by [@sgress454](https://twitter.com/sgress454), which watches for changes to your backend code so you don't need to kill and re-lift the server every time you change your controllers, routes, models, etc.
-
-To install the `autoreload` hook, run:
-
-```sh
+ ```sh
 npm install sails-hook-autoreload
 ```
+这只是其中的一个例子。也许你已经知道，钩子在Sails中是最低级的可插拔的抽象事物。它们允许作者去接入启动进程，监听事件，注入自定义的“shadow”路由，总之会利用原始访问到实时运行的Sails。大部分你熟悉的Sails特性实际上已经都被实现成“内核”钩子一年多了，包含：
++ `blueprints` (提供blueprint API)
++ `sockets` (提供socket.io集成)
++ `grunt` (提供Grunt集成)
++ `orm` (提供Waterline ORM的集成,以及导入你的工程的适配器和模型等)
++ `http` (提供一个HTTP server)
++ 以及其他16个钩子。
 
-This is just one example of what's possible.  As you might already know, hooks are the lowest-level pluggable abstraction in Sails.  They allow authors to tap into the lift process, listen for events, inject custom "shadow" routes, and, in general, take advantage of raw access to the `sails` runtime.
-Most of the features you're familiar with in Sails have actually already been implemented as "core" hooks for over a year, including:
-
-+ `blueprints` _(which provides the blueprint API)_
-+ `sockets`    _(which provides socket.io integration)_
-+ `grunt`      _(which provides Grunt integration)_
-+ `orm`        _(which provides integration with the Waterline ORM, and imports your projects adapters, models, etc.)_
-+ `http`       _(which provides an HTTP server)_
-+ and 16 others.
-
-You can read more about how to write your own hooks in the [new and improved "Extending Sails" documentation](http://sailsjs.org/#!/documentation/concepts/extending-sails) on http://sailsjs.org.
-
+你可以在http://sailsjs.org阅读更多关于如何在[新的可提高的“扩展Sails”](http://sailsjs.org/#!/documentation/concepts/extending-sails)中写出你自己的钩子的文档。
 
 #### Socket.io v1.x
 
-The upgrade to Socket.io v1.0 shouldn't actually affect your app-level code, provided you are using the layer of abstraction provided by Sails itself; everything from the `sails.sockets.*` wrapper methods and "up" (resourceful pubsub, blueprints)
-If you are using underlying socket.io methods in your apps, or are just curious about what changed in Socket.io v1.0, be sure and check out the [complete Socket.io 1.0 migration guide](http://socket.io/docs/migrating-from-0-9/) from Guillermo and the socket.io team.
+升级到Socket.io v1.0实际上不会影响你的应用层代码，因为你正在使用Sails自己提供的层抽象功能；任何从`sails.sockets.*`封装的方法以及"之上"的方法(resourceful pubsub, blueprints)。如果你正在你的app中使用根本的socket.io方法,或者只是好奇Socket.io v1.0改变了些什么,那么可以从Guillermo和ocket.io团队审阅[完整的Socket.io 1.0升级文档](http://socket.io/docs/migrating-from-0-9/)。
 
 #### Ever-increasing modularity
+作为Socket.io v1.0升级的一部分,我们将内核`sockets`钩子单独拉出一个独立的代码库。者允许我们写出一些有模块化的、钩子专用的socket.io拦截器的测试，这会让事情变得更容易维护、定制化和重写。这也允许钩子可以按照自己的步伐来成长并将相关的问题放在自己的空间下。
 
-As part of the upgrade to Socket.io v1.0, we pulled out the core `sockets` hook into a separate repository.  This allowed us to write some modular, hook-specific tests for the socket.io interpreter, which will make things easier to maintain, customize, and override.
-This also allows the hook to grow at its own pace, and puts related issues in one place.
-
-Consider this a test of the pros and cons of pulling other hooks out of the sails core repo over the next few months.  This will make Sails core lighter, faster, and more extensible, with fewer core dependencies, shorter "lift" time for most apps, and faster `npm install`s.
+考虑到在接下来的几个月里从Sails内核的代码库中拉取其他的钩子来做测试，那么这会让Sails内核更加轻量级、更快以及更具有扩展性，拥有更少的内核依赖性以及更短的启动时间和更快速的`npm安装`。
 
 
-#### Testing, the "virtual" request interpreter, and the `sails.request()` method
+#### 关于测试的“虚拟”请求拦截器和sails.request()方法
+在从内核拉取出`sockets`钩子的过程中，拦截请求的逻辑已经被标准化了并且代码是位于Sails内核中。因此`sails.request()`方法将会变得更加有用.
 
-In the process of pulling the `sockets` hook _out_ of core, the logic which interprets requests has been normalized and is now located _in_ Sails core.  As a result, the `sails.request()` method is much more powerful.
+这个方法允许你在Sails中直接与请求拦截器通信而不需要运行你的服务器在某个端口上。这与Sails从Socket.io映射入口消息到有类似`req`和`res`流的“虚拟请求”一样的机制。sails.request()使用的最大情形是在写快速运行单元的时候以及集成测试，但是它用在代理挂载的app(或者"sub-apps")也很便利。
 
-This method allows you to communicate directly with the request interpreter in Sails without lifting your server onto a port.  It's the same mechanism that Sails uses to map incoming messages from Socket.io to "virtual requests" that have the familiar `req` and `res` streams.
+比如，这里有一个例子(使用的是mocha)，讲解如何测试你的app的路由的一个：
 
-The primary use case for `sails.request()` is in writing faster-running unit and integration tests, but it's also handy for proxying to mounted apps (or "sub-apps").
 
-For instance, here is an example (using mocha) of how you might test one of your app's routes:
-
-```js
+ ```js
 var assert = require('assert');
 var Sails = require('sails').Sails;
 
@@ -185,21 +157,16 @@ describe('GET /hotpockets', function (){
 });
 ```
 
+#### config/env/ subfolders
+在v0.10.x,我们添加了`config/env`文件夹(感谢[@clarkorz](https://github.com/clarkorz)), 在该文件夹下你可以添加在恰当的环境下才会加载的配置文件(比如`config/env/production.js`只会在production环境下加载, `config/env/development`只会在开发环境下加载)。 在v0.11.x我们增加了为每个环境指定整个子文件夹的功能。比如当环境被设置为产品模式的时候所有保存在`config/env/production`目录下的文件都会加载并会被合并到其它顶层配置中去。注意如果同时存在一个`config/env/production`文件夹和一个`config/env/production.js`文件，那么会优先采用`config/env/production.js`的设置.另外`local.js`总是会合并到其他配置文件和`.sailsrc`规则的头部。
 
-#### `config/env/` subfolders
+#### 问题?
+如果你在升级的过程中遇到问题，或者如果上面所讲的注意事项没什么意义，请联系我们，我们会尽我们所能帮助你的。
 
-In v0.10.x, we added the `config/env` folder (thanks to [@clarkorz](https://github.com/clarkorz)), where you can add config files that will be loaded only in the appropriate environment (e.g. `config/env/production.js` for production environment, `config/env/development` for development, etc.).  In v0.11.x we've added the ability to specify whole subfolders per-environment.  For example, *all* config files saved to the `config/env/production` will be loaded and merged on top of other configuration when the environment is set to `production`.  Note that if both a `config/env/production` folder and a `config/env/production.js` file are present, the `config/env/production.js` settings will take precedence.  And, as always, `local.js` is merged on top of all other files, and `.sailsrc` rules them all.
+最后，给那些从v0.10在8月发布以后贡献过这个工程的你们：我们不能强调我们多么重视你的持续支持和鼓励。虽然这里还有大量的问题、pull request、文档tweaks和问题，但是所有的这些恰恰让我们知道我们一直是在一起的 :)
 
+谢谢！
 
-## Questions?
-
-As always, if you run into issues upgrading, or if any of the notes above don't make sense, let us know and we'll do what we can to clarify.
-
-Finally, to those of you that have contributed to the project since the v0.10 release in August: we can't stress enough how much we value your continued support and encouragement.  There is a pretty massive stream of issues, pull requests, documentation tweaks, and questions, but it always helps to know that we're in this together :)
-
-Thanks.
-
--[@mikermcneil](https://github.com/mikermcneil/), [@sgress454](https://github.com/sgress454/) and [@particlebanana](https://github.com/particlebanana/)
-
+-[@mikermcneil](https://github.com/mikermcneil/), [@sgress454](https://github.com/sgress454/)和[@particlebanana](https://github.com/particlebanana/)
 
 <docmeta name="displayName" value="To v0.11">
