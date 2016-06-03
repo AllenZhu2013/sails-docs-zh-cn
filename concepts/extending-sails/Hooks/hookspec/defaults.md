@@ -1,6 +1,5 @@
-# `.defaults`
-
-The `defaults` feature can be implemented either as an object or a function which takes a single argument (see &ldquo;using `defaults` as a function&rdquo; below) and returns an object.  The object you specify will be used to provide default configuration values for Sails.  You should use this feature to specify default settings for your hook.  For example, if you were creating a hook that communicates with a remote service, you may want to provide a default domain and timeout length:
+# defaults
+`defaults`特性既可以在作为一个对象去实现也可以作为一个带有一个参数的函数并返回一个对象去实现(参考下面的"using `defaults` as a function")。这个你指定的对象将会被用来提供Sails默认的配置值。你应该使用这个特性去指定默认的钩子配置。比如，如果你正在创建一个与一个远程服务通信的钩子，你也许想要提供一个默认的域名和超时时间：
 
 ```
 {
@@ -11,10 +10,10 @@ The `defaults` feature can be implemented either as an object or a function whic
 }
 ```
 
-If a `myapihook.timeout` value is provided via a Sails configuration file, that value will be used; otherwise it will default to `5000`.  
+如果一个`myapihook.timeou`值是通过一个Sails配置文件提供的，那么该值会被使用，否则它会默认为`5000`。
 
 ##### Namespacing your hook configuration
-For [project hooks](http://sailsjs.org/documentation/concepts/extending-sails/Hooks?q=types-of-hooks), you should namespace your hook&rsquo;s configuration under a key that uniquely identifies that hook (e.g. `myapihook` above).  For [installable hooks](http://sailsjs.org/documentation/concepts/extending-sails/Hooks?q=types-of-hooks), you should use the special `__configKey__` key to allow end-users of your hook to [change the configuration key](http://sailsjs.org/documentation/concepts/extending-sails/Hooks/usinghooks.html?q=changing-the-way-sails-loads-an-installable-hook) if necessary.  The default key for a hook using `__configKey__` is the hook name.  For example, if you create a hook called `sails-hooks-myawesomehook` which includes the following `defaults` object:
+对于[工程钩子](http://sailsjs.org/documentation/concepts/extending-sails/Hooks?q=types-of-hooks)，你应该在一个可以唯一识别你的钩子(比如上面的`myapihook`)的关键词下namespace你的钩子配置。对于[可安装的钩子](http://sailsjs.org/documentation/concepts/extending-sails/Hooks?q=types-of-hooks)，你应该使用特殊的`__configKey__`关键词去允许在你的钩子的终端用户去[去改变关键词配置](http://sailsjs.org/documentation/concepts/extending-sails/Hooks/usinghooks.html?q=changing-the-way-sails-loads-an-installable-hook)如果需要的话。一个使用`__configKey__`的钩子的默认的关键词是该钩子的名字。比如，如果你创建了一个叫做`sails-hooks-myawesomehook`的钩子，并包含下面的`defaults`对象：
 
 ```
 {
@@ -24,11 +23,10 @@ For [project hooks](http://sailsjs.org/documentation/concepts/extending-sails/Ho
 }
 ```
 
-then it will, by default, provide default settings for the `sails.config.myawesomehook.name` value.  If the end-user of the hook overrides the hook name to be `foo`, then the `defaults` object will provide a default value for `sails.config.foo.name`.
+那么默认它会为`sails.config.myawesomehook.name`值提供默认的设置。如果钩子的终端用户重写钩子的名字为`foo`，那么`defaults`对象将会为`sails.config.foo.name`提供一个默认值。
 
-##### Using `defaults` as a function
-
-If you specify a function for the `defaults` feature instead of a plain object, it takes a single argument (`config`) which receives any Sails configuration overrides.  Configuration overrides can be made by passing settings to the command line when lifting Sails (e.g. `sails lift --prod`), by passing an object as the first argument when programmatically lifting or loading Sails (e.g. `Sails.lift({port: 1338}, ...)`) or by using a [`.sailsrc`](http://sailsjs.org/documentation/anatomy/myApp/sailsrc.html) file.  The `defaults` function should return a plain object representing configuration defaults for your hook.
+##### 将defults作为函数使用
+如果你为`defaults`特性指定一个函数而不是一个对象，那么它会带有一个参数(`config`)，该参数会接收任何Sails配置的重写。配置重写会在Sails启动的时候通过传递设置到命令行中生效。(比如`sails lift --prod`)，也可以当可编程地启动或者加载Sails的时候通过传递一个对象作为第一个参数(比如`Sails.lift({port: 1338}, ...)`)或者通过使用一个[.sailsrc](http://sailsjs.org/documentation/anatomy/myApp/sailsrc.html)文件。`defaults`函数应该返回一个代表你的钩子的默认配置的对象。
 
 
 <docmeta name="displayName" value=".defaults">
