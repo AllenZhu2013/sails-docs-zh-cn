@@ -1,19 +1,18 @@
-# Using Hooks in a Sails App
+# 在一个Sails App中使用钩子
+## 使用一个工程钩子
+为了在你的app中使用工程钩子，首先创建`api/hooks`文件夹如果它不存在的话。然后[创建工程钩子](http://sailsjs.org/documentation/concepts/extending-sails/Hooks/projecthooks.html)或者你想要在`api/hooks`文件夹下使用的钩子文件夹。
 
-## Using a project hook
-To use a project hook in your app, first create the `api/hooks` folder if it doesn&rsquo;t already exist.  Then [create the project hook](http://sailsjs.org/documentation/concepts/extending-sails/Hooks/projecthooks.html) or copy the folder for the hook you want to use into `api/hooks`.
+## 使用一个可安装的钩子
+为了在你的app中使用可安装的钩子，只需要运行`npm install`加上你想要安装的钩子的包名(比如`npm install sails-hook-autoreload`)。你也可以直接地手工拷贝或者链接一个你[已经创建的可安装钩子](http://sailsjs.org/documentation/concepts/extending-sails/Hooks/installablehooks.html)的文件夹到你的`node_modules`文件夹。
 
-## Using an installable hook
-To use an installable hook in your app, simply run `npm install` with the package name of the hook you wish to install (e.g. `npm install sails-hook-autoreload`).  You may also manually copy or link an [installable hook folder that you've created](http://sailsjs.org/documentation/concepts/extending-sails/Hooks/installablehooks.html) directly into your app&rsquo;s `node_modules` folder.
+## 调用钩子方法
+一个钩子暴露的任何方法都可以在对象`sails.hooks[<hook-name>]`中可用。比如，`sails-hook-email`钩子提供一个`sails.hooks.email.send()`方法(注意前缀`sails-hook-`是被剥掉的)。参考一个钩子的文档看看它提供了哪些方法。
 
-## Calling hook methods
-Any methods that a hook exposes are available in the `sails.hooks[<hook-name>]` object.  For example, the `sails-hook-email` hook provides a `sails.hooks.email.send()` method (note that the `sails-hook-` prefix is stripped off).  Consult a hook&rsquo;s documentation to determine which methods it provides.
+## 配置一个钩子
+一旦你已经添加一个可安装的钩子到你的app中，你可以使用常规的Sails配置文件比如`config/local.js`，` config/env/development.js`或者你自己创建的自定义配置文件来配置钩子。钩子的设置都是直接使用钩子的名称，任何的前缀`sails-hook-`都会被剥离掉。比如，`sails-hook-email`的`from`设置名是`sails.config.email.from`。可安装的钩子的文档应该描述清楚哪些可用的配置选项。
 
-## Configuring a hook
-Once you&rsquo;ve added an installable hook to your app, you can configure it using the regular Sails config files like `config/local.js`, `config/env/development.js`, or a custom config file you create yourself.  Hook settings are typically namespaced under the hook&rsquo;s name, with any `sails-hook-` prefix stripped off.  For example, the `from` setting for `sails-hook-email` is available as `sails.config.email.from`.  The documentation for the installable hook should describe the available configuration options.
-
-## Changing the way Sails loads an installable hook
-On rare occassions, you may need to change the name that Sails uses for an installable hook, or change the configuration key that the hook uses.  This may be the case if you already have a project hook with the same name as an installable hook, or if you&rsquo;re already using a configuration key for something else.  To avoid these conflicts, Sails provides the `sails.config.installedHooks.<hook-identity>` configuration option.  The hook identity is *always* the name of the folder that the hook is installed in.  
+## 改变Sails加载一个可安装钩子的方法
+偶尔你可能需要改变Sails使用的可安装钩子的名称，或者改变钩子使用的配置关键词。有这么一种情况那就是如果你已经有了一个和可安装钩子同名的工程钩子或者如果你已经在使用一个配置关键词做别的事情。为了避免这些冲突，Sails提供`sails.config.installedHooks.<hook-identity>`配置选项。这个钩子的身份*总是*和钩子安装的文件夹的名称。
 
 ```
 // config/installedHooks.js
@@ -27,7 +26,7 @@ module.exports.installedHooks = {
 };
 ```
 
-> Note: you may have to create the `config/installedHooks.js` file yourself.
+> 注意：你也许已经创建了`config/installedHooks.js`文件。
 
 * [Hooks overview](http://sailsjs.org/documentation/concepts/extending-sails/Hooks)
 * [The hook specification](http://sailsjs.org/documentation/concepts/extending-sails/Hooks/hookspec)
