@@ -1,14 +1,12 @@
-# Content Security Policy
+# 内容安全策略(CSP)
+Content Security Policy(CSP)是一哥W3C规范，用来指示客户端浏览器允许加载哪些类型和哪个位置的资源。该文档使用“指令助记符”开定义一个为目标资源类型加载行为。指令助记符能够使用HTTP响应头部或者HTML Meta 标签来指定。
 
-Content Security Policy (CSP) is a W3C specification for instructing the client browser as to which location and/or which type of resources are allowed to be loaded. This spec uses "directives" to define a loading behaviors for target resource types. Directives can be specified using HTTP response headers or or HTML Meta tags.
-
-#### HTTP Headers
+#### HTTP头部
 | Header                    | Browsers                                                                               |
 | ------------------------- | -------------------------------------------------------------------------------------- |
 | Content-Security-Policy   | (W3C Standard header) Chrome version >= 25, Firefox version >= 23, Opera version >= 19 |
 | X-Content-Security-Policy | Firefox version < 23, IE version 10                                                    |
 | X-WebKit-CSP              | Chrome version < 25                                                                    |
-
 
 #### Supported Directives
 | Directive     | |
@@ -28,6 +26,8 @@ Content Security Policy (CSP) is a W3C specification for instructing the client 
 | plugin-types  | Defines the set of plugins that can be invoked by the protected resource by limiting the types of resources that can be embedded |
 | reflected-xss | Instructs a user agent to activate or deactivate any heuristics used to filter or block reflected cross-site scripting attacks, equivalent to the effects of the non-standard X-XSS-Protection header |
 | report-uri    | Specifies a URI to which the user agent sends reports about policy violation |
+
+> 更多资料请参考[W3C CSP Spec](https://w3c.github.io/webappsec/specs/content-security-policy/)。
 
 > For more information, see the [W3C CSP Spec](https://w3c.github.io/webappsec/specs/content-security-policy/)
 
