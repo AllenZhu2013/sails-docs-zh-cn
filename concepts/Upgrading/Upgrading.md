@@ -1,20 +1,16 @@
 # Upgrading
+就像大部分的Node安装包一样，Sails也是遵循[语义版本控制](http://semver.org/)。比如如果你正在使用Sails v0.11.3，然后想升级到v0.11.4，你就不需要更改你的应用代码来适配这样的升级。因为这种升级通常称为**补丁版本**。另一方面，如果你从Sails v0.11.3升级到v0.12.0，那么你就有可能需要做些*重大的改变*了--这意味着你需要修改你的Sails app的代码来适配这个新版本。对于一些框架或工具，*一些*重大的改变久而久之是不可避免的；但是因为在Node和Sails中的APIs已经变得稳定，所以想看到这些APIs发生重大改变基本是很少的。同时，内核的维护者努力保持这些改变最小化并且尽可能保证其向后兼容性。
 
-Like most Node packages, Sails respects [semantic versioning](http://semver.org/).  For example if you are using Sails v0.11.3, and then upgrade to Sails v0.11.4, you shouldn't need to change your application code.  This is called a **patch release**.  On the other hand, if you upgrade from Sails v0.11.3 to v0.12.0, you can expect some _breaking changes_-- meaning that you will need to change your Sails app's code in order to use the new version.  With any framework or tool, _some_ breaking changes are inevitable over time; but as the APIs in Node and Sails continue to stabilize, expect to see these sorts of breaking changes less and less often.  In the mean time, the core maintainers strive to keep these sorts of changes to a minimum and maintain backwards compatibility where possible.
+### 版本记录
+关于这些版本之间的改变细节以及升级指导，请参考对应的网页：
 
-### Version Notes
++ [v0.12.x](http://sailsjs.org/documentation/concepts/upgrading/to-v-0-12)
++ [v0.11.x](http://sailsjs.org/documentation/concepts/upgrading/to-v-0-11)
++ [v0.10.x](http://sailsjs.org/documentation/concepts/upgrading/to-v-0-10)
 
-For details about changes between versions, as well as a migration guide to assist you in making an necessary changes to your app, please refer to the appropriate page:
-
-- [v0.12.x](http://sailsjs.org/documentation/concepts/upgrading/to-v-0-12)
-- [v0.11.x](http://sailsjs.org/documentation/concepts/upgrading/to-v-0-11)
-- [v0.10.x](http://sailsjs.org/documentation/concepts/upgrading/to-v-0-10)
-
-
-### Notes
-
-> - Once Sails v1.0 is released, minor version bumps will aim to not cause breaking changes either-- e.g. upgrading from v1.1.0 to v1.2.0 should not force you to make changes to your code; whereas upgrading to v2.0.0 might.
-> - If you are more than one minor version behind the latest and run into difficulties, consider updating your app one step at a time. The migration guides are written with a particular version diff in mind and as you probably are well aware, when in doubt, it's best to isolate as many variables as possible.  For instance, if you are running Sails v0.9 and trying to upgrade to Sails v0.12 but having trouble, first upgrade to Sails v0.10, then v0.11, _then_ v0.12.  
+### 注意
+> + 一旦Sails v1.0发布，次版本升级也致力于不引起重大改变--比如从v1.1.0升级到v1.2.0不会让你对你的代码做出太大的改变。而升级到v2.0.0可能会有大改动。
+> + 如果你当前的版本和最新版本差了多个次版本并且遇到了问题，那么可以考虑一次性将你的版本升级到最新的。升级的指南是先升级到你最清楚的一个版本差异的指定版本，如果有疑问，最好是将尽可能多的变量因素隔离出去。比如，如果你正在运行Sails v0.9然后尝试升级到v0.12但是遇到了问题，那么你应该尝试先升级到v0.10，然后再v0.11，最后才是*v0.12*。
 
 
 <docmeta name="displayName" value="Upgrading">
