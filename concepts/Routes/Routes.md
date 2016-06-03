@@ -1,16 +1,13 @@
 # Routes
-### Overview
+### 概述
+任何web应用的最基本的特性就是能够拦截发送给一个URL的请求，然后返回一个响应。为了实现这个，你的应用必须能够区分不同的URL。
 
-The most basic feature of any web application is the ability to interpret a request sent to a URL, then send back a response.  In order to do this, your application has to be able to distinguish one URL from another.
+就像大部分web框架一样，Sails提供一个路由器：一种映射URL到控制器和视图的机制。**Routes**就是告诉Sails当面对一条进入的请求是该做些什么的规则。在Sails中有两种主要类型的路由：**自定义**(或者“明确的”)和**自动的**(或者“不明确的”)。
 
-Like most web frameworks, Sails provides a router: a mechanism for mapping URLs to controllers and views.  **Routes** are rules that tell Sails what to do when faced with an incoming request.  There are two main types of routes in Sails: **custom** (or "explicit") and **automatic** (or "implicit").
+### 自定义路由
+Sails让你自己用你自己喜欢的方法设计你的app的URLs--也就是没有框架限制。
 
-
-### Custom Routes
-
-Sails lets you design your app's URLs in any way you like- there are no framework restrictions.
-
-Every Sails project comes with [`config/routes.js`](http://sailsjs.org/documentation/reference/sails.config/sails.config.routes.html), a simple [Node.js module](http://nodejs.org/api/modules.html) that exports an object of custom, or "explicit" **routes**. For example, this `routes.js` file defines six routes; some of them point to a controller's action, while others route directly to a view.
+每一个Sails的工程都带有[`config/routes.js`](http://sailsjs.org/documentation/reference/sails.config/sails.config.routes.html)，一个简单的[Node.js module](http://nodejs.org/api/modules.html)，可以到处一个自定义的对象或者明确的**routes**。比如，下面的这个`routes.js`文件定义了6条路由；它们有些指向一个控制器的动作，其他的一些直接指向视图。
 
 ```javascript
 // config/routes.js
@@ -24,14 +21,13 @@ module.exports.routes = {
 }
 ```
 
+每一条**route**都包含一个**地址**(最左边的字符串，比如`“get /me”`)和一个**目的地**(最右边的字符串，比如`'UserController.profile'`)。这个**地址**是一个URL路径并且(可选地)带有一个专用的[HTTP方法](http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods)。**目标**可以被定义为各种不同的方法(参考the expanded concepts section on the subject](http://sailsjs.org/documentation/concepts/Routes/RouteTargetSyntax.html)t)，但是上面的两种不同的方法是最常见的。当Sails收到一条请求时，它会检测所有自定义的路由的**地址**并找到匹配的那条。如果匹配的路由找到了那么将会将这条请求传给**目标**。
 
-Each **route** consists of an **address** (on the left, e.g. `'get /me'`) and a **target** (on the right, e.g. `'UserController.profile'`)  The **address** is a URL path and (optionally) a specific [HTTP method](http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods). The **target** can be defined a number of different ways ([see the expanded concepts section on the subject](http://sailsjs.org/documentation/concepts/Routes/RouteTargetSyntax.html)), but the two different syntaxes above are the most common.  When Sails receives an incoming request, it checks the **address** of all custom routes for matches.  If a matching route is found, the request is then passed to its **target**.
+比如，我们读取`'get /me': 'UserController.profile'`会是这样子的：
 
-For example, we might read `'get /me': 'UserController.profile'` as:
+>  "Hey Sails, when you receive a GET request to `http://mydomain.com/me`, run the `profile` action of `UserController`, would'ya?"
 
-> "Hey Sails, when you receive a GET request to `http://mydomain.com/me`, run the `profile` action of `UserController`, would'ya?"
-
-What if I want to change the view layout within the route itself?  No problem we could:
+如果我们想改变路由本身自己的视图布局时该怎么办？很简单，只需这样：
 
 ```javascript
 'get /privacy': {
@@ -42,30 +38,23 @@ What if I want to change the view layout within the route itself?  No problem we
   },
 ```
 
-#### Notes
+### 注意：
+
 + Just because a request matches a route address doesn't necessarily mean it will be passed to that route's target _directly_.  For instance, HTTP requests will usually pass through some [middleware](http://sailsjs.org/documentation/concepts/Middleware) first.  And if the route points to a controller [action](http://sailsjs.org/documentation/concepts/Controllers?q=actions), the request will need to pass through any configured [policies](http://sailsjs.org/documentation/concepts/Policies) first.  Finally, there are a few special [route options](http://sailsjs.org/documentation/concepts/Routes/RouteTargetSyntax.html?q=route-target-options) which allow a route to be "skipped" for certain kinds of requests.
 + The router can also programmatically **bind** a **route** to any valid route target, including canonical Node middleware functions (i.e. `function (req, res, next) {}`).  However, you should always use the conventional [route target syntax](http://sailsjs.org/documentation/concepts/Routes/RouteTargetSyntax.html) when possible- it streamlines development, simplifies training, and makes your app more maintainable.
 
+### 自动化的路由
+除了你自定义的路由，Sails还自动地帮你绑定了许多路由。如果一条URL不匹配任何自定义的路由，它可能会匹配上自动路由中的一条，那么还是会生成一条响应的。在Sails中主要类型的自动化路由如下：
 
++ [Blueprint routes](http://sailsjs.org/documentation/reference/blueprint-api?q=blueprint-routes)，提供一个完整的REST API给你的[controllers](http://sailsjs.org/documentation/concepts/Controllers)和[models](http://sailsjs.org/documentation/concepts/ORM/Models.html)；
++ [Assets](http://sailsjs.org/documentation/concepts/Assets)： 比如图片、JS和CSS文件
++ [CSRF](http://sailsjs.org/documentation/concepts/Security/CSRF.html)： 如果打开的话，将会在你的app中提供一条**/csrdfToken**路由，这样可以用于取回CSRF token。
 
-### Automatic Routes
+### 支持的协议
+Sails路由器是“protocol-agnostic”；它知道如何处理通过[Websockets](http://en.wikipedia.org/wiki/Websockets)的[HTTP请求](http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol)和消息。它通过监听Socket.io消息来实现，该消息以一种简单的格式发送给保留的event handlers，该格式称为JWR(JSON-Websocket Request/Response)。详细说明和实现参考现在可用的文档[client-side socket SDK](http://sailsjs.org/documentation/reference/websockets/sails.io.js)。
 
-In addition to your custom routes, Sails binds many routes for you automatically.  If a URL doesn't match a custom route, it may match one of the automatic routes and still generate a response.  The main types of automatic routes in Sails are:
-
-* [Blueprint routes](http://sailsjs.org/documentation/reference/blueprint-api?q=blueprint-routes), which provide your [controllers](http://sailsjs.org/documentation/concepts/Controllers) and [models](http://sailsjs.org/documentation/concepts/ORM/Models.html) with a full REST API.
-* [Assets](http://sailsjs.org/documentation/concepts/Assets), such as images, Javascript and stylesheet files.
-* [CSRF](http://sailsjs.org/documentation/concepts/Security/CSRF.html), if turned on, provides a **/csrfToken** route to your app that can be used to retrieve the CSRF token.
-
-
-### Supported Protocols
-
-The Sails router is "protocol-agnostic"; it knows how to handle both [HTTP requests](http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) and messages sent via [WebSockets](http://en.wikipedia.org/wiki/Websockets). It accomplishes this by listening for Socket.io messages sent to reserved event handlers in a simple format, called JWR (JSON-WebSocket Request/Response).  This specification is implemented and available out of the box in the [client-side socket SDK](http://sailsjs.org/documentation/reference/websockets/sails.io.js).
-
-
-
-#### Notes
-+ Advanced users may opt to circumvent the router entirely and send low-level, completely customizable WebSocket messages directly to the underlying Socket.io server.  You can bind socket events directly in your app's [`onConnect`](http://sailsjs.org/documentation/reference/sails.config/sails.config.sockets.html?q=commonlyused-options) function (located in [`config/sockets.js`](http://sailsjs.org/documentation/anatomy/myApp/config/sockets.js.html).)  But bear in mind that, in most cases, you are better off leveraging the request interpreter for socket communication - maintaining consistent routes across HTTP and WebSockets helps keep your app maintainable.
-
+#### 注意
++ 高级用户也许会完全地绕过路由器然后直接地发送底层的完全自定义的WebSocket消息给底层的Socket.io服务器。你可以在你的app的[`onConnect`](http://sailsjs.org/documentation/reference/sails.config/sails.config.sockets.html?q=commonlyused-options)函数(位于[`config/sockets.js`](http://sailsjs.org/documentation/anatomy/myApp/config/sockets.js.html)文件中)中直接绑定你的套接字事件。但是记住在大部分的情况下，你最好放弃利用请求拦截器来进行套接字通信--因为在HTTP和WebSockets之间维护一直的路由会让你的app变得更加可维护性。
 
 
 
