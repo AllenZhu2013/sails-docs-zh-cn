@@ -21,6 +21,7 @@ Services对于那些可以在多个[控制器](http://sailsjs.org/documentation/
 
 ## 钩子的类型
 在Sails中有下面三种类型的钩子可用
+
 1. **Core hooks**。这类的钩子提供了一个Sails app绝大部分的公共的必不可少的特性，比如请求处理，blueprint 路由创建和通过[Waterline](http://sailsjs.org/documentation/concepts/models-and-orm)的数据库集成。因为内核钩子绑定到Sails内核这样的话在每一个app中都是可用的。在你的代码中你可能很少需要去调用到内核钩子的方法。
 2. **Project hooks**。这类钩子存在于Sails app的`api/hooks`文件夹下。工程钩子提供一种利用钩子系统特性的方法，对应的代码不需要在app之间共享。
 3. **Installable hooks**。这类钩子安装在一个app的`node_module`文件夹下并使用`npm install`。可安装的钩子允许在Sails社区中的开发者去创建并安插--就像Sails app使用的模块一样。
