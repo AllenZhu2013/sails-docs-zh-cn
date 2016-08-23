@@ -16,6 +16,7 @@ Sails文档已经被翻译成多种其他语言版本。下面的列表是对应
 | Brazilian Portuguese         | `pt-BR` | [@marceloboeira](https://github.com/marceloboeira) & [@gabrielalmir10](https://github.com/gabrielalmir10)   | [sails-docs-pt-BR](https://github.com/balderdashy/sails-docs/tree/pt-BR)
 | Taiwanese Mandarin           | `zh-TW` | [@CalvertYang](https://github.com/CalvertYang)   | [sails-docs-zh-TW](https://github.com/balderdashy/sails-docs/tree/zh-TW)
 | Korean                       | `ko`    | [@sapsaldog](https://github.com/sapsaldog)   | [sails-docs-ko](https://github.com/balderdashy/sails-docs/tree/ko)
+| Chinese                      | `zh-cn`    | [@linxiaowu66](https://github.com/linxiaowu66)   | [sails-docs-zh-cn](https://github.com/linxiaowu66/sails-docs-zh-cn)
 
 > 因为我们正在使用分支来追朔Sails文档的不同版本，所以我们正在逐渐地放弃掉将不同语言版本作为分支的原始做法。在你着手开始一项新的翻译工程之前，我们希望你细看一下[下面更新的内容](#how-can-i-help-translate-the-documentation)-- 流程上稍微有一点点变化。
 
