@@ -37,9 +37,10 @@ Sails文档已经被翻译成多种其他语言版本。下面的列表是对应
 
 | Branch (in `sails-docs`)                    | Documentation for Sails Version...                                   | Preview At...      |
 |-------------------------------------------------------------------------------------|------------------------|:-------------------|
-| [`master`](https://github.com/balderdashy/sails-docs/tree/master) | [![NPM version](https://badge.fury.io/js/sails.png)](http://badge.fury.io/js/sails) | [preview.sailsjs.org](http://preview.sailsjs.org)
-| [`1.0`](https://github.com/balderdashy/sails-docs/tree/1.0) | Upcoming v1.0 release _(branch not available yet)_           | [next.sailsjs.org](http://next.sailsjs.org)
-| [`0.11`](https://github.com/balderdashy/sails-docs/tree/0.11) | Sails v0.11.x           | [0.11.sailsjs.org](http://0.11.sailsjs.org)
+| [`1.0`](https://github.com/balderdashy/sails-docs/tree/1.0) | Upcoming v1.0 release                          | [next.sailsjs.com](http://next.sailsjs.com)
+| [`master`](https://github.com/balderdashy/sails-docs/tree/master) | [![NPM version](https://badge.fury.io/js/sails.png)](http://badge.fury.io/js/sails) | [preview.sailsjs.com](http://preview.sailsjs.com)
+| [`0.12`](https://github.com/balderdashy/sails-docs/tree/0.12) | Sails v0.12.x | [sailsjs.com](http://sailsjs.com)
+| [`0.11`](https://github.com/balderdashy/sails-docs/tree/0.11) | Sails v0.11.x           | [0.11.sailsjs.com](http://0.11.sailsjs.com)
 
 
 #### 这些文档是怎样被编译并推送到网站的？
