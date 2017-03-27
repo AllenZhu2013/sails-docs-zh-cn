@@ -9,7 +9,7 @@ module.exports = function (sails) {
       initialize: function(cb) {
          this.numRequestsSeen = 0;
          this.numUnhandledRequestsSeen = 0;
-         return cb();
+         return cb();configure.md
       },
 
       routes: {
