@@ -1,5 +1,8 @@
 ![Squiddy reads the docs](http://sailsjs.org/images/squidford_swimming.png)
 
+# Sails.js文档的Gitbook版本
+
+该中文翻译文档的gitbook版本已经放在[SailsJs中文文档](https://linxiaowu66.gitbooks.io/sailsjs/content/)，有需要的童鞋可以自行查看。
 # Sails.js文档
 
 当前Sails的稳定版本的官方文档是在[master branch](github.com/balderdashy/sails-docs)这个代码库上。[Sails官方网站](http://sailsjs.org)上的大部分章节内容都可以在这里找得到。
