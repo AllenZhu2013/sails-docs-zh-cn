@@ -18,7 +18,7 @@ Something.findOne(criteria).exec(function (err, record) {
 
 |   |     Argument        | Type                | Details |
 |---|:--------------------|---------------------|----------------------------------------------------------------------------------|
-| 1 |    err              | ((Error?))          | The error that occurred, or `undefined` if there were no errors.
+| 1 |    err              | ((Error?))          | The error that occurred, or `null` if there were no errors.
 | 2 |    record           | ((dictionary?))     | The record that was found, or `undefined` if no such record could be located.
 
 
@@ -33,7 +33,7 @@ User.findOne({
   username:'finn'
 }).exec(function (err, finn){
   if (err) {
-    return res.negotiate(err);
+    return res.serverError(err);
   }
   if (!finn) {
     return res.notFound('Could not find Finn, sorry.');
@@ -47,7 +47,7 @@ User.findOne({
 
 
 ### Notes
-> - Being unable to find a record with the given criteria does **not** constitute an error for `findOne()`.  If no matching record is found, the value of `record` in the callback will be `undefined`.
+> - Being unable to find a record with the given criteria does **not** constitute an error for `findOne()`.  If no matching record is found, the value of the 2nd argument to the callback (e.g. `finn`) will be `undefined`.
 
 
 

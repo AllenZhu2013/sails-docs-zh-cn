@@ -6,8 +6,20 @@
 
 比如，为了切换到Jade，运行`run npm install jade --save-dev`，然后在[`config/views.js`](http://sailsjs.org/documentation/anatomy/myApp/config/views.js.html)中设置`engine: 'jade'`。
 
+<<<<<<< HEAD
 ##### 模板引擎
 - [atpl](https://github.com/soywiz/atpl.js)
+=======
+To use a different view engine, you should use npm to install it in your project, then set `sails.config.views.engine` in [`config/views.js`](http://sailsjs.com/documentation/anatomy/myApp/config/views.js.html).
+
+For example, to switch to jade, run `npm install jade --save-dev`, then set `engine: 'jade'` in [`config/views.js`](http://sailsjs.com/documentation/anatomy/myApp/config/views.js.html).
+
+
+
+##### Supported view engines
+
+  - [atpl](https://github.com/soywiz/atpl.js)
+>>>>>>> upstream/master
   - [dust](https://github.com/akdubya/dustjs) [(website)](http://akdubya.github.com/dustjs/) (.dust)
   - [eco](https://github.com/sstephenson/eco)
   - [ect](https://github.com/baryshev/ect) [(website)](http://ectjs.com/)

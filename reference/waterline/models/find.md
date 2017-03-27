@@ -18,7 +18,7 @@ Something.find(criteria).exec(function (err, records) {
 
 |   |     Argument        | Type                | Details |
 |---|:--------------------|---------------------|:---------------------------------------------------------------------------------|
-| 1 |    err              | ((Error?))          | The error that occurred, or `undefined` if there were no errors.
+| 1 |    err              | ((Error?))          | The error that occurred, or `null` if there were no errors.
 | 2 |    records          | ((array))           | The array of records from your database which match the given criteria.
 
 
@@ -28,7 +28,7 @@ To find any users named Finn in the database:
 ```javascript
 User.find({name:'Finn'}).exec(function (err, usersNamedFinn){
   if (err) {
-    return res.negotiate(err);
+    return res.serverError(err);
   }
   sails.log('Wow, there are %d users named Finn.  Check it out:', usersNamedFinn.length, usersNamedFinn);
   return res.json(usersNamedFinn);

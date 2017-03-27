@@ -1,9 +1,10 @@
-![Squiddy reads the docs](http://sailsjs.org/images/squidford_swimming.png)
+![Squiddy reads the docs](http://sailsjs.com/images/squidford_swimming.png)
 
 # Sails.js文档的Gitbook版本
 
 该中文翻译文档的gitbook版本已经放在[SailsJs中文文档](https://linxiaowu66.gitbooks.io/sailsjs/content/)，有需要的童鞋可以自行查看。
 # Sails.js文档
+
 
 当前Sails的稳定版本的官方文档是在[master branch](github.com/balderdashy/sails-docs)这个代码库上。[Sails官方网站](http://sailsjs.org)上的大部分章节内容都可以在这里找得到。
 
@@ -20,12 +21,15 @@ Sails文档已经被翻译成多种其他语言版本。下面的列表是对应
 | Taiwanese Mandarin           | `zh-TW` | [@CalvertYang](https://github.com/CalvertYang)   | [sails-docs-zh-TW](https://github.com/balderdashy/sails-docs/tree/zh-TW)
 | Korean                       | `ko`    | [@sapsaldog](https://github.com/sapsaldog)   | [sails-docs-ko](https://github.com/balderdashy/sails-docs/tree/ko)
 | Chinese                      | `zh-cn`    | [@linxiaowu66](https://github.com/linxiaowu66)   | [sails-docs-zh-cn](https://github.com/linxiaowu66/sails-docs-zh-cn)
+| French                       | `fr`    | [@marrouchi](https://github.com/marrouchi)   | [sails-docs-fr](https://github.com/marrouchi/sails-docs-fr)
+
 
 > 因为我们正在使用分支来追朔Sails文档的不同版本，所以我们正在逐渐地放弃掉将不同语言版本作为分支的原始做法。在你着手开始一项新的翻译工程之前，我们希望你细看一下[下面更新的内容](#how-can-i-help-translate-the-documentation)-- 流程上稍微有一点点变化。
 
 
 
 ## Sails文档的贡献工作
+
 
 我们非常欢迎你的帮助！  请提出一个带有更正错误或者添加新的东西的pull请求到**master**然后我们会再三检查之后尽快合并到主干分支上去。
 
@@ -34,6 +38,7 @@ Sails文档已经被翻译成多种其他语言版本。下面的列表是对应
 #### 我应该编辑哪个分支？
 
 这取决于你想要编辑的类型。大部分情况下，你都会编辑Sails最新稳定版本的相关文档(也就是在[NPM](npmjs.org/package/sails)上的版本)同时你也会想要编辑这个代码库的`master`(也就是你在sails-docs代码库上默认看到的分支)。
+
 
 另一方面，如果你想要在一个未来版本中编辑一个没有加入版本中的特性；或者更常见的，作为一个提议的特性或者到Sails或一个相关工程的开放的pull请求的伴随物，那么你接下来将会编辑那些Sails没有发布的版本(有时候我们称之为“边缘版本”)。
 
@@ -51,6 +56,7 @@ Sails文档已经被翻译成多种其他语言版本。下面的列表是对应
 我们使用一种叫做`doc-templater`的模块来转换.md文件为html文件。你可以参考该链接来学习该模块是如何工作的-[doc-templater repo](https://github.com/uncletammy/doc-templater)。
 
 每一个.md文件在网站上都有自己的页面(也就是说所有的引用、概念、和框架文件), 并且应该都包含一个特殊的`<docmeta name="displayName">`标签，其`value`的属性指定为该页面的标题。这个将会影响到文档在在搜索引擎中的结果的显示，并且它也会作为显示名称显示在sailsjs.org网站上的导航栏菜单。比如：
+
 
 ```markdown
 <docmeta name="displayName" value="Building Custom Homemade Puddings">
@@ -75,6 +81,7 @@ Sails文档已经被翻译成多种其他语言版本。下面的列表是对应
 + 当你对于你的翻译工作的第一个版本比较满意的时候，开启一个issue然后我们文档小组的某些人将会乐于帮助你在Sails网站上预览这些内容，并让它在一个域名中显示(也许是你的域名，或者是sailsjs.org的子域名, 哪个是最好的选择呢？), 最后将其分享到Sails社区中的其他地方。
 
 
+
 #### 还有别的我能帮上忙的吗？
 
 更多关于贡献Sails文档的信息，可以参考[Contribution Guide](https://github.com/balderdashy/sails/blob/master/CONTRIBUTING.md).
@@ -85,8 +92,11 @@ Sails文档已经被翻译成多种其他语言版本。下面的列表是对应
 + sails-docs-zh-cn/concepts/** (**代表该目录下所有文件已经翻译完毕)
 
 
+
 #### 如何联系我？
 
+
 鉴于英语水平有限，翻译过程中有不对的地方，大家可以完全修改它并提交。其他章节有兴趣的童鞋也可以参与其中。不胜感激。
+
 
 联系方式： linguang661990@126.com

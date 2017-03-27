@@ -5,6 +5,10 @@
 
 参考信息和例子请参考[sails.log()](http://sailsjs.org/documentation/reference/application/sails-log),或配置选项参考[sails.config.log](http://sailsjs.org/documentation/reference/configuration/sails-config-log)。
 
+<<<<<<< HEAD
+=======
+See [sails.log()](http://sailsjs.com/documentation/reference/application/sails-log) for more information and examples, or  [sails.config.log](http://sailsjs.com/documentation/reference/configuration/sails-config-log) for configuration options.
+>>>>>>> upstream/master
 
 ## 可用的方法
 下面的每一种方法都接受一组不限数目的不限类型的参数，通过逗号分隔区分。就像`console.log`一样，传递给Sails日志器的数据作为参数被自动地修饰，以便可以使用Node的[`util.inspect()`](http://nodejs.org/api/util.html#util_util_inspect_object_options)读取。因此这是一个标准的Nodejs会话应用;*任何*词语、错误、日期、数组或绝大部分的数据类型都可以使用内建的[`util.inspect()`](https://nodejs.org/api/util.html#util_util_inspect_object_options)逻辑很好地打印(比如，你可以看到{ pet: { name: 'Hamlet' } }而不是简单的打印[`object Object`])。同时如果你使用`inspect()`方法记录一个对象，它将会自动运行并且它返回的字符串将会被写到控制台。

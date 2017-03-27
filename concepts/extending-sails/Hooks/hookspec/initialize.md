@@ -18,8 +18,14 @@ initialize: function(cb) {
 }
 ```
 
+<<<<<<< HEAD
 ##### 钩子超时设置
 默认，钩子有10秒的时间去完成`initialize`函数并在Sails抛出一个错误之前调用`cb`。这个超时时间可以通过设置`_hookTimeout`关键词来设置，超时时间的单位是毫秒。这个是在钩子的[defaults](http://sailsjs.org/documentation/concepts/extending-sails/Hooks/hookspec/defaults.html)中设置：
+=======
+##### Hook timeout settings
+
+By default, hooks have ten seconds to complete their `initialize` function and call `cb` before Sails throws an error.  That timeout can be configured by setting the `_hookTimeout` key to the number of milliseconds that Sails should wait.  This can be done in the hook&rsquo;s [`defaults`](http://sailsjs.com/documentation/concepts/extending-sails/Hooks/hookspec/defaults.html):
+>>>>>>> upstream/master
 
 ```
 defaults: {
@@ -52,7 +58,7 @@ initialize: function(cb) {
       // Then call cb()
       return cb();
 
-   }
+   });
 }
 ```
 为了让你的钩子依赖于多个钩子，你可以将所有需要等待的时间组成一个数组并调用`sails.after`：
@@ -67,7 +73,7 @@ initialize: function(cb) {
       // Then call cb()
       return cb();
 
-   }
+   });
 }
 ```
 

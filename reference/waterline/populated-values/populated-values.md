@@ -1,6 +1,6 @@
 # Populated Values
 
-In addition to basic attribute data like email addresses, phone numbers, and birthdates, Waterline can dynamically store and retrieve linked sets of records using associations.  When [`.populate()`](http://sailsjs.org/documentation/reference/waterline/queries/populate.html) is called on a query, each of the resulting records will contain one or more **populated values**.  Each one of those **populated values** is a snapshot of the record(s) linked to that particular association at the time of the query.
+In addition to basic attribute data like email addresses, phone numbers, and birthdates, Waterline can dynamically store and retrieve linked sets of records using associations.  When [`.populate()`](http://sailsjs.com/documentation/reference/waterline/queries/populate.html) is called on a query, each of the resulting records will contain one or more **populated values**.  Each one of those **populated values** is a snapshot of the record(s) linked to that particular association at the time of the query.
 
 The type of a populated value is either:
 
@@ -19,7 +19,7 @@ Order.find()
 
   // this array is a snapshot of the Customers who are associated with the first Order as "buyers"
   orders[0].buyers;
-  // => [ {id: 1, name: 'Rob Stark'}, {id: 6, name: 'Arya Stark'} ]
+  // => [ {id: 1, name: 'Robb Stark'}, {id: 6, name: 'Arya Stark'} ]
 
   // this object is a snapshot of the Company that is associated with the first Order as the "seller"
   orders[0].seller;
@@ -67,6 +67,11 @@ Order.find()
   orders[1].buyers.add({ name: 'Jon Snow' });
   orders[1].seller = { corporateName: 'Wolf Orphanage' };
   orders[1].save(function (err) {
+    if (err) {
+      // handle error (e.g. `return res.serverError(err);` )
+      return;
+    }
+    
     // We successfully created a new Customer named Jon and added
     // him to `order[1]` as one of its "buyers".
     // We also created a new company and set it as `order[1]`'s "seller".

@@ -283,7 +283,7 @@ targets: {
 * User
 *
 * @description :: TODO: You might write a short summary of how this model works and what it represents here.
-* @docs        :: http://sailsjs.org/#!documentation/models
+* @docs        :: http://sailsjs.com/#!documentation/models
 */
 
 module.exports = {
@@ -304,13 +304,17 @@ module.exports = {
 ```sh
 ~/ $ npm publish
 ```
+<<<<<<< HEAD
+=======
+>**Note:**  If you don't already have an NPM account, go to [npmjs.org](https://www.npmjs.org/) and create one.
+>>>>>>> upstream/master
 
 > **注意**：如果你还没有一个NPM账号，可以到(npmjs.org)[https://www.npmjs.org/]中创建一个
 
 想要取消发布某个模块可以输入：
 
 ```sh
-~/ $  npm unpublish` --force
+~/ $  npm unpublish --force
 ```
 
 改变`myProject\.sailsrc`为：

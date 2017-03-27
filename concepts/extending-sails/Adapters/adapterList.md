@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 # 罗列可用的适配器
 这个文件已经更新到最新的了，综合了在Sails,js框架中所有可用的适配器列表。如果我们遗漏了某个或者你想添加你自己编写的适配器，只需要提交一个Pull Request到这个文件，然后添加到这个列表。
+=======
+# Available Database Adapters
+
+This file is meant to be an up to date, comprehensive list of all of the core adapters available for the Sails.js framework, and a reference of a few of the community adapters out there.  If you see out of date information on this page, or if you want to add an adapter you made, please just submit a pull request to this file, adding to the list of community adapters below.
+
+
+### Officially supported database adapters
+>>>>>>> upstream/master
 
 ### 官方支持的适配器
 ##### sails-disk
@@ -65,7 +74,28 @@ MySQL是世界上最流行的关系型数据库。http://en.wikipedia.org/wiki/M
 + Semantic
 + Queryable
 
+<<<<<<< HEAD
 ### 社区支持的适配器
+=======
+
+
+
+### Can I contribute to a core adapter?
+
+Definitely!  Get started by reading [the Sails project contribution guide](http://sailsjs.com/documentation/contributing). 
+
+
+
+
+### Community supported database adapters
+
+Is your database not supported by one of the core adapters?  Good news!  There are many different community database adapters for Sails.js and Waterline [available on NPM](https://www.npmjs.com/search?q=sails+adapter).
+
+> Learn [how to install and configure community adapters](http://sailsjs.com/docs/concepts/extending-sails/adapters).
+
+Here are a few highlights:
+
+>>>>>>> upstream/master
 ##### sails-orientdb
 地址：https://github.com/appscot/sails-orientdb
 
@@ -86,8 +116,27 @@ MySQL是世界上最流行的关系型数据库。http://en.wikipedia.org/wiki/M
 ##### 接口实现：
 + Semantic
 
+<<<<<<< HEAD
 
 你有自己写的Sails适配器吗？赶紧提交一个PR到这个文件并添加在这儿吧！
+=======
+##### sails-derby
+
+https://github.com/dash-/node-sails-derby
+
+[Apache Derby](https://db.apache.org/derby/) is an open source relational database implemented entirely in Java and available under the Apache License, Version 2.0.
+
+###### Interfaces implemented:
++ Semantic
++ Queryable
++ Associations
++ SQL
+
+
+### Add your custom adapter to this list
+
+Have you written a Sails adapter? Submit a PR to this file and add it here!
+>>>>>>> upstream/master
 
 
 <docmeta name="displayName" value="Available Adapters">

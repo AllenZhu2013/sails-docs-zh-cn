@@ -18,13 +18,8 @@ Something.destroy(criteria).exec(function (err) {
 
 |   |     Argument        | Type                | Details |
 |---|:--------------------|---------------------|:-----------------------------------------------------------------------------|
-| 1 |    err              | ((Error?))          | The error that occurred, or `undefined` if there were no errors.
-
-
-
-<!--
+| 1 |    err              | ((Error?))          | The error that occurred, or `null` if there were no errors.
 | 2 |    deletedRecords   | ((array))           | An array containing any records which were deleted.
--->
 
 
 ### Example

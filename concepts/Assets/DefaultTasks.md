@@ -3,6 +3,7 @@
 ### 概述
 绑定到Sails的Assets流水线是一组配置为常见的默认值的Grunt任务，这样设计主要是让你的工程变得更加一致和富有成效。整个前端Assets工作流完全可以客制化，因为它创造性地提供了一些默认的任务。Sails让你更加容易地[配置新的任务](http://sailsjs.org/documentation/concepts/Assets/TaskAutomation.html?q=task-configuration)以符合自己的需求。<!-- change link to: /documentation/concepts/assets/task-automation#?task-configuration once new site is live -->
 
+<<<<<<< HEAD
 下面罗列的是Sails默认的Grunt配置以帮助你更有成效搭建服务器:
 + 自动LESS编译
 + 自动JST编译
@@ -19,6 +20,29 @@
 这个任务用于清空`./tmp/public`文件夹下面的内容。
 
 [使用说明](https://github.com/gruntjs/grunt-contrib-clean)
+=======
+The asset pipeline bundled in Sails is a set of Grunt tasks configured with conventional defaults designed to make your project more consistent and productive. The entire frontend asset workflow is completely customizable, while it provides some default tasks out of the box. Sails makes it easy to [configure new tasks](http://sailsjs.com/documentation/concepts/Assets/TaskAutomation.html?q=task-configuration) to fit your needs.
+<!-- change link to: /documentation/concepts/assets/task-automation#?task-configuration once new site is live -->
+
+Here are a few things that the default Grunt configuration in Sails does to help you out:
+- Automatic LESS compilation
+- Automatic JST compilation
+- Automatic Coffeescript compilation
+- Optional automatic asset injection, minification, and concatenation
+- Creation of a web ready public directory
+- File watching and syncing
+- Optimization of assets in production
+
+### Default Grunt tasks
+
+Below is a list of the Grunt tasks that are included by default in new Sails projects:
+
+##### clean
+
+> This grunt task is configured to clean out the contents in the `.tmp/public/` of your sails project.
+
+> [usage docs](https://github.com/gruntjs/grunt-contrib-clean)
+>>>>>>> upstream/master
 
 ##### coffee
 编译在`assets/js`目录下的coffeeScript文件然后将它们放在`./tmp/public`。
@@ -65,6 +89,12 @@
 ##### uglify
 压缩客户端的JS文件
 
+<<<<<<< HEAD
+=======
+> Minifies client-side javascript assets.  Note that by default, this task will "mangle" all of your function and variable names (either by changing them to a much shorter name, or stripping them entirely).  This is usually desirable as it makes your code significantly smaller, but in some cases can lead to unexpected results (particularly when you expect an object's constructor to have a certain name).  To turn off or modify this behavior, [use the `mangle` option](https://github.com/gruntjs/grunt-contrib-uglify#no-mangling) when setting up this task.
+
+> [usage docs](https://github.com/gruntjs/grunt-contrib-uglify)
+>>>>>>> upstream/master
 
 [使用说明](https://github.com/gruntjs/grunt-contrib-uglify)
 

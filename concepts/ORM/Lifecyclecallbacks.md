@@ -1,6 +1,16 @@
+<<<<<<< HEAD
 # 生命周期回调
 ### 概述
 生命周期回调是能够在某些*模型*动作之前或之后自动调用的功能。比如，我们有时使用生命周期回调自动化地加密一个密码在创建或者更新一个`Account`模型之前。
+=======
+# Lifecycle callbacks
+
+### Overview
+
+Lifecycle callbacks are functions that are automagically called before or after certain _model_ actions. For example, we sometimes use lifecycle callbacks to automatically hash a password before creating or updating an `Account` model.
+
+Sails exposes a handful of lifecycle callbacks by default.
+>>>>>>> upstream/master
 
 Sails默认暴露了一个有用的生命周期调用。
 
@@ -25,8 +35,14 @@ Sails默认暴露了一个有用的生命周期调用。
   - afterDestroy: fn(destroyedRecords, cb)
 
 
+<<<<<<< HEAD
 ### 例子
 如果你想在保存到数据库之前加密一个密码，你也许会使用`beforeCreate`生命周期回调。
+=======
+### Example
+
+If you want to hash a password before saving in the database, you might use the `beforeCreate` lifecycle callback.
+>>>>>>> upstream/master
 
 ```javascript
 var bcrypt = require('bcrypt');
@@ -44,7 +60,7 @@ module.exports = {
       type: 'string',
       minLength: 6,
       required: true,
-      columnName: 'encrypted_password'
+      columnName: 'hashed_password'
     }
 
   },
@@ -53,7 +69,7 @@ module.exports = {
   // Lifecycle Callbacks
   beforeCreate: function (values, cb) {
 
-    // Encrypt password
+    // Hash password
     bcrypt.hash(values.password, 10, function(err, hash) {
       if(err) return cb(err);
       values.password = hash;

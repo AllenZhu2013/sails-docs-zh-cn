@@ -13,8 +13,6 @@ Policies are like any other system for authentication control. You can allow or 
 
 Your app's ACL (access control list) is located in **config/policies.js**.
 
-#### Applying a Policy
-
 ##### To a Specific Action
 
 To apply a policy to a specific action in particular, you should specify it on the right-hand side of that action:
@@ -26,6 +24,8 @@ To apply a policy to a specific action in particular, you should specify it on t
   }
 }
 ```
+
+> Note: Mapping a policy to a blueprint action works the same way. See [Concepts > Policies](http://sailsjs.com/docs/concepts/policies#?using-policies-with-blueprint-actions) for more info.
 
 
 ##### To an Entire Controller

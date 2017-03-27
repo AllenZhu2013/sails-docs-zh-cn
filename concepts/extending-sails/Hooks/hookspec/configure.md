@@ -1,7 +1,13 @@
 # `configure()`
 `configure`特性提供了一种在[default对象](http://sailsjs.org/documentation/concepts/extending-sails/Hooks/hookspec/defaults.html)已经被应用到所有钩子之后还可以配置一个钩子的方法。等到一个自定的钩子的`configure()`函数运行的时候，所有用户级别的配置和内核钩子设置将会被合并到`sails.config`中。但是，这时候你*不应该*依赖于其他自定义的钩子的配置，因为自定义钩子的加载顺序是不能保证的。
 
+<<<<<<< HEAD
 `configure`应该被实现成一个没有参数的函数，并且不应该返回任何值。比如，下面的`configure`函数可以被一个钩子用来与一个远程API通信，并基于用户是否设置钩子的`ssl`属性为`true`来改变API的终结点。注意钩子的配置关键词`this.configKey`在`configure`中可用。
+=======
+The `configure` feature provides a way to configure a hook after the [`defaults` objects](http://sailsjs.com/documentation/concepts/extending-sails/Hooks/hookspec/defaults.html) have been applied to all hooks.  By the time a custom hook&rsquo;s `configure()` function runs, all user-level configuration and core hook settings will have been merged into `sails.config`.  However, you should *not* depend on other custom hooks&rsquo; configuration at this point, as the load order of custom hooks is not guaranteed.
+
+`configure` should be implemented as a function with no arguments, and should not return any value.  For example, the following `configure` function could be used for a hook that communicates with a remote API, to change the API endpoint based on whether the user set the hook&rsquo;s `ssl` property to `true`.  Note that the hook&rsquo;s configuration key is available in `configure` as `this.configKey`:
+>>>>>>> upstream/master
 
 ```
 configure: function() {
@@ -17,7 +23,11 @@ configure: function() {
 }
 ```
 
+<<<<<<< HEAD
 `configure`的最大好处是所有钩子的`configure`函数保证在任何[initialize函数](http://sailsjs.org/documentation/concepts/extending-sails/Hooks/hookspec/initialize.html)之前运行；因为一个钩子的`initialize`函数可以在其他钩子的设置中检查。
+=======
+The main benefit of `configure` is that all hook `configure` functions are guaranteed to run before any [`initialize` functions](http://sailsjs.com/documentation/concepts/extending-sails/Hooks/hookspec/initialize.html) run; therefore a hook&rsquo;s `initialize` function can examine the configuration settings of other hooks.
+>>>>>>> upstream/master
 
 
 <docmeta name="displayName" value=".configure()">

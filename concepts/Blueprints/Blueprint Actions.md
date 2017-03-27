@@ -5,6 +5,7 @@ Blueprint actions(不要和blueprint action *routes*相混淆)是设计成与你
 
 当前版本的Sails有以下blueprint动作：
 
+<<<<<<< HEAD
 + [find](http://sailsjs.org/documentation/reference/blueprint-api/Find.html)
 + [findOne](http://sailsjs.org/documentation/reference/blueprint-api/FindOne.html)
 + [create](http://sailsjs.org/documentation/reference/blueprint-api/Create.html)
@@ -15,5 +16,30 @@ Blueprint actions(不要和blueprint action *routes*相混淆)是设计成与你
 + [remove](http://sailsjs.org/documentation/reference/blueprint-api/Remove.html)
 
 关于blueprint更多信息，包括如何禁用它以及重写它们，请参考[Blueprint API参考文档](http://sailsjs.org/documentation/reference/blueprint-api)。
+=======
++ [find](http://sailsjs.com/documentation/reference/blueprint-api/Find)
++ [findOne](http://sailsjs.com/documentation/reference/blueprint-api/FindOne)
++ [create](http://sailsjs.com/documentation/reference/blueprint-api/create)
++ [update](http://sailsjs.com/documentation/reference/blueprint-api/Update)
++ [destroy](http://sailsjs.com/documentation/reference/blueprint-api/Destroy)
++ [populate](http://sailsjs.com/documentation/reference/blueprint-api/Populate)
++ [add](http://sailsjs.com/documentation/reference/blueprint-api/Add)
++ [remove](http://sailsjs.com/documentation/reference/blueprint-api/Remove)
+
+##### Overriding blueprint actions
+
+You may also override any of the actions for a model by naming your function method the same name as the blueprint action.
+
+```javascript
+module.exports = {
+  findOne: function (req, res) {
+    return res.json(403, 'Single model lookup is denied.');
+  }
+}
+
+```
+For more information about blueprints, including how to disable and override them, see the [Blueprint API reference](http://sailsjs.com/documentation/reference/blueprint-api)
+
+>>>>>>> upstream/master
 
 <docmeta name="displayName" value="Blueprint Actions">

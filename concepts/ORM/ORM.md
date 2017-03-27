@@ -12,7 +12,11 @@ Waterline查询语法则是建立在这之上，关注于业务逻辑比如创�
 ##### 灵活性
 *你问产品线他们将会使用什么数据库？*
 
+<<<<<<< HEAD
 > "数据库... 什么东东? 我们不能太草率, 否则会做出错误的选择的。我将会展开调查。让我们开始干活吧。"
+=======
+Waterline query syntax floats above all that, focusing on business logic like creating new records, fetching/searching existing records, updating records, or destroying records.  No matter what database you're contacting, the usage is _exactly the same_.  Furthermore, Waterline allows you to [`.populate()`](http://sailsjs.com/documentation/reference/waterline/queries/populate.html) associations between models, _even if_ the data for each model lives in a different database.  That means you can switch your app's models from Mongo, to Postgres, to MySQL, to Redis, and back again - without changing any code.  For the times when you need low-level, database-specific functionality, Waterline provides a query interface that allows you to talk directly to your models' underlying database driver (see [.query()](http://sailsjs.com/documentation/reference/waterline/models/query.html) and [.native()](http://sailsjs.com/documentation/reference/waterline/models/native.html).)
+>>>>>>> upstream/master
 
 传统的方法去选择一个单一的服务器给一个web应用实际上是禁止的。时常的，应用程序需要兼容性地与一个或者多个已经存在的数据组维护或者它需要因为性能的原因使用不同类型的数据库。
 
@@ -32,7 +36,11 @@ Sails/Waterline让你的不同模型与不同的数据库关联起来；无论�
 
 > "我应该怎样做关键词搜索呢？这个产品的数据没有任何关键词，但是产品线却想要基于n-gram 单词顺序来得到搜索结果。并且我对这个推荐引擎如何工作也没有任何概念。如果我今晚不止一次听到·大数据`这个单词，那么我宁愿推出回到以前的咖啡店工作。“
 
+<<<<<<< HEAD
 所以"大数据”是指的什么呢？正常地当你听到博主或者分析者使用这个专业术语的时候，你会想到数据挖掘和商业智能。你也许想到这是一个将数据从多个源中取下来，然后处理/索引/分析它，最后将提取的信息写到任何地方并且将原始数据保留着或者丢掉。
+=======
+Since Sails uses `sails-disk` by default, you can start building your app with zero configuration, using a local temporary file as storage.  When you're ready to switch to the real thing (and when everyone knows what that even is), just change your app's [connection configuration](http://sailsjs.com/documentation/reference/configuration/sails-config-connections).
+>>>>>>> upstream/master
 
 然而，这里也有一些普遍的挑战，那就是提供他们自己给同样的索引或分析需求；像"driving-direction-closeness" 这类的搜索，或者一个相关产品的建议引擎。幸运的是，许多数据库简化了专用的大数据用例(比如MongoDb提供地理空间索引，ElasticSearch提供全文本搜索索引的支持)
 
@@ -45,8 +53,38 @@ Waterline使用它的适配器概念灵活地构建。一个适配器是一组�
 
 自定义的Waterline适配器实际上[很容易构建](https://github.com/balderdashy/sails-generate-adapter)，也更易于维护集成。 anything from a proprietary enterprise system, to an open API like LinkedIn, to a cache or traditional database.
 
+<<<<<<< HEAD
 ### 连接
 一个**连接**代表一个特有的数据库配置。这个配置对象包含一个被使用的适配器同时也包含象端口、主机、用户名称等信息。如果你的数据库不需要密码的话直接删掉密码就行了，连接定义在[`config/connections.js`](http://sailsjs.org/documentation/reference/sails.config/sails.config.connections.html).：
+=======
+Many enterprise applications must integrate with an existing database.  If you're lucky, a one-time data migration may be all that's necessary, but more commonly, the existing dataset is still being modified by other applications.  In order to build your app, you might need to marry data from multiple legacy systems, or with a separate dataset stored elsewhere.  These datasets could live on 5 different servers scattered across the world! One colocated database server might house a SQL database with relational data, while another cloud server might hold a handful of Mongo or Redis collections.
+
+Sails/Waterline lets you hook up different models to different datastores; locally or anywhere on the internet.  You can build a User model that maps to a custom MySQL table in a legacy database (with weird crazy column names).  Same thing for a Product model that maps to a table in DB2, or an Order model that maps to a MongoDB collection.  Best of all, you can `.populate()` across these different datastores and adapters, so if you configure a model to live in a different database, your controller/model code doesn't need to change (note that you _will_ need to migrate any important production data manually)
+
+##### Performance
+
+_You're sitting in front of your laptop late at night, and you realize:_
+> "How can I do keyword search?  The product data doesn't have any keywords, and the business wants search results ranked based on n-gram word sequences.  Also I have no idea how this recommendation engine is going to work.  Also if I hear the words `big data` one more time tonight I'm quitting and going back to work at the coffee shop."
+
+So what about the "big data"?  Normally when you hear bloggers and analyst use that buzzword, you think of data mining and business intelligence.  You might imagine a process that pulls data from multiple sources, processes/indexes/analyzes it, then writes that extracted information somewhere else and either keeps the original data or throws it away.
+
+However, there are some much more common challenges that lend themselves to the same sort of indexing/analysis needs; features like "driving-direction-closeness" search, or a recommendation engine for related products.  Fortunately, a number of databases simplify specific big-data use cases (for instance MongoDB provides geospatial indexing, and ElasticSearch provides excellent support for indexing data for full-text search).
+
+Using databases in the way they're intended affords tremendous performance benefits, particularly when it comes to complex report queries, searching (which is really just customized sorting), and NLP/machine learning.  Certain databases are very good at answering traditional relational business queries, while others are better suited for map/reduce-style processing of data, with optimizations/trade-offs for blazing-fast read/writes.  This consideration is especially important as your app's user-base scales.
+
+### Adapters
+
+Like most MVC frameworks, Sails supports [multiple databases](http://sailsjs.com/features).  That means the syntax to query and manipulate our data is always the same, whether we're using MongoDB, MySQL, or any other supported database.
+
+Waterline builds on this flexibility with its concept of adapters.  An adapter is a bit of code that maps methods like `find()` and `create()` to a lower-level syntax like `SELECT * FROM` and `INSERT INTO`.  The Sails core team maintains open-source adapters for a handful of the [most popular databases](http://sailsjs.com/features), and a wealth of [community adapters](https://github.com/balderdashy/sails-docs/blob/0.9/Database-Support.md) are also available.
+
+Custom Waterline adapters are actually [pretty simple to build](https://github.com/balderdashy/sails-generate-adapter), and can make for more maintainable integrations; anything from a proprietary enterprise account system, to a cache, to a traditional database.
+
+
+### Connections
+
+A **connection** represents a particular database configuration.  This configuration object includes an adapter to use, as well as information like the host, port, username, password, and so forth.  If your database doesn't require a password simply delete the password property. Connections are defined in [`config/connections.js`](http://sailsjs.com/documentation/reference/sails.config/sails.config.connections.html).
+>>>>>>> upstream/master
 
 ```javascript
 // in config/connections.js
@@ -94,8 +132,16 @@ connections:{
 
 默认的数据库连接配置位于基本的模型配置文件中：`config/models.js`，但是他也可以基于每个模型进行改写通过指定一个[`connection`](http://sailsjs.org/documentation/reference/sails.config/sails.config.connections.html)。在[`config/local.js`](http://sailsjs.org/documentation/concepts/configuration/the-local-js-file)文件中重写连接对象也是很有用的。
 
+<<<<<<< HEAD
 ### 类比
 想象一个文件柜里放满了笔写的表格。所有的表格都有相同的字段(比如"name", "birthdate", "maritalStatus")，但是每一张表格中字段的值都是不同的。比如，其中一张可能包含 "Lara", "2000-03-16T21:16:15.127Z", "single"，但是另外一张可能包含："Larry", "1974-01-16T21:16:15.127Z", "married"。
+=======
+The default database connection for a Sails app is located in the base model configuration (`config/models.js`), but it can also be overriden on a per-model basis by specifying a [`connection`](http://sailsjs.com/documentation/reference/sails.config/sails.config.connections.html).
+Often it is also useful override the connections object in [`config/local.js`](http://sailsjs.com/documentation/concepts/configuration/the-local-js-file)
+
+
+### Analogy
+>>>>>>> upstream/master
 
 现在现在想象你正在运行一个热狗业务。如果你非常有条理，你可能这样收拾你的文件柜：
 

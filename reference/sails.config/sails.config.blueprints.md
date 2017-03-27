@@ -1,11 +1,12 @@
 # sails.config.blueprints
 
-By default, Sails controllers automatically bind routes for each of their functions. Additionally, each controller will automatically bind routes for a CRUD API controlling the model which matches its name, if one exists.
+These configurable settings allow you to configure the blueprint API in Sails.  Some settings (like `sails.config.blueprints.populate`) control the behavior of built-in blueprint actions, whereas others (like `sails.config.blueprints.shortcuts`) tweak the behavior of blueprint routing and/or determine whether Sails automatically binds certain kinds of blueprint routes at all.
+
 
 ### Properties
 
 | Property    | Type       | Default   | Details |
-|:------------|:----------:|-----------|---------|
+|:------------|:----------:|:----------|:--------|
 | `actions`| ((boolean))|`true`|Whether routes are automatically generated for every action in your controllers (also maps `index` to `/:controller`) '/:controller', '/:controller/index', and '/:controller/:action'
 |`rest`|((boolean))|`true`|Automatic REST blueprints enabled? e.g. `'get /:controller/:id?'` `'post /:controller'` `'put /:controller/:id'` `'delete /:controller/:id'`
 |`shortcuts`|((boolean))|`true`|These CRUD shortcuts exist for your convenience during development, but you'll want to disable them in production.: `'/:controller/find/:id?'`, `'/:controller/create'`, `'/:controller/update/:id'`, and `'/:controller/destroy/:id'`
@@ -14,7 +15,7 @@ By default, Sails controllers automatically bind routes for each of their functi
 |`pluralize`|((boolean))|false|Optionally use plural controller names in blueprint routes, e.g. `/users` for `api/controllers/UserController.js`.
 |`populate`|((boolean))|`true`|Whether the blueprint controllers should populate model fetches with data from other models which are linked by associations.  If you have a lot of data in one-to-many associations, leaving this on may result in very heavy api calls.
 |`defaultLimit`|((integer))|`30`|The default number of records to show in the response from a "find" action.  Doubles as the default size of populated arrays if `populate` is `true`.
-|`autoWatch`|((boolean))|`true`|Whether to run [`Model.watch()`](http://sailsjs.org/documentation/reference/websockets/resourceful-pubsub/watch.html) in the `find` and `findOne` blueprint actions.  Can be overridden on a per-model basis.
+|`autoWatch`|((boolean))|`true`|Whether to run [`Model.watch()`](http://sailsjs.com/documentation/reference/websockets/resourceful-pubsub/watch.html) in the `find` and `findOne` blueprint actions.  Can be overridden on a per-model basis.
 |`jsonp`|((boolean))|`false`|Optionally wrap blueprint JSON responses in a JSONP callback using `res.jsonp()` from Express 3.
 
 

@@ -17,10 +17,10 @@ module.exports = function myBasicHook(sails) {
 ## 钩子特性
 在你的钩子中下面的特性在实现的时候可用。所有的特性都是可选地，并且可以通过添加它们到对象中并返回你的钩子函数来实现。
 
-* [.defaults](http://sailsjs.org/documentation/concepts/extending-sails/Hooks/hookspec/defaults.html)
-* [.configure()](http://sailsjs.org/documentation/concepts/extending-sails/Hooks/hookspec/configure.html)
-* [.initialize()](http://sailsjs.org/documentation/concepts/extending-sails/Hooks/hookspec/initialize.html)
-* [.routes](http://sailsjs.org/documentation/concepts/extending-sails/Hooks/hookspec/routes.html)
+* [.defaults](http://sailsjs.com/documentation/concepts/extending-sails/Hooks/hookspec/defaults.html)
+* [.configure()](http://sailsjs.com/documentation/concepts/extending-sails/Hooks/hookspec/configure.html)
+* [.initialize()](http://sailsjs.com/documentation/concepts/extending-sails/Hooks/hookspec/initialize.html)
+* [.routes](http://sailsjs.com/documentation/concepts/extending-sails/Hooks/hookspec/routes.html)
 
 
 ## 自定义的钩子数据和函数
