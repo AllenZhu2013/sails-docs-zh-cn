@@ -1,6 +1,6 @@
 # Summary
 
-* [Assets](gitbook/Assets.md)
+* [Assets](concepts/Assets/Assets.md)
   * [布尔类型](gitbook/basic_types.md#boolean)
   * [数字](gitbook/basic_types.md#number)
   * [字符串](gitbook/basic_types.md#string)
