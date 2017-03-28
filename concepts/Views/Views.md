@@ -14,20 +14,7 @@
 ##### 编译一个视图
 在你可以访问到`res`对象的地方(也就是一个控制器的动作、自定义响应、策略等)，你都可以使用[`res.view`](http://sailsjs.org/documentation/reference/res/res.view.html)来编译你的视图然后发送结果HTML页面给用户。
 
-<<<<<<< HEAD
 你也可以直接在`routes.js`文件中路由你的视图文件。只需要指示你的视图文件在`views/`目录下的相对路径，如下所示：
-=======
-If you prefer to use a different view engine, there are a multitude of options.  Sails supports all of the view engines compatible with [Express](https://github.com/balderdashy/sails-docs/blob/master/PAGE_NEEDED.md) via [Consolidate](https://github.com/visionmedia/consolidate.js/).
-
-Views are defined in your app's [`views/`](http://sailsjs.com/documentation/anatomy/myApp/views) folder by default, but like all of the default paths in Sails, they are [configurable](https://github.com/balderdashy/sails-docs/blob/master/PAGE_NEEDED.md).  If you don't need to serve dynamic HTML pages at all (say, if you're building an API for a mobile app), you can remove the directory from your app.
-
-
-##### Compiling a view
-
-Anywhere you can access the `res` object (i.e. a controller action, custom response, or policy), you can use [`res.view`](http://sailsjs.com/documentation/reference/res/res.view.html) to compile one of your views, then send the resulting HTML down to the user.
-
-You can also hook up a view directly to a route in your `routes.js` file.  Just indicate the relative path to the view from your app's `views/` directory.  For example:
->>>>>>> upstream/master
 
 ```javascript
 {

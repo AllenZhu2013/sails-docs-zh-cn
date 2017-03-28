@@ -15,8 +15,8 @@ $ npm install skipper-s3 --save
   uploadFile: function (req, res) {
     req.file('avatar').upload({
       adapter: require('skipper-s3'),
-      key: 'S3 Key',
-      secret: 'S3 Secret',
+      key: 'S3 Key'
+      secret: 'S3 Secret'
       bucket: 'Bucket Name'
     }, function (err, filesUploaded) {
       if (err) return res.negotiate(err);

@@ -22,8 +22,6 @@
 ### 社区生成器
 在[NPM中](https://www.npmjs.com/search?q=sails+generate)可用的社区生成器超过100个：
 
-+ [sails-generate-views-hbs](https://github.com/bhaskarmelkani/sails-generate-views-hbs)
-+ [sails-inverse-model](https://github.com/juliandavidmr/sails-inverse-model)
 + [sails-generate-new-gulp](https://github.com/Karnith/sails-generate-new-gulp)
 + [sails-generate-archive](https://github.com/jaumard/sails-generate-archive)
 + [sails-generate-scaffold](https://github.com/irlnathan/sails-generate-scaffold)

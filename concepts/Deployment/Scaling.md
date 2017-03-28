@@ -18,7 +18,6 @@ Load Balancer  <-->    Sails.js server    <-->    Socket.io message queue (Redis
 ### 配置你的服务器为一个集群部署
 该记住的最重要的事情是关于一个可伸缩的服务端应用程序应该是**无状态的**。这意味着你应该能够部署相同的代码到*n*个不同的服务器上，并期望任何给定的服务器能够处理任何给定的入口请求，并且所有的一切都工作正常。幸运的是Sails app早就为这种部署做好了准备并且开箱即用。但是在你部署到多个服务器之前，还有一些东西你需要做一下：
 
-<<<<<<< HEAD
 + 确保在你的app中你想使用的依赖软件都不会依赖于共享内存。
 + 确保你的models的数据库(比如MySQL, Postgres, Mongo)是可伸缩的(比如分区或者集群)；
 + **如果你在使用sessions**：
@@ -27,33 +26,6 @@ Load Balancer  <-->    Sails.js server    <-->    Socket.io message queue (Redis
     + 配置你的app使用Redis作为一个共享消息队列，用来传递socket.io消息(只需要在`config/sockets.js`文件中去掉`adapter`的注释)
     + 安装socket.io-redis适配器作为你的app的依赖库(比如`npm install socket.io-redis@~1.0.0 --save --save-exact`)
 
-=======
-### Preparing your app for a clustered deployment
-
-The most important thing to remember about scaling a server-side application is that it should be **stateless**.  That means you should be able to deploy the same code to _n_ different servers, expecting any given incoming request handled by any given server, and everything should still work.  Luckily, Sails apps come ready for this kind of deployment almost right out of the box.  But before deploying your app to multiple servers, there are a few things you need to do:
-
-+ Ensure none of the other dependencies you might be using in your app rely on shared memory.
-+ Make sure the database(s) for your models (e.g. MySQL, Postgres, Mongo) are scalable (e.g. sharding/cluster)
-+ **If your app uses sessions:**
-  + Configure your app to use a shared session store such as Redis (simply uncomment the `adapter` option in `config/session.js`) and install the connect-redis adapter as a dependency of your app (e.g. `npm install connect-redis@~3.0.2 --save --save-exact`).
-+ **If your app uses sockets:**
-  + Configure your app to use Redis as a shared message queue for delivering socket.io messages (uncomment the `adapter` option in `config/sockets.js`)
-  + Install the socket.io-redis adapter as a dependency of your app (e.g. `npm install socket.io-redis@~1.0.0 --save --save-exact`)
-+ **If your cluster is on a single server (for instance, using [pm2 cluster mode](http://pm2.keymetrics.io/docs/usage/cluster-mode/))**
-  + To avoid file conflict issues due to Grunt tasks, always start your apps in `production` environment, and/or consider [turning Grunt off completely](http://sailsjs.com/documentation/concepts/assets/disabling-grunt).  See [here](https://github.com/balderdashy/sails/issues/3577#issuecomment-184786535) for more details on Grunt issues in single-server clusters
-  + Be careful with [`config/bootstrap.js` code](http://sailsjs.com/documentation/reference/configuration/sails-config-bootstrap) that persists data in a database, to avoid conflicts when the bootstrap runs multiple times (once per node in the cluster)
-
-### Deploying a Node/Sails app to a PaaS
-
-Deploying your app to a PaaS like Heroku or Modulus is dead simple. Depending on your situation, there may still be a few devils in the details, but Node support with hosting providers has gotten _really good_ over the last couple of years.  Take a look at [Hosting](http://sailsjs.com/documentation/concepts/deployment/Hosting) for more platform-specific information.
-
-### Deploying your own cluster
-
-+ Deploy multiple instances (aka servers running a copy of your app) behind a [load balancer](https://en.wikipedia.org/wiki/Load_balancing_(computing)) (e.g. nginx)
-  + Configure your load balancer to terminate SSL requests
-  + But remember that you won't need to use the SSL configuration in Sails-- the traffic will already be decrypted by the time it reaches Sails.
-  + Lift your app on each instance using a daemon like `forever` or `pm2` (see http://sailsjs.com/documentation/concepts/deployment for more about daemonology)
->>>>>>> upstream/master
 
 ### 部署一个Node/Sails app到PaaS
 部署你的app到诸如Heroku或Modulus之类的PaaS是超级简单的。依赖于你的环境，在细节上可能会有一些差异，但是Node支持的主机提供商在过去的几年间已经变得越来越多了。更过平台专用的信息参考[Hosting](http://sailsjs.org/documentation/concepts/deployment/Hosting)。
@@ -77,17 +49,10 @@ Deploying your app to a PaaS like Heroku or Modulus is dead simple. Depending on
 
 ### 注意事项
 
-<<<<<<< HEAD
 > + 你不需要为你的会话非使用Redis不可--你实际上可以使用任何兼容会话存储的任何Connect或Express。更多信息参考[sails.config.session](sailsjs.org/documentation/reference/configuration/sails-config-session)
 + 默认的Socket.io配置尝试使用[长轮询](http://en.wikipedia.org/wiki/Push_technology#Long_polling)来连接服务器。为了让这个做法能够工作，你的服务器环境[必须支持](http://socket.io/blog/introducing-socket-io-1-0/#scalability)严格的负载均衡(也就是严格会话)，否则握手将会失败知道connection升级到使用WebSockets(并且仅当WebSockets可用)：
     + 在**Heroku**，你必须有严格的负载均衡beta特性[明确地使能](https://devcenter.heroku.com/articles/session-affinity)
     + 在没有严格负载均衡器的环境中，你需要[config/sockets.js](https://github.com/balderdashy/sails-docs/blob/v0.11/reference/sails.config/sails.config.sockets.md)文件中设置`transports`为`['websocket']`，强迫它只使用websocket以避免长轮询。你也需要在你的套接字客户端中设置transports--如果你正在使用`sails.io.js`，很容易在包含`sails.io.js`文件后立即添加代码`<script>io.sails.transports=['websocket']</script>`.关于这个问题的深入解释清参考[this thread](https://github.com/Automattic/engine.io/issues/261)。
-=======
-> + You don't have to use Redis for your sessions-- you can actually use any Connect or Express-compatible session store.  See [sails.config.session](sailsjs.com/documentation/reference/configuration/sails-config-session) for more information.
-> + The default Socket.io configuration initially attempts to connect to the server using [long-polling](http://en.wikipedia.org/wiki/Push_technology#Long_polling).  In order for this to work, your server environment [must support](http://socket.io/blog/introducing-socket-io-1-0/#scalability) sticky load-balancing (aka sticky sessions), otherwise the handshake will fail until the connection is upgraded to use Websockets (and only if Websockets are available).
->   + On **Heroku**, you must have the sticky load-balancing beta feature [explicitly enabled](https://devcenter.heroku.com/articles/session-affinity).
->   + In an environment without stickky load balancing, you will need to set the `transports` setting in [config/sockets.js](https://github.com/balderdashy/sails-docs/blob/v0.11/reference/sails.config/sails.config.sockets.md) to `['websocket']`, forcing it to use websockets only and avoid long-polling.  You'll also need to set the transports in your socket client--if you're using `sails.io.js`, this is as easy as adding a `<script>io.sails.transports=['websocket']</script>` immediately after the `sails.io.js` script include.  For a rather dramatic read on the issue, see [this thread](https://github.com/Automattic/engine.io/issues/261).
->>>>>>> upstream/master
 
 
 <docmeta name="displayName" value="Scaling">

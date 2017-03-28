@@ -11,12 +11,7 @@ Grunt
 + 在每个代码文件的顶部(或许可证头部)中包含ASCII的猫图片
 + 使用另外一种语言而不是英语来开始所有的文档和注释
 
-<<<<<<< HEAD
 > 如果你对制作自定义的生成器很感兴趣，最好开始的地方便是阅读文档[introduction to custom generators](http://sailsjs.org/documentation/concepts/extending-sails/generators/custom-generators)。你也可以阅读[open-source generators from the community](https://sailsjs-website.herokuapp.com/documentation/concepts/extending-sails/generators/available-generators)。
-=======
-
-> If you are interested in making custom generators, the best place to start is by checking out the [introduction to custom generators](http://sailsjs.com/documentation/concepts/extending-sails/generators/custom-generators).  You also might check out [open-source generators from the community](https://sailsjs.com/documentation/concepts/extending-sails/generators/available-generators), in case something already out there will save you some time.
->>>>>>> upstream/master
 
 
 <docmeta name="displayName" value="Generators">

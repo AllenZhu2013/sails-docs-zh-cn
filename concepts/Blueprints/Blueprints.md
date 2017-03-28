@@ -4,18 +4,8 @@
 
 同时，[blueprint routes](http://sailsjs.org/documentation/concepts/blueprints/blueprint-routes)和 [blueprint actions](http://sailsjs.org/documentation/concepts/blueprints/blueprint-actions)构成了**blueprint API**，其内建的逻辑可以在你每次创建一个模型和控制器的时候提供强有力的[RESTful JSON API](http://en.wikipedia.org/wiki/Representational_state_transfer)。
 
-<<<<<<< HEAD
 比如如果你在你的工程中创建了一个`User.js`模型和`UserController.js`控制器文件，然后使能blueprints，那么你可以直接地访问`/user/create?name=joe`来创建一个用户，并且访问`/user`来查看你的app中用户数组。所有的这些都是无须多写一行代码！
 
 Blueprints不仅是一个伟大的原型设计，而且它在产品中也是一款非常有用的工具因为它们的特性完全可以被重写、保护、扩展或者禁用。
-=======
-Like any good web framework, Sails aims to reduce both the amount of code you write and the time it takes to get a functional app up and running.  _Blueprints_ are Sails&rsquo; way of quickly generating API [routes](http://sailsjs.com/documentation/concepts/routes) and [actions](http://sailsjs.com/documentation/concepts/controllers#?actions) based on your application design.
-
-Together, [blueprint routes](http://sailsjs.com/documentation/concepts/blueprints/blueprint-routes) and [blueprint actions](http://sailsjs.com/documentation/concepts/blueprints/blueprint-actions) constitute the **blueprint API**, the built-in logic that powers the [RESTful JSON API](http://en.wikipedia.org/wiki/Representational_state_transfer) you get every time you create a model and controller.
-
-For example, if you create a `User.js` model and `UserController.js` controller file in your project, then with blueprints enabled you will be able to immediately visit `/user/create?name=joe` to create a user, and visit `/user` to see an array of your app's users.  All without writing a single line of code!
-
-Blueprints are great for prototyping, but they are also a powerful tool in production due to their ability to be overridden, protected, extended or disabled entirely.
->>>>>>> upstream/master
 
 <docmeta name="displayName" value="Blueprints">

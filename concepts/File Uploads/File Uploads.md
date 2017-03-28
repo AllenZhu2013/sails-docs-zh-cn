@@ -14,11 +14,7 @@ req.file('avatar').upload(function (err, uploadedFiles) {
 });
 ```
 
-<<<<<<< HEAD
 文件上传的动作应该在你的某一个控制器中的一个`action`中。下面的一个比较深入的例子来解释怎样允许用户上传一个avatar图片并将它关联到它的账户的。这假设你已经获取对服务器的访问控制权利，并且你存储已经登录的用户的ID在`req.session.me`。
-=======
-Files should be uploaded inside of an `action` in one of your controllers.  Here's a more in-depth example that demonstrates how you could allow users to upload an avatar image and associate it with their accounts.  It assumes you've already taken care of access control in a policy, that you're storing the id of the logged-in user in `req.session.me`, and that you've put the base URL in an [environment-dependent configuration value](http://sailsjs.com/documentation/concepts/configuration#?environmentspecific-files-config-env) called `sails.config.appUrl`.
->>>>>>> upstream/master
 
  ```javascript
 // api/controllers/UserController.js
@@ -51,7 +47,7 @@ uploadAvatar: function (req, res) {
     User.update(req.session.me, {
 
       // Generate a unique URL where the avatar can be downloaded.
-      avatarUrl: require('util').format('%s/user/avatar/%s', sails.config.appUrl, req.session.me),
+      avatarUrl: require('util').format('%s/user/avatar/%s', sails.getBaseUrl(), req.session.me),
 
       // Grab the first file and use it's `fd` (file descriptor)
       avatarFd: uploadedFiles[0].fd
@@ -88,9 +84,6 @@ avatar: function (req, res){
     var SkipperDisk = require('skipper-disk');
     var fileAdapter = SkipperDisk(/* optional opts */);
 
-    // set the filename to the same file as the user uploaded
-    res.set("Content-disposition", "attachment; filename='" + file.name + "'");
-
     // Stream the file down
     fileAdapter.read(user.avatarFd)
     .on('error', function (err){
@@ -108,22 +101,12 @@ avatar: function (req, res){
 #### 上传的文件放在哪里？
 当使用默认的`receiver`，文件上传到`myApp/.tmp/uploads/`目录下。你可以使用`dirname`选项重写这个目录。注意：当你调用`.upload()`函数和当你调用skipper-disk适配器的时候你需要提供dirname选项(所以你上传和下载的目录位置都是同一个)。
 
-<<<<<<< HEAD
 ####上传到自定义的文件夹
 在上面的例子中我们上传文件到 .tmp/uploads。所以如何配置才能上传文件到我们自定义的文件夹呢，比如”assets/images“。我们可以通过下面的例子添加选项到上传函数中来实现这个目的：
-=======
-
-#### Where do the files go?
-When using the default `receiver`, file uploads go to the `.tmp/uploads/` directory.  You can override this using the `dirname` option.  Note that you'll need to provide this option both when you call the `.upload()` function AND when you invoke the skipper-disk adapter (so that you are uploading to and downloading from the same place.)
-
-
-#### Uploading to a custom folder
-In the above example we upload the file to .tmp/uploads. So how do we configure it with a custom folder, say ‘assets/images’. We can achieve this by adding options to upload function as shown below.
->>>>>>> upstream/master
 
 ```javascript
 req.file('avatar').upload({
-  dirname: require('path').resolve(sails.config.appPath, 'assets/images')
+  dirname: require('path').resolve(sails.config.appPath, '/assets/images')
 },function (err, uploadedFiles) {
   if (err) return res.negotiate(err);
 
@@ -152,7 +135,7 @@ info: and will be available the next time you run `sails lift`.
 
  ```javascript
 
-// api/controllers/FileController.js
+// myApp/api/controllers/FileController.js
 
 module.exports = {
 
@@ -182,7 +165,6 @@ module.exports = {
 };
 ```
 
-<<<<<<< HEAD
 #### 它们往哪里去？
 当使用默认的`receiver`，文件将上传到`myApp/.tmp/uploads/`目录。你可以在`upload`动作中做任何想做的事情。
 
@@ -202,13 +184,9 @@ req.file('avatar').upload({
 ```
 
 ## 更多阅读
-=======
-## Read more
-
->>>>>>> upstream/master
 + [Skipper docs](https://github.com/balderdashy/skipper)
-+ [Uploading to Amazon S3](http://sailsjs.com/documentation/concepts/file-uploads/uploading-to-s-3)
-+ [Uploading to Mongo GridFS](http://sailsjs.com/documentation/concepts/file-uploads/uploading-to-grid-fs)
++ [Uploading to Amazon S3](http://sailsjs.org/documentation/concepts/file-uploads/uploading-to-s-3)
++ [Uploading to Mongo GridFS](http://sailsjs.org/documentation/concepts/file-uploads/uploading-to-grid-fs)
 
 
 

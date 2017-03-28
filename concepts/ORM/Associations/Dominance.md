@@ -1,3 +1,6 @@
+# Associations
+使用Sails和Waterline的时候，你可以关联模型到多个数据存储中。这意味着即使你的users存储在[PostgreSQL](http://www.postgresql.org/)和你的照片放在[MongoDb](http://www.mongodb.com/)，你也可以交互这些数据就好像它们是在同一个数据库一样。你也可以使用相同的适配器关联到不同范围的[连接](http://sailsjs.org/documentation/reference/sails.config/sails.config.connections.html)(也就是数据存储或数据库)。这样很方便如果比如你的app需要访问或者更新传统的存储在一个[MySQL](http://www.mysql.com/)中的食谱数据在你的公司的数据中心，而且还可以从一个云上的一个新的MySQL数据中存储和获取配料数据。
+
 # 支配
 ## 例子本体
 
@@ -87,11 +90,11 @@ module.exports = {
 
 ##### 如果其中的一个连接没有via咋办？
  > 如果关联的一个`连接`没有`via`属性，那么它会自动被设为`dominant: true`
-
+ 
 ##### 如果两个连接都没有via属性？
 > 如果两个`连接`都没有`via`属性，那么它们就没有相关性。二者都是`主导方`因为它们在独立的关系表中。
 
-#####模型关联怎么样？
+#####模型关联怎么样？ 
 > 在其他类型的连接中，`dominant`属性是禁用的。设置一端为`dominant`只在关联两个都有一个属性`{ via: '...', collection: '...' }`的模型的时候才有必要。
 
 ##### 可以一个模型因为某个属性成为主导方而另外一个不是？

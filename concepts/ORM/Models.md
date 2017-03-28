@@ -48,20 +48,7 @@ module.exports = {
 ### 使用模型
 模型可能可以通过我们的控制器、策略、服务、响应、测试或者在我们自定义的模型方法中访问到。在模型上有许多内建的方法可用，最重要的是查询方法：[find](http://sailsjs.org/documentation/reference/waterline/models/find.html)， [create](http://sailsjs.org/documentation/reference/waterline/models/create.html)， [update](http://sailsjs.org/documentation/reference/waterline/models/update.html)， 和 [destroy](http://sailsjs.org/documentation/reference/waterline/models/destroy.html)。 这些方法都是[异步的](https://github.com/balderdashy/sails-docs/blob/master/PAGE_NEEDED.md)--在后台中，Waterline会发送一条查询到数据库然后等待响应。
 
-<<<<<<< HEAD
 因此，查询方法会返回一个延迟的查询对象。为实际执行一条查询，`.exec(cb)`必须在这条延迟对象上调用，其中`cb`是一个回调函数来运行查询结束之后的操作。
-=======
-### Using models
-
-
-Models may be accessed from our controllers, policies, services, responses, tests, and in custom model methods.  There are many built-in methods available on models, the most important of which are the query methods: [find](http://sailsjs.com/documentation/reference/waterline/models/find.html), [create](http://sailsjs.com/documentation/reference/waterline/models/create.html), [update](http://sailsjs.com/documentation/reference/waterline/models/update.html), and [destroy](http://sailsjs.com/documentation/reference/waterline/models/destroy.html).  These methods are [asynchronous](https://github.com/balderdashy/sails-docs/blob/master/PAGE_NEEDED.md) - under the covers, Waterline has to send a query to the database and wait for a response.
-
-
-Consequently, query methods return a deferred query object.  To actually execute a query, `.exec(cb)` must be called on this deferred object, where `cb` is a callback function to run after the query is complete.
-
-Waterline also includes opt-in support for promises.  Instead of calling `.exec()` on a query object, we can call `.then()`, `.spread()`, or `.catch()`, which will return a [Bluebird promise](https://github.com/petkaantonov/bluebird).
-
->>>>>>> upstream/master
 
 Waterline也包含可选的promise支持。除了调用`.exec()`之外，还可以调用`.then()`, `.spread()`, 或者`.catch()`，这些函数都返回一个[Bluebird promise](https://github.com/petkaantonov/bluebird)。
 
@@ -90,7 +77,7 @@ findWithSameNameAsPerson: function (opts, cb) {
   // person we're even talking about:
   (function _lookupPersonIfNecessary(afterLookup){
     // (this self-calling function is just for concise-ness)
-    if (typeof person === 'object') return afterLookup(null, person);
+    if (typeof person === 'object')) return afterLookup(null, person);
     Person.findOne(person).exec(afterLookup);
   })(function (err, person){
     if (err) return cb(err);
@@ -163,16 +150,8 @@ module.exports = {
 Person.findByFirstName('emma').exec(function(err,people){ ... });
 ```
 
-<<<<<<< HEAD
 #### 资源丰富的发布订阅方法
 一个用pubsub钩子勾住的特殊类型模型方法。更多参考[section of the docs on resourceful pubsub](http://sailsjs.org/documentation/reference/websockets/resourceful-pubsub)。
-=======
-
-#### Resourceful Pubsub Methods
-
-A special type of model methods which are attached by the pubsub hook.  More on that in the [section of the docs on resourceful pubsub](http://sailsjs.com/documentation/reference/websockets/resourceful-pubsub).
-
->>>>>>> upstream/master
 
 <!--
 another special type of class method.  It stands for 'Publish, Subscribe' and that's just what they do. These methods play a big role in how Sails integrates and utilizes Socket.IO.  They are used to subscribe clients to and publish messages about the creation, update, and destruction of models.  If you want to build real-time functionality in Sails, these will come in handy.
@@ -184,10 +163,10 @@ another special type of class method.  It stands for 'Publish, Subscribe' and th
 ###### 内建的属性方法
 每一个Waterline方法自动包含一些属性方法，包括：
 
-+ [`.toJSON()`](http://sailsjs.com/documentation/reference/waterline/records/toJSON.html)
-+ [`.save()`](http://sailsjs.com/documentation/reference/waterline/records/save.html)
-+ [`.destroy()`](http://sailsjs.com/documentation/reference/waterline/models/destroy.html)
-+ [`.validate()`](http://sailsjs.com/documentation/reference/waterline/records/validate.html)
++ [`.toJSON()`](http://sailsjs.org/documentation/reference/waterline/records/toJSON.html)
++ [`.save()`](http://sailsjs.org/documentation/reference/waterline/records/save.html)
++ [`.destroy()`](http://sailsjs.org/documentation/reference/waterline/models/destroy.html)
++ [`.validate()`](http://sailsjs.org/documentation/reference/waterline/records/validate.html)
 
 <!-- note to self- we should bundle a getPrimaryKeyValue() attribute method on every model in waterline core (or maybe just getId() since "id" is simpler to understand) ~mike - aug2,2014 -->
 
@@ -208,9 +187,6 @@ module.exports = {
       type: 'string',
       defaultsTo: ''
     },
-    age: {
-      type: 'integer'
-    },
 
     // Associations (aka relational attributes)
     spouse: { model: 'Person' },
@@ -226,25 +202,18 @@ module.exports = {
     isEligibleForSocialSecurity: function (){
       return this.age >= 65;
     },
+    encryptPassword: function () {
+
+    }
   }
 };
 ```
 
-<<<<<<< HEAD
 > 值得注意的除了内建的`.save()`和`.destroy()`属性方法之外，其他的属性方法几乎都是与约定*同步*。
 > 也还要注意自定义的属性方法默认是不会序列化成JSON的。那么为了序列化它们，你可以重写[toJSON](http://sailsjs.org/documentation/reference/waterline-orm/records/to-json)。
 
 ###### 什么时候写一个自定义属性方法
 自定义属性方法对从一个记录中提取信息特别有用。也就是说，你可能想要从一个或者多个属性中减少一些信息(也就是“这个人结婚了吗？”)。
-=======
-> Note that with the notable exception of the built-in `.save()` and `.destroy()` attribute methods, attribute methods are almost always _synchronous_ by convention.
->
-> Also note that custom attributes methods are not serialized to JSON by default.  To serialize them, you can override [toJSON](http://sailsjs.com/documentation/reference/waterline-orm/records/to-json).
-
-###### When to write a custom attribute method
-
-Custom attribute methods are particularly useful for extracting some information out of a record.  I.e. you might want to reduce some information from one or more attributes (i.e. "is this person married?")
->>>>>>> upstream/master
 
 ```js
 if ( rick.isMarried() ) {
@@ -275,15 +244,8 @@ Person.marry([joe,raquel], function (err) {
 })
 ```
 
-<<<<<<< HEAD
 ###### 命名你的属性方法
 确保你使用一个命名规则来帮助你避免将**属性方法**和*属性值*混淆当你在使用记录的时候。一个最佳实践是使用“get*”(比如`getFileName()`)前缀并避免写属性方法原状地改变记录。
-=======
-
-
-###### Naming your attribute methods
-Make sure you use a naming convention that helps you avoid confusing **attribute methods** from _attribute values_ when you're working with records in your app.  A good best practice is to use "get*" or "is*" (e.g. `getFullName()` or `isMarried()`) prefix and avoid writing attribute methods that change records in-place.
->>>>>>> upstream/master
 
 <!--
 

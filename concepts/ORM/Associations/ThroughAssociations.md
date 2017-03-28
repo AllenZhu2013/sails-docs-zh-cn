@@ -53,11 +53,7 @@ module.exports = {
 }
 ```
 
-<<<<<<< HEAD
 通过使用`PetUser`模型我们可以在`User`模型和`Pet`模型上都使用`.populate()`，只需要和一个正常的[Many-to-Many](http://sailsjs.org/documentation/concepts/models-and-orm/associations/many-to-many)关联一样。
-=======
-By using the `PetUser` model we can use `.populate()` on both the `User` model and `Pet` model just the same as a normal [Many-to-Many](http://sailsjs.com/documentation/concepts/models-and-orm/associations/many-to-many) association.
->>>>>>> upstream/master
 
 > 当前如果你想要添加额外的信息到`through`表中，那么当地奥欧勇`.populate`的时候将不会生效。为了实现这个你需要手工地去查询`through`模型。
 

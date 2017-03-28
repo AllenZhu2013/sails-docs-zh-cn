@@ -1,13 +1,7 @@
 # 生成控制器
 你可以使用[Sails命令行工具](http://sailsjs.org/documentation/reference/cli)快速生成一个控制器，只需要输入：
 
-<<<<<<< HEAD
  ```sh
-=======
-You can use the [Sails command line tool](http://sailsjs.com/documentation/reference/command-line-interface) to quickly generate a controller, by typing:
-
-```sh
->>>>>>> upstream/master
 $ sails generate controller <controller name> [action names separated by spaces...]
 ```
 

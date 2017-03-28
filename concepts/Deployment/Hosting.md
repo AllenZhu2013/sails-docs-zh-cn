@@ -14,13 +14,7 @@
 
 你还需要使用命令`npm i --save grunt-cli`安装`grunt-cli`。
 
-<<<<<<< HEAD
 做完这些之后，创建文件`.openshift/action_hooks/pre_start_nodejs`，并写入下面的内容：
-=======
-After doing that, create the file `.openshift/action_hooks/pre_start_nodejs` with the following contents. ([source](https://gist.github.com/mdunisch/4a56bdf972c2f708ccc6))
-This action_hook tells OpenShift's supervisor to run all 'prod' grunt tasks, before Sails lifted.
-
->>>>>>> upstream/master
 
 ```
 #!/bin/bash
@@ -30,32 +24,11 @@ if [ -f "${OPENSHIFT_REPO_DIR}"/Gruntfile.js ]; then
     (cd "${OPENSHIFT_REPO_DIR}"; node_modules/grunt-cli/bin/grunt prod)
 fi
 ```
-<<<<<<< HEAD
 然后创建文件`/supervisor_opts`，并写入下面的内容。这个是为了告知Openshift的管理员忽略Sails的`.tmp`文件夹因为热加载功能。([source](https://gist.github.com/mdunisch/4a56bdf972c2f708ccc6#comment-1318102))
-=======
-Then disable Sails Grunt integration hook. 
-To do this set the `grunt` property to `false` in `.sailsrc` hooks like this:
-
-```json
-{
-    "hooks": {
-        "grunt": false
-    }
-}
-```
-### NOTE:
-Do not remove Gruntfile.js to disable Grunt hook, this file still using by OpenShift's supervisor.
-
-
-Then create the file `/supervisor_opts` with the following contents. This tells OpenShift's supervisor to ignore Sails' `.tmp` directory for the hot reload functionality. ([source](https://gist.github.com/mdunisch/4a56bdf972c2f708ccc6#comment-1318102))
->>>>>>> upstream/master
 
 ```
 -i .tmp
 ```
-### NOTE:
-This deployment guide works only on Openshift's "SCALABLE" gears, nodejs v0.10.
-If you're using non-scalable gear, the `/supervisor_opts` file will be ignored and Sails will not lift on it. 
 
 你现在可以`git add . && git commit -a -m "your message" && git push`部署到openshift了。
 
@@ -67,7 +40,7 @@ If you're using non-scalable gear, the `/supervisor_opts` file will be ignored a
 
 ##### 部署到Heroku?
 
-+ [Platzi: Develop Apps with Sails.js: Pt 2](https://courses.platzi.com/classes/develop-apps-sails-js/)  _(see part 2)_
++ [Sails.js and Heroku](http://pburtchaell.com/2015/sails/)
 + [SailsCasts: Deploying a Sails App to Heroku](http://irlnathan.github.io/sailscasts/blog/2013/11/05/building-a-sails-application-ep26-deploying-a-sails-app-to-heroku/)
 + [Sails.js on Heroku](http://vort3x.me/sailsjs-heroku/)
 + https://groups.google.com/forum/#!topic/sailsjs/vgqJFr7maSY
@@ -90,12 +63,6 @@ If you're using non-scalable gear, the `/supervisor_opts` file will be ignored a
 
 + https://www.cloudcontrol.com/dev-center/Guides/NodeJS/Sailsjs
 
-
-##### Deploying to RoseHosting?
-
- + [Install Sails.js with Apache as a reverse proxy on CentOS 7](https://www.rosehosting.com/blog/install-sails-js-with-apache-as-a-reverse-proxy-on-centos-7/)
- + [Install Sails.js on Ubuntu](https://www.rosehosting.com/blog/install-the-sails-js-framework-on-an-ubuntu-vps/)
- + All hosting plans from RoseHosting are fully-managed with free 24/7 support, so you can contact their [support team](https://www.rosehosting.com/support.html) and they will install and configure Sails.js for you for free
 
 
 

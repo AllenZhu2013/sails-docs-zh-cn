@@ -18,9 +18,6 @@
 - binary
 - array
 - json
-- mediumtext
-- longtext
-- objectid
 
 ##### defaultsTo
 当创建一条记录的时候，如果没有设置任何值，该记录将会创建一个`defaultsTo`指定的值：
@@ -67,30 +64,8 @@ attributes: {
 > 当使用带有`utf8mb4`字符集的MySQL，你会需要通过MySQL直接在你的表中添加 `size`约束条件到合适的列中。否则，因为在MySQL适配器中`type: 'string'`会被转换为`varchar(255)`，所以`unique: true`的约束条件将会导致一个'index too long'的错误: `ER_INDEX_COLUMN_TOO_LONG: Index column size too large. The maximum column size is 767 bytes.`
 
 
-<<<<<<< HEAD
 ##### primaryKey
 使用了这个那么该记录的这条属性就会成为主要关键词。一条模型中只能有一个属性是`primaryKey`。注意：除非[autoPK](http://sailsjs.org/documentation/concepts/ORM/model-settings.html?q=autopk)设置为false，否则不要去使用该关键词。
-=======
-###### index
-
-Will create a simple index in the underlying datastore for faster queries if available. This is only for simple indexes and currently dosn't support compound indexes. For these you will need to create them yourself or use a migration.
-
-There is currently an issue with adding indexes to string fields. Because Waterline performs its queries in a case insensitive manner we are unable to use the index on a string attribute. There are some workarounds being discussed but nothing is implemented so far. This will be updated in the near future to fully support indexes on strings.
-
-javascript
-attributes: {
-  email: {
-    type: 'string',
-    index: true
-  }
-}
-
--->
-
-###### primaryKey
-
-Use this attribute as the the primary key for the record. Only one attribute per model can be the `primaryKey`.  Note: This should never be used unless [autoPK](http://sailsjs.com/documentation/concepts/ORM/model-settings.html?q=autopk) is set to false.
->>>>>>> upstream/master
 
 ```javascript
 attributes: {
@@ -237,12 +212,7 @@ module.exports = {
 };
 ```
 
-<<<<<<< HEAD
 > 你也许注意到了我们在这个例子中也使用了[`tableName`](http://sailsjs.org/documentation/concepts/ORM/model-settings.html?q=tablename)属性。这允许我们去控制将会用于放置我们的数据的表的名字。
-=======
-> You might have noticed that we also used the [`tableName`](http://sailsjs.com/documentation/concepts/ORM/model-settings.html?q=tablename) property in this example.  This allows us to control the name of the table that will be used to house our data.
-
->>>>>>> upstream/master
 
 
 

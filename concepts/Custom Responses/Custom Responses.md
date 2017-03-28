@@ -2,15 +2,7 @@
 ### 概述
 Sails V0.10允许定制化服务器的响应。Sails默认自带少数最常见的响应类型。它们都放置于`/api/responses`目录。为了自定义这些响应，简单地修改appropriate.js文件。
 
-<<<<<<< HEAD
 下面是一个简单的例子，
-=======
-### Overview
-
-Sails allows for customizable server responses.  Sails comes with a handful of the most common response types by default.  They can be found in the `/api/responses` directory of your project.  To customize these, simply edit the appropriate .js file.
-
-As a quick example, consider the following controller action:
->>>>>>> upstream/master
 
 ```javascript
 foo: function(req, res) {

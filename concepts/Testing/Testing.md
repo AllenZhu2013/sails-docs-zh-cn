@@ -35,7 +35,7 @@ before(function(done) {
 
   sails.lift({
     // configuration for testing purposes
-  }, function(err) {
+  }, function(err, server) {
     if (err) return done(err);
     // here you can load fixtures, etc.
     done(err, sails);
@@ -51,11 +51,7 @@ after(function(done) {
 ### mocha.opts
 这个文件应该包含[mocha.opts](http://mochajs.org/#mocha-opts)描述的mocha配置选项。
 
-<<<<<<< HEAD
 注意:如果你的测试代码是CoffeeScript编写的，请确保添加以下代码到你的`mocha.opts`中：
-=======
-This file should contain mocha configuration as described here: [mocha.opts](https://mochajs.org/#mochaopts)
->>>>>>> upstream/master
 
 ```
 --require coffee-script/register

@@ -55,10 +55,6 @@
   // ...
 ```
 
-<<<<<<< HEAD
-=======
-On the other hand, in the more likely scenario that this data is dynamic, we'd need to use a controller action to load it from our models, then pass it to the view using the [res.view()](http://sailsjs.com/documentation/reference/res/res.view.html) method.
->>>>>>> upstream/master
 
 另一方面，在大部分场景下这些数据是动态的，我们可能需要控制器的动作来从我们的模型中加载，然后通过res.view()方法传递给视图。
 
