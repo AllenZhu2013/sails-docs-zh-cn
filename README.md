@@ -90,6 +90,7 @@ Sails文档已经被翻译成多种其他语言版本。下面的列表是对应
 
 + sails-docs-zh-cn/README.md
 + sails-docs-zh-cn/concepts/** (**代表该目录下所有文件已经翻译完毕)
++ sails-docs-zh-cn/upgrading/*.md
 
 
 
