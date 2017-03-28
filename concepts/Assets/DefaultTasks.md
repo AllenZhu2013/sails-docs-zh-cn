@@ -68,7 +68,7 @@
 
 [使用说明](https://github.com/gruntjs/grunt-contrib-uglify)
 
-##### 、watch
+##### watch
 当监控的文件类型被添加、修改或者删除的时候运行预定义好的那些任务。监控的是`assets/`文件夹下的文件改变，然后运行恰当的任务(比如less和jst编译)。这个允许你可以实时看到你的Assets目录下文件的改变而不需要重启服务器。
 
 [使用说明](https://github.com/gruntjs/grunt-contrib-watch)
